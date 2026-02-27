@@ -7,7 +7,7 @@
 **Production-grade interactive terminal for API orchestration, developer tooling, and concurrent workloads.**  
 Built with zero external dependencies — pure Go standard library.
 
-[![Latest Release](https://img.shields.io/github/v/release/hari7261/INDUS?label=latest&color=blue)](https://github.com/hari7261/INDUS/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/tag/hari7261/INDUS?sort=semver&label=latest&color=blue)](https://github.com/hari7261/INDUS/releases/latest)
 [![Go](https://img.shields.io/badge/Go-1.21+-00ADD8?logo=go)](https://go.dev/)
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D6?logo=windows)](https://www.microsoft.com/windows)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)

@@ -996,31 +996,70 @@ code {
 }
 
 /* ═══════════════════════════════════════════════
-   RESPONSIVE — full coverage all breakpoints
-   1200 → 1024 → 768 → 640 → 480 → 360
+   GLOBAL OVERFLOW GUARD
+═══════════════════════════════════════════════ */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Every box is capped at viewport width */
+* { min-width: 0; }
+
+/* Scrollable wrappers for wide content */
+.table-wrap,
+.commands-table-wrap,
+.code-block,
+.term-banner,
+.terminal-body,
+.pipeline-diagram {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Grids — safe minimums that never force overflow */
+.features-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+}
+.usage-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
+}
+.colors-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+}
+.install-info-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+}
+
+/* Pipeline stages — safe at any width */
+.pipe-stage { min-width: 0; flex: 1 1 180px; }
+.pipe-stages { flex-wrap: wrap; }
+
+/* Compare table always scrolls, never wraps columns */
+.compare-table { min-width: 520px; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — 1200 → 1024 → 768 → 640 → 480 → 360
 ═══════════════════════════════════════════════ */
 
-/* ── 1200px: large tablet / small laptop ── */
+/* ── 1200px ── */
 @media (max-width: 1200px) {
   .container { padding: 0 20px; }
-  .features-grid { grid-template-columns: repeat(2, 1fr); }
-  .usage-grid    { grid-template-columns: repeat(2, 1fr); }
-  .colors-grid   { grid-template-columns: repeat(5, 1fr); }
+  .colors-grid { grid-template-columns: repeat(5, 1fr); }
 }
 
 /* ── 1024px: tablet landscape ── */
 @media (max-width: 1024px) {
   .hero-terminal-preview { max-width: 100%; }
-  .usage-grid { grid-template-columns: 1fr 1fr; }
-  .install-info-grid { grid-template-columns: repeat(2, 1fr); }
   .roadmap-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* ── 768px: tablet portrait / large phone ── */
+/* ── 768px: tablet portrait ── */
 @media (max-width: 768px) {
   :root { --nav-h: 58px; }
 
-  /* nav */
+  /* ── nav ── */
   .nav-hamburger { display: flex; }
   .nav-links {
     display: none;
@@ -1048,112 +1087,97 @@ code {
     font-size: 1rem;
     border-radius: var(--radius-sm);
   }
-  .nav-github {
-    margin-left: 0 !important;
-    margin-top: 0.25rem;
-    border: 1px solid var(--border) !important;
-  }
+  .nav-github { margin-left: 0 !important; margin-top: 0.25rem; border: 1px solid var(--border) !important; }
   .hide-mobile { display: none; }
 
-  /* hero */
+  /* ── hero ── */
   .hero-content { padding: 3.5rem 16px 3rem; gap: 1.25rem; }
   .hero-sub { font-size: 1rem; }
   .hero-badges { gap: 0.4rem; }
   .hero-badges img { height: 20px; }
-
-  /* banner — scale down but keep visible */
+  .hero-terminal-preview { border-radius: var(--radius-sm); }
   .term-banner { font-size: 0.42rem; line-height: 1.3; }
 
-  /* sections */
+  /* ── sections ── */
   .section { padding: 4.5rem 0; }
   .section-header { margin-bottom: 2.5rem; }
   .section-header h2 { font-size: clamp(1.5rem, 5vw, 2rem); }
 
-  /* features */
-  .features-grid { grid-template-columns: 1fr; }
-  .feature-card:hover { transform: none; } /* disable hover lift on touch */
+  /* ── features ── */
+  .features-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .feature-card:hover { transform: none; }
 
-  /* usage */
+  /* ── usage ── */
   .usage-grid { grid-template-columns: 1fr; gap: 1.25rem; }
 
-  /* install */
-  .install-info-grid { grid-template-columns: 1fr 1fr; }
+  /* ── install ── */
   .install-step { padding: 1.25rem; }
-
-  /* code blocks */
   .code-block { font-size: 0.78rem; padding: 1rem; }
   .code-block-header { font-size: 0.72rem; }
 
-  /* colors */
-  .colors-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  /* ── colors ── */
+  .colors-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
   .color-swatch { padding: 1rem; }
   .color-swatch:hover { transform: none; }
 
-  /* pipeline */
+  /* ── pipeline ── */
+  .pipeline-diagram { padding: 1.5rem 1rem; }
   .pipe-stages { flex-direction: column; align-items: stretch; }
   .pipe-connector { flex-direction: row; padding: 0.5rem 0; justify-content: center; }
   .pipe-connector-line { width: 40px; height: 2px; }
-  .pipeline-diagram { padding: 1.5rem 1rem; }
+  .pipe-stage { flex: 1 1 auto; }
 
-  /* tables */
+  /* ── tables ── */
   .commands-table,
   .compare-table { font-size: 0.82rem; }
   .commands-table th,
   .commands-table td,
   .compare-table th,
-  .compare-table td { padding: 0.65rem 0.75rem; }
-  .commands-table-wrap,
-  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-table td { padding: 0.6rem 0.75rem; }
 
-  /* compare table — hide less-important cols on mobile */
-  .compare-table .hide-sm { display: none; }
-
-  /* releases */
+  /* ── releases ── */
   .releases-header-actions { gap: 0.75rem; }
   .release-header { flex-direction: column; gap: 0.5rem; }
   .release-assets { gap: 0.4rem; }
   .asset-link { font-size: 0.78rem; }
 
-  /* roadmap */
+  /* ── roadmap ── */
   .roadmap-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 
-  /* footer */
+  /* ── footer ── */
   .footer-inner { flex-direction: column; gap: 2rem; padding-bottom: 2rem; }
   .footer-links { gap: 1.5rem; flex-wrap: wrap; }
   .footer-col { min-width: 140px; }
 
-  /* modal */
+  /* ── modal ── */
   .modal { padding: 1.5rem; }
 }
 
 /* ── 640px: large phone ── */
 @media (max-width: 640px) {
-  .container { padding: 0 16px; }
+  .container { padding: 0 14px; }
 
-  /* hero */
-  .hero-content { padding: 3rem 16px 2.5rem; }
+  /* ── hero ── */
+  .hero-content { padding: 3rem 14px 2.5rem; gap: 1rem; }
+  .hero-title { font-size: clamp(2.2rem, 11vw, 3.5rem); }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { justify-content: center; width: 100%; }
   .hero-flag { width: 60px; }
-
-  /* banner — smaller but still tricolor visible */
+  .hero-badges img { height: 18px; }
   .term-banner { font-size: 0.34rem; line-height: 1.25; }
   .terminal-body { padding-bottom: 0.75rem; }
 
-  /* sections */
+  /* ── sections ── */
   .section { padding: 3.5rem 0; }
   .section-header { margin-bottom: 2rem; }
 
-  /* features */
+  /* ── features ── */
+  .features-grid { grid-template-columns: 1fr; }
   .feature-card { padding: 1.25rem; }
   .feat-svg { width: 1.6rem; height: 1.6rem; }
 
-  /* colors */
-  .colors-grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
-  .swatch-preview { font-size: 0.7rem; }
-
-  /* install */
-  .install-info-grid { grid-template-columns: 1fr; }
+  /* ── install ── */
+  .install-info-grid { grid-template-columns: 1fr 1fr; }
   .install-tabs { flex-direction: column; border-bottom: none; gap: 0.4rem; }
   .tab-btn {
     border: 1px solid var(--border-subtle);
@@ -1161,18 +1185,19 @@ code {
     text-align: left;
     padding: 0.65rem 1rem;
     width: 100%;
+    margin-bottom: 0;
   }
-  .tab-btn.active {
-    background: var(--saffron-glow);
-    border-color: var(--saffron);
-    color: var(--saffron);
-  }
+  .tab-btn.active { background: var(--saffron-glow); border-color: var(--saffron); color: var(--saffron); }
 
-  /* pipeline */
+  /* ── colors ── */
+  .colors-grid { grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
+  .swatch-preview { font-size: 0.7rem; }
+
+  /* ── pipeline ── */
   .pipe-box--input { padding: 0.75rem 1rem; }
   .pipe-box--input code { font-size: 0.72rem; word-break: break-all; }
 
-  /* tables — enable card-style on phone */
+  /* ── Built-in commands table → card layout ── */
   .commands-table thead { display: none; }
   .commands-table tr {
     display: flex;
@@ -1193,72 +1218,84 @@ code {
   .commands-table td:first-child { font-weight: 600; color: var(--saffron-light); }
   .commands-table td:last-child  { color: var(--green); }
 
-  /* compare table — keep horizontal scroll, don't card it */
-  .compare-table { min-width: 480px; }
-
-  /* code blocks */
+  /* ── code blocks ── */
   .code-block { font-size: 0.75rem; }
   .copy-btn { font-size: 0.68rem; padding: 0.2rem 0.5rem; }
 
-  /* roadmap */
+  /* ── roadmap ── */
   .roadmap-list li { font-size: 0.85rem; padding: 0.5rem 0.75rem; }
 
-  /* releases */
+  /* ── releases ── */
   .releases-header-actions { flex-direction: column; }
   .releases-header-actions .btn { width: 100%; justify-content: center; }
   .release-card { padding: 1.25rem; }
 
-  /* footer */
+  /* ── footer ── */
   .footer-links { flex-direction: column; gap: 1.25rem; }
   .footer-bottom { flex-direction: column; text-align: center; }
 }
 
 /* ── 480px: phone ── */
 @media (max-width: 480px) {
-  .hero-title { font-size: 2.6rem; }
-  .hero-title-term { font-size: 0.5em; }
-  .hero-sub { font-size: 0.92rem; }
-
-  /* banner — ultra compact but still show tricolor */
+  .hero-title { font-size: clamp(1.9rem, 10vw, 2.6rem); }
+  .hero-title-term { font-size: 0.48em; letter-spacing: 0.1em; }
+  .hero-sub { font-size: 0.9rem; }
+  .hero-badges { gap: 0.3rem; }
+  .hero-badges img { height: 17px; }
   .term-banner { font-size: 0.28rem; line-height: 1.2; }
 
   .nav-logo span { font-size: 0.95rem; }
 
   .section { padding: 3rem 0; }
 
-  .swatch-info code { font-size: 0.75rem; }
-  .swatch-info span { font-size: 0.72rem; }
-
-  .pipe-rules { gap: 0.4rem; }
-  .pipe-rule { font-size: 0.8rem; padding: 0.5rem 0.75rem; }
-
+  /* ── install ── */
+  .install-info-grid { grid-template-columns: 1fr; }
   .install-step { flex-direction: column; gap: 0.75rem; padding: 1rem; }
   .step-num { width: 30px; height: 30px; min-width: 30px; font-size: 0.85rem; }
 
-  .modal { padding: 1.25rem; border-radius: 12px; }
+  /* ── colors ── */
+  .colors-grid { grid-template-columns: repeat(2, 1fr); }
+  .swatch-info code { font-size: 0.75rem; }
+  .swatch-info span { font-size: 0.72rem; }
+
+  /* ── pipeline rules ── */
+  .pipe-rules { gap: 0.4rem; }
+  .pipe-rule { font-size: 0.8rem; padding: 0.5rem 0.75rem; }
+
+  /* ── modal ── */
+  .modal { padding: 1.25rem; border-radius: 12px; width: 95%; }
   .modal-terminal .terminal-bar { padding: 8px 12px; }
+
+  /* ── footer ── */
+  .footer-col { min-width: 0; width: 100%; }
 }
 
 /* ── 360px: small phone ── */
 @media (max-width: 360px) {
   :root { --nav-h: 54px; }
-  .container { padding: 0 12px; }
-  .hero-title { font-size: 2.1rem; }
-  .hero-content { padding: 2.5rem 12px 2rem; }
-  .hero-badges img { height: 18px; }
+  .container { padding: 0 10px; }
 
-  /* banner — very small, but the tricolor is still recognisable */
+  .hero-title { font-size: 1.85rem; }
+  .hero-content { padding: 2.5rem 10px 2rem; gap: 0.9rem; }
+  .hero-badges img { height: 16px; }
   .term-banner { font-size: 0.22rem; line-height: 1.15; }
 
   .btn { padding: 0.65rem 1.1rem; font-size: 0.88rem; }
   .btn-sm { padding: 0.45rem 0.85rem; font-size: 0.8rem; }
 
+  .section { padding: 2.5rem 0; }
+  .section-header h2 { font-size: 1.35rem; }
+
   .feature-card { padding: 1rem; }
+
   .colors-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-  .color-swatch { padding: 0.75rem; }
+  .color-swatch { padding: 0.65rem; }
+
   .release-card { padding: 1rem; }
   .roadmap-col h4 { font-size: 0.95rem; }
-  .section-header h2 { font-size: 1.4rem; }
+
+  .code-block { font-size: 0.7rem; padding: 0.75rem; }
+  .install-step { padding: 0.85rem; }
 }
 
 /* ── SVG Icon System ─────────────────────────────────────────── */

@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	version   = "1.1.0"
+	version   = "1.2.0"
 	commit    = "initial"
 	buildTime = "2026-02-26T12:00:00Z"
 )
@@ -74,23 +74,43 @@ func main() {
 	}
 }
 
+// colorSchemes maps single-letter codes to ANSI escape sequences.
+// The color is applied to the prompt accent ("INDUS" label and ">").
+var colorSchemes = map[string]struct {
+	code  string // ANSI escape
+	name  string // human-readable label
+}{
+	"r": {"\033[31m",           "Red"},
+	"g": {"\033[32m",           "Green"},
+	"b": {"\033[34m",           "Blue"},
+	"y": {"\033[33m",           "Yellow"},
+	"c": {"\033[36m",           "Cyan"},
+	"m": {"\033[35m",           "Magenta"},
+	"w": {"\033[97m",           "White"},
+	"o": {"\033[38;5;208m",     "Orange"},
+	"p": {"\033[38;5;213m",     "Pink"},
+	"d": {"\033[36m",           "Default (Cyan)"},
+}
+
 type Terminal struct {
-	app       *cli.App
-	reader    *bufio.Reader
-	version   string
-	commit    string
-	buildTime string
+	app        *cli.App
+	reader     *bufio.Reader
+	version    string
+	commit     string
+	buildTime  string
 	currentDir string
+	accentColor string // current prompt accent ANSI code
 }
 
 func NewTerminal(app *cli.App, version, commit, buildTime, currentDir string) *Terminal {
 	return &Terminal{
-		app:       app,
-		reader:    bufio.NewReader(os.Stdin),
-		version:   version,
-		commit:    commit,
-		buildTime: buildTime,
-		currentDir: currentDir,
+		app:         app,
+		reader:      bufio.NewReader(os.Stdin),
+		version:     version,
+		commit:      commit,
+		buildTime:   buildTime,
+		currentDir:  currentDir,
+		accentColor: "\033[36m", // default: cyan
 	}
 }
 
@@ -159,6 +179,8 @@ func (t *Terminal) handleCommand(ctx context.Context, line string) error {
 	case "pwd":
 		fmt.Println(t.currentDir)
 		return nil
+	case "color":
+		return t.handleColor(args)
 	case "indus":
 		if len(args) == 1 {
 			fmt.Println("You're already in INDUS Terminal. Type 'help' for commands.")
@@ -175,6 +197,34 @@ func (t *Terminal) handleCommand(ctx context.Context, line string) error {
 		}
 		return err
 	}
+}
+
+func (t *Terminal) handleColor(args []string) error {
+	reset := "\033[0m"
+
+	if len(args) < 2 {
+		// Print current color and all available options.
+		fmt.Printf("Current accent color: %s██%s\n\n", t.accentColor, reset)
+		fmt.Println("Available colors:")
+		keys := []string{"r", "g", "b", "y", "c", "m", "w", "o", "p", "d"}
+		for _, k := range keys {
+			s := colorSchemes[k]
+			fmt.Printf("  color %s   %s%-10s%s %s██%s\n", k, s.code, s.name, reset, s.code, reset)
+		}
+		fmt.Println("\nUsage: color <letter>   e.g. color r")
+		return nil
+	}
+
+	key := strings.ToLower(args[1])
+	s, ok := colorSchemes[key]
+	if !ok {
+		fmt.Fprintf(os.Stderr, "Unknown color '%s'. Run 'color' to see all options.\n", args[1])
+		return nil
+	}
+
+	t.accentColor = s.code
+	fmt.Printf("Accent color set to %s%s%s\n", s.code, s.name, reset)
+	return nil
 }
 
 func (t *Terminal) changeDirectory(args []string) error {
@@ -261,6 +311,7 @@ func (t *Terminal) printWelcome() {
 	fmt.Printf("  • Type %shelp%s to see all commands\n", yellow, reset)
 	fmt.Printf("  • Use like PowerShell: %scd%s, %sdir%s, %spwd%s, %sipconfig%s\n", yellow, reset, yellow, reset, yellow, reset, yellow, reset)
 	fmt.Printf("  • INDUS commands: %sversion%s, %shttp get <url>%s, %sinit%s, %srun%s\n", yellow, reset, yellow, reset, yellow, reset, yellow, reset)
+	fmt.Printf("  • Change prompt color: %scolor r%s  %scolor b%s  %scolor g%s  (10 colors)\n", yellow, reset, yellow, reset, yellow, reset)
 	fmt.Printf("  • Type %sexit%s to quit\n\n", yellow, reset)
 }
 
@@ -280,6 +331,17 @@ func (t *Terminal) printHelp() {
 	fmt.Printf("  %sclear%s, %scls%s        Clear screen\n", green, reset, green, reset)
 	fmt.Printf("  %sexit%s, %squit%s        Exit terminal\n", green, reset, green, reset)
 	fmt.Printf("  %shelp%s               Show this help\n", green, reset)
+	fmt.Printf("  %scolor%s <letter>     Change prompt accent color\n", green, reset)
+	fmt.Printf("\n%sCOLOR CODES:%s\n", yellow, reset)
+	keys := []string{"r", "g", "b", "y", "c", "m", "w", "o", "p", "d"}
+	for i, k := range keys {
+		s := colorSchemes[k]
+		fmt.Printf("  %s%-2s%s= %s%-14s%s", green, k, reset, s.code, s.name, reset)
+		if (i+1)%2 == 0 {
+			fmt.Println()
+		}
+	}
+	fmt.Println()
 	
 	fmt.Printf("\n%sINDUS COMMANDS:%s\n", yellow, reset)
 	fmt.Printf("  %sinit%s --name <project> [--dir <path>]\n", green, reset)
@@ -294,19 +356,18 @@ func (t *Terminal) printHelp() {
 }
 
 func (t *Terminal) printPrompt() {
-	cyan := "\033[36m"
-	green := "\033[32m"
-	yellow := "\033[33m"
-	reset := "\033[0m"
-	
-	// Get short path
+	accent := t.accentColor
+	green  := "\033[32m"
+	reset  := "\033[0m"
+
+	// Shorten path: replace home dir prefix with ~
 	shortPath := t.currentDir
 	home, _ := os.UserHomeDir()
 	if strings.HasPrefix(shortPath, home) {
 		shortPath = "~" + strings.TrimPrefix(shortPath, home)
 	}
-	
-	fmt.Printf("%sINDUS%s %s%s%s %s>%s ", cyan, reset, green, shortPath, reset, yellow, reset)
+
+	fmt.Printf("%sINDUS%s %s%s%s %s>%s ", accent, reset, green, shortPath, reset, accent, reset)
 }
 
 func parseCommandLine(line string) []string {

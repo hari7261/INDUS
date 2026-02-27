@@ -7,7 +7,7 @@ echo ========================================================
 echo.
 
 :: ── version info ──────────────────────────────────────────
-set VERSION=1.1.0
+set VERSION=1.2.0
 for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set COMMIT=%%i
 if "!COMMIT!"=="" set COMMIT=none
 set BUILD_TIME=%date:~-4%-%date:~3,2%-%date:~0,2%T%time:~0,2%:%time:~3,2%:%time:~6,2%Z

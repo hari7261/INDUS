@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	version   = "1.2.0"
+	version   = "1.3.0"
 	commit    = "initial"
 	buildTime = "2026-02-26T12:00:00Z"
 )
@@ -156,6 +156,12 @@ func (t *Terminal) Start(ctx context.Context) error {
 }
 
 func (t *Terminal) handleCommand(ctx context.Context, line string) error {
+	// Detect internal pipeline: split by | before any further parsing.
+	segments := splitPipeline(line)
+	if len(segments) > 1 {
+		return t.app.RunPipeline(ctx, segments)
+	}
+
 	args := parseCommandLine(line)
 	if len(args) == 0 {
 		return nil
@@ -186,7 +192,6 @@ func (t *Terminal) handleCommand(ctx context.Context, line string) error {
 			fmt.Println("You're already in INDUS Terminal. Type 'help' for commands.")
 			return nil
 		}
-		// Run indus subcommand
 		return t.app.Run(ctx, args[1:])
 	default:
 		// Try INDUS command first.
@@ -332,6 +337,11 @@ func (t *Terminal) printHelp() {
 	fmt.Printf("  %sexit%s, %squit%s        Exit terminal\n", green, reset, green, reset)
 	fmt.Printf("  %shelp%s               Show this help\n", green, reset)
 	fmt.Printf("  %scolor%s <letter>     Change prompt accent color\n", green, reset)
+
+	fmt.Printf("\n%sPIPELINES (internal, no OS shell):%s\n", yellow, reset)
+	fmt.Printf("  Pipe INDUS commands with %s|%s:\n", green, reset)
+	fmt.Printf("  %sversion | http post https://example.com/log%s\n", green, reset)
+	fmt.Printf("  %srun --tasks 5 | http post https://example.com/results%s\n", green, reset)
 	fmt.Printf("\n%sCOLOR CODES:%s\n", yellow, reset)
 	keys := []string{"r", "g", "b", "y", "c", "m", "w", "o", "p", "d"}
 	for i, k := range keys {
@@ -368,6 +378,42 @@ func (t *Terminal) printPrompt() {
 	}
 
 	fmt.Printf("%sINDUS%s %s%s%s %s>%s ", accent, reset, green, shortPath, reset, accent, reset)
+}
+
+// splitPipeline splits a raw command line by | (pipe) characters that
+// are not inside single or double quotes.  Each segment is then parsed
+// by parseCommandLine.  Returns a single segment when no unquoted | is
+// found so callers can treat the single-command case cheaply.
+func splitPipeline(line string) [][]string {
+	var segments [][]string
+	var current strings.Builder
+	inQuotes := false
+	var quoteChar byte
+
+	for i := 0; i < len(line); i++ {
+		c := line[i]
+		switch {
+		case (c == '"' || c == '\'') && !inQuotes:
+			inQuotes = true
+			quoteChar = c
+			current.WriteByte(c)
+		case inQuotes && c == quoteChar:
+			inQuotes = false
+			current.WriteByte(c)
+		case c == '|' && !inQuotes:
+			seg := strings.TrimSpace(current.String())
+			if seg != "" {
+				segments = append(segments, parseCommandLine(seg))
+			}
+			current.Reset()
+		default:
+			current.WriteByte(c)
+		}
+	}
+	if seg := strings.TrimSpace(current.String()); seg != "" {
+		segments = append(segments, parseCommandLine(seg))
+	}
+	return segments
 }
 
 func parseCommandLine(line string) []string {

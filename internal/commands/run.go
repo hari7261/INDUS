@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"sync"
 	"time"
@@ -19,32 +20,31 @@ func NewRun(cfg *config.Config) *Run {
 	return &Run{cfg: cfg}
 }
 
-func (c *Run) Name() string {
-	return "run"
-}
+func (c *Run) Name() string        { return "run" }
+func (c *Run) Description() string { return "Execute a simulated workload with bounded concurrency" }
 
-func (c *Run) Description() string {
-	return "Execute a simulated workload with bounded concurrency"
-}
-
+// Run satisfies cli.Command.
 func (c *Run) Run(ctx context.Context, args []string) error {
+	return c.RunStream(ctx, args, os.Stdin, os.Stdout)
+}
+
+// RunStream satisfies cli.StreamCommand — final results go to out.
+func (c *Run) RunStream(ctx context.Context, args []string, _ io.Reader, out io.Writer) error {
 	fs := flag.NewFlagSet("run", flag.ContinueOnError)
 	fs.SetOutput(os.Stderr)
-	
+
 	workers := fs.Int("workers", 4, "Number of concurrent workers")
 	tasks := fs.Int("tasks", 20, "Total number of tasks to process")
-	
+
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
-	
+
 	fmt.Fprintf(os.Stderr, "Starting run with %d workers processing %d tasks...\n", *workers, *tasks)
-	
-	// Create job channel
+
 	jobs := make(chan int, *tasks)
 	results := make(chan result, *tasks)
-	
-	// Start worker pool
+
 	var wg sync.WaitGroup
 	for w := 1; w <= *workers; w++ {
 		wg.Add(1)
@@ -53,8 +53,7 @@ func (c *Run) Run(ctx context.Context, args []string) error {
 			c.worker(ctx, id, jobs, results)
 		}(w)
 	}
-	
-	// Send jobs
+
 	go func() {
 		for j := 1; j <= *tasks; j++ {
 			select {
@@ -66,17 +65,15 @@ func (c *Run) Run(ctx context.Context, args []string) error {
 		}
 		close(jobs)
 	}()
-	
-	// Collect results
+
 	go func() {
 		wg.Wait()
 		close(results)
 	}()
-	
-	// Process results
+
 	completed := 0
 	failed := 0
-	
+
 	for r := range results {
 		if r.err != nil {
 			failed++
@@ -88,18 +85,17 @@ func (c *Run) Run(ctx context.Context, args []string) error {
 			}
 		}
 	}
-	
-	// Check if canceled
+
 	if ctx.Err() != nil {
 		fmt.Fprintf(os.Stderr, "Run canceled: completed=%d failed=%d\n", completed, failed)
 		return ctx.Err()
 	}
-	
-	// Machine-readable output to stdout
-	fmt.Printf("completed=%d\n", completed)
-	fmt.Printf("failed=%d\n", failed)
-	fmt.Printf("total=%d\n", *tasks)
-	
+
+	// Machine-readable output → out (may be a pipe).
+	fmt.Fprintf(out, "completed=%d\n", completed)
+	fmt.Fprintf(out, "failed=%d\n", failed)
+	fmt.Fprintf(out, "total=%d\n", *tasks)
+
 	return nil
 }
 
@@ -117,8 +113,6 @@ func (c *Run) worker(ctx context.Context, id int, jobs <-chan int, results chan<
 			if !ok {
 				return
 			}
-			
-			// Simulate work
 			select {
 			case <-ctx.Done():
 				results <- result{id: job, err: ctx.Err()}

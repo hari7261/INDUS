@@ -522,7 +522,11 @@ code {
   background: var(--bg-code);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: hidden;          /* clip rounded corners vertically */
+  overflow-x: auto;          /* let wide code scroll inside the box */
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  width: 100%;
 }
 .code-block-header {
   display: flex;
@@ -556,11 +560,14 @@ code {
   font-family: var(--mono);
   font-size: 0.85rem;
   line-height: 1.7;
-  padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+  padding: 1.25rem;
   color: #cdd6f4;
   overflow-x: auto;
   white-space: pre;
+  word-break: normal;
   tab-size: 2;
+  max-width: 100%;
+  display: block;
 }
 .code-block .c  { color: #6c7086; }
 .code-block .str{ color: #a6e3a1; }
@@ -569,9 +576,17 @@ code {
 /* ── USAGE GRID ── */
 .usage-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
+}
+.usage-block {
+  min-width: 0;       /* allow grid cell to shrink below content */
+  overflow: hidden;
+}
+.usage-block .code-block-wrap {
+  width: 100%;
+  max-width: 100%;
 }
 .usage-block h4 {
   color: var(--white);
@@ -1219,7 +1234,11 @@ html, body {
   .commands-table td:last-child  { color: var(--green); }
 
   /* ── code blocks ── */
-  .code-block { font-size: 0.75rem; }
+  .code-block {
+    font-size: 0.75rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
   .copy-btn { font-size: 0.68rem; padding: 0.2rem 0.5rem; }
 
   /* ── roadmap ── */

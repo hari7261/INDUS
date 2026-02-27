@@ -55,10 +55,10 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 ; ── Optional tasks shown on the "Select Additional Tasks" wizard page ──────
 [Tasks]
-Name: "desktopicon";    Description: "Create a &desktop shortcut";            GroupDescription: "Additional shortcuts:"; Flags: checked
-Name: "startmenuicon";  Description: "Create a Start &Menu shortcut";         GroupDescription: "Additional shortcuts:"; Flags: checked
-Name: "contextmenu";    Description: "Add ""Open INDUS Terminal here"" to right-click context menu"; GroupDescription: "Shell integration:"; Flags: checked
-Name: "addtopath";      Description: "Add INDUS to &PATH (use 'indus' from any terminal)"; GroupDescription: "System integration:"; Flags: checked
+Name: "desktopicon";    Description: "Create a &desktop shortcut";                                  GroupDescription: "Additional shortcuts:"
+Name: "startmenuicon";  Description: "Create a Start &Menu shortcut";                               GroupDescription: "Additional shortcuts:"
+Name: "contextmenu";    Description: "Add ""Open INDUS Terminal here"" to right-click context menu"; GroupDescription: "Shell integration:"
+Name: "addtopath";      Description: "Add INDUS to &PATH (use 'indus' from any terminal)";          GroupDescription: "System integration:"
 
 ; ── Files to install ──────────────────────────────────────────────────────
 [Files]

@@ -1,13 +1,126 @@
-# INDUS Terminal - Installation Guide
+# INDUS Terminal — Installation Guide
 
-## 🚀 Quick Install
+## 🚀 Install from a Release (like Git)
 
-### Method 1: Automatic Installation (Recommended)
+1. Go to the **[Releases](https://github.com/hari7261/indus-terminal/releases)** page
+2. Download **`indus-setup-vX.Y.Z-windows-amd64.exe`**
+3. Double-click it — a setup wizard opens
+4. Click **Next** through the wizard (choose shortcuts, PATH etc.)
+5. Click **Finish** — INDUS is installed
 
-1. **Download** the latest release
-2. **Extract** all files to a folder
-3. **Right-click** `install.bat` and select **"Run as administrator"**
-4. Follow the on-screen instructions
+Open any new terminal and type:
+```
+indus
+```
+
+Or use the **INDUS Terminal** shortcut on your Desktop / Start Menu.
+Or **right-click any folder** → **"Open INDUS Terminal here"**.
+
+---
+
+## 📦 What the Installer Does
+
+| Step | What happens |
+|------|--------------|
+| Files | Copies `indus.exe` to `%LOCALAPPDATA%\INDUS\` |
+| PATH | Adds that folder to your user PATH (no admin needed) |
+| Desktop | Creates **INDUS Terminal** shortcut (optional) |
+| Start Menu | Creates **INDUS Terminal** entry (optional) |
+| Context menu | Adds **"Open INDUS Terminal here"** to right-click on folders (optional) |
+| Uninstaller | Registered in **Apps & Features** for clean removal |
+
+---
+
+## 🗂️ Portable Install (no wizard)
+
+Just download `indus.exe` from Releases, put it anywhere,  
+and double-click — no installation needed.
+
+---
+
+## 🔧 Build & Release Yourself
+
+### Build the binary + installer locally
+
+```bat
+:: 1. Install Inno Setup (free) from https://jrsoftware.org/isdl.php
+:: 2. Run:
+build.bat
+:: Outputs:  dist\indus.exe  +  dist\indus-setup.exe
+```
+
+### Publish a release on GitHub
+
+```bash
+git tag v1.2.0
+git push --tags
+```
+
+GitHub Actions (`.github/workflows/release.yml`) automatically:
+1. Builds `indus.exe` (Windows 64-bit)
+2. Compiles `indus-setup-v1.2.0-windows-amd64.exe` via Inno Setup
+3. Publishes a **GitHub Release** with both files + `checksums.txt`
+
+No manual uploads needed.
+
+---
+
+## 🖥️ Windows Terminal Integration (optional)
+
+Add INDUS as a profile in Windows Terminal:
+1. Open Windows Terminal → Settings → **Add a new profile**
+2. Set **Command line** to:  `%LOCALAPPDATA%\INDUS\indus.exe`
+3. Set **Starting directory** to: `%USERPROFILE%`
+4. Give it the name **INDUS Terminal** and save
+
+---
+
+## 🔧 Configuration
+
+INDUS reads config from:
+```
+~\.config\indus\config.yaml
+```
+
+Supported keys:
+```yaml
+api_timeout = 30    # HTTP timeout in seconds
+max_retries = 3     # HTTP retry attempts (GET/HEAD/PUT only)
+```
+
+Override location with:
+```bat
+set INDUS_CONFIG=C:\path\to\config.yaml
+```
+
+---
+
+## 🗑️ Uninstall
+
+**Method 1 — Apps & Features (recommended)**
+1. Windows Settings → Apps → search **INDUS Terminal** → Uninstall
+
+**Method 2 — manual**
+1. Delete `%LOCALAPPDATA%\INDUS\`
+2. Remove `%LOCALAPPDATA%\INDUS` from your user PATH
+3. Delete Desktop / Start Menu shortcuts
+
+---
+
+## 🐛 Troubleshooting
+
+| Problem | Fix |
+|---------|-----|
+| `indus` not found after install | Open a **new** terminal window (PATH only loads at start) |
+| Colors look broken | Run inside **Windows Terminal** for full ANSI support |
+| Installer blocked by Windows | Click **More info → Run anyway** (SmartScreen warning on unsigned exe) |
+
+---
+
+## 🙏 Credits
+
+Made with ♥ by [hari7261](https://github.com/hari7261)
+
 
 The installer will:
 - Install INDUS to `%LOCALAPPDATA%\INDUS`

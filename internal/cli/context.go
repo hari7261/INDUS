@@ -13,6 +13,9 @@ func WithConfig(ctx context.Context, cfg interface{}) context.Context {
 }
 
 func ConfigFromContext(ctx context.Context) (interface{}, bool) {
-	cfg, ok := ctx.Value(configKey).(interface{})
-	return cfg, ok
+	val := ctx.Value(configKey)
+	if val == nil {
+		return nil, false
+	}
+	return val, true
 }

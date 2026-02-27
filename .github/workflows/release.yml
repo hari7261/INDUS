@@ -1,0 +1,154 @@
+# ============================================================
+#  INDUS Terminal – GitHub Actions Release Workflow
+#
+#  Triggers when you push a tag like:  git tag v1.2.0 && git push --tags
+#
+#  What it does:
+#    1. Builds indus.exe (Windows 64-bit)
+#    2. Compiles indus-setup.exe (Inno Setup installer)
+#    3. Creates a GitHub Release with both files attached
+# ============================================================
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"          # matches v1.0.0, v2.3.1, etc.
+
+permissions:
+  contents: write         # needed to create releases and upload assets
+
+jobs:
+  build-and-release:
+    name: Build & Release
+    runs-on: windows-latest
+
+    steps:
+      # ── 1. Checkout ────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so git describe works
+
+      # ── 2. Set up Go ───────────────────────────────────────────────────
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+          cache: true
+
+      # ── 3. Parse version from tag ──────────────────────────────────────
+      - name: Parse version
+        id: version
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME}"       # e.g. v1.2.3
+          VER="${TAG#v}"                  # strip leading v → 1.2.3
+          COMMIT=$(git rev-parse --short HEAD)
+          BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          echo "tag=$TAG"          >> "$GITHUB_OUTPUT"
+          echo "version=$VER"      >> "$GITHUB_OUTPUT"
+          echo "commit=$COMMIT"    >> "$GITHUB_OUTPUT"
+          echo "build_time=$BUILD_TIME" >> "$GITHUB_OUTPUT"
+
+      # ── 4. Install rsrc (icon embedder) ───────────────────────────────
+      - name: Install rsrc
+        run: go install github.com/akavel/rsrc@latest
+
+      # ── 5. Embed icon into .syso ───────────────────────────────────────
+      - name: Embed icon
+        shell: cmd
+        run: |
+          if exist build\icon.ico (
+            rsrc -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
+          ) else (
+            echo "No icon found, skipping rsrc"
+          )
+
+      # ── 6. Build indus.exe ─────────────────────────────────────────────
+      - name: Build binary
+        shell: cmd
+        env:
+          GOOS: windows
+          GOARCH: amd64
+          CGO_ENABLED: "0"
+        run: |
+          go build ^
+            -ldflags "-s -w -X main.version=${{ steps.version.outputs.version }} -X main.commit=${{ steps.version.outputs.commit }} -X main.buildTime=${{ steps.version.outputs.build_time }}" ^
+            -o dist\indus.exe ^
+            .\cmd\indus-terminal
+
+      # ── 7. Install Inno Setup ──────────────────────────────────────────
+      - name: Install Inno Setup
+        shell: powershell
+        run: |
+          $url = "https://files.jrsoftware.org/is/6/innosetup-6.3.3.exe"
+          $out = "$env:TEMP\innosetup.exe"
+          Invoke-WebRequest -Uri $url -OutFile $out
+          Start-Process -FilePath $out -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART" -Wait
+
+      # ── 8. Compile installer ───────────────────────────────────────────
+      - name: Build installer
+        shell: cmd
+        run: |
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\indus-setup.iss
+          if not exist dist\indus-setup.exe (
+            echo "Installer build failed!"
+            exit /b 1
+          )
+
+      # ── 9. Rename installer to include version ─────────────────────────
+      - name: Rename installer
+        shell: cmd
+        run: |
+          rename dist\indus-setup.exe indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe
+
+      # ── 10. Generate SHA-256 checksums ────────────────────────────────
+      - name: Generate checksums
+        shell: powershell
+        run: |
+          $files = @(
+            "dist\indus.exe",
+            "dist\indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe"
+          )
+          $lines = foreach ($f in $files) {
+            $hash = (Get-FileHash $f -Algorithm SHA256).Hash.ToLower()
+            "$hash  $(Split-Path $f -Leaf)"
+          }
+          $lines | Set-Content dist\checksums.txt
+          Get-Content dist\checksums.txt
+
+      # ── 11. Create GitHub Release ──────────────────────────────────────
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "INDUS Terminal ${{ steps.version.outputs.tag }}"
+          body: |
+            ## INDUS Terminal ${{ steps.version.outputs.tag }}
+
+            ### Install
+            1. Download **indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe**
+            2. Run it — the wizard will install INDUS and add it to your PATH
+            3. Open a new terminal and type `indus` — or use the **INDUS Terminal** desktop shortcut
+
+            ### Manual install (no wizard)
+            Download `indus.exe`, place it anywhere in your PATH, and run it.
+
+            ### What's new
+            See [CHANGELOG](https://github.com/${{ github.repository }}/commits/${{ steps.version.outputs.tag }}) for details.
+
+            ---
+            **Build info**
+            | | |
+            |---|---|
+            | Version | `${{ steps.version.outputs.version }}` |
+            | Commit  | `${{ steps.version.outputs.commit }}` |
+            | Built   | `${{ steps.version.outputs.build_time }}` |
+          files: |
+            dist/indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe
+            dist/indus.exe
+            dist/checksums.txt
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.tag, '-') }}

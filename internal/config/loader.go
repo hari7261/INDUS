@@ -5,6 +5,8 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 )
 
 type Config struct {
@@ -29,13 +31,31 @@ func Load() (*Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read config: %w", err)
 	}
-	
-	// Simple parsing - in production this would parse YAML
-	// For now, just validate it exists and is readable
-	if len(data) > 0 {
-		// Config loaded successfully
+
+	// Parse simple "key = value" format (lines starting with # are comments).
+	for _, line := range strings.Split(string(data), "\n") {
+		line = strings.TrimSpace(line)
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		parts := strings.SplitN(line, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+		key := strings.TrimSpace(parts[0])
+		val := strings.TrimSpace(parts[1])
+		switch key {
+		case "api_timeout":
+			if n, err := strconv.Atoi(val); err == nil && n > 0 {
+				cfg.APITimeout = n
+			}
+		case "max_retries":
+			if n, err := strconv.Atoi(val); err == nil && n >= 0 {
+				cfg.MaxRetries = n
+			}
+		}
 	}
-	
+
 	return cfg, nil
 }
 

@@ -1,6 +1,7 @@
 package httpclient
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -36,53 +37,89 @@ func New(opts Options) *Client {
 	}
 }
 
+// idempotentMethods are safe to retry without side effects.
+var idempotentMethods = map[string]bool{
+	http.MethodGet:     true,
+	http.MethodHead:    true,
+	http.MethodOptions: true,
+	http.MethodPut:     true,
+}
+
 func (c *Client) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
 	req = req.WithContext(ctx)
-	
-	var resp *http.Response
-	var err error
-	
-	for attempt := 0; attempt < c.maxRetries; attempt++ {
-		// Check cancellation
+
+	// Read body once so it can be replayed on retries.
+	var bodyBytes []byte
+	if req.Body != nil {
+		var err error
+		bodyBytes, err = io.ReadAll(req.Body)
+		_ = req.Body.Close()
+		if err != nil {
+			return nil, fmt.Errorf("failed to read request body: %w", err)
+		}
+	}
+
+	// Only retry idempotent methods to avoid duplicate side effects.
+	maxAttempts := 1
+	if idempotentMethods[req.Method] {
+		maxAttempts = c.maxRetries
+	}
+
+	var (
+		resp    *http.Response
+		lastErr error
+	)
+
+	for attempt := 0; attempt < maxAttempts; attempt++ {
+		// Check cancellation before each attempt.
 		select {
 		case <-ctx.Done():
 			return nil, ctx.Err()
 		default:
 		}
-		
-		resp, err = c.httpClient.Do(req)
-		
-		// Success
-		if err == nil && resp.StatusCode < 500 {
+
+		// Reattach a fresh body reader for every attempt.
+		if bodyBytes != nil {
+			req.Body = io.NopCloser(bytes.NewReader(bodyBytes))
+			req.ContentLength = int64(len(bodyBytes))
+		}
+
+		resp, lastErr = c.httpClient.Do(req)
+
+		// Success: 2xx / 3xx / 4xx — caller decides what to do with 4xx.
+		if lastErr == nil && resp.StatusCode < 500 {
 			return resp, nil
 		}
-		
-		// Close response body if present
+
+		// Drain and close the body so the connection can be reused.
 		if resp != nil {
-			io.Copy(io.Discard, resp.Body)
-			resp.Body.Close()
+			_, _ = io.Copy(io.Discard, resp.Body)
+			_ = resp.Body.Close()
+			resp = nil
 		}
-		
-		// Don't retry on last attempt
-		if attempt == c.maxRetries-1 {
+
+		// No more attempts left.
+		if attempt == maxAttempts-1 {
 			break
 		}
-		
-		// Exponential backoff
+
+		// Exponential back-off before the next attempt.
 		delay := c.baseDelay * time.Duration(1<<uint(attempt))
-		
 		select {
 		case <-ctx.Done():
 			return nil, ctx.Err()
 		case <-time.After(delay):
 		}
 	}
-	
-	if err != nil {
-		return nil, fmt.Errorf("request failed after %d attempts: %w", c.maxRetries, err)
+
+	if lastErr != nil {
+		return nil, fmt.Errorf("request failed after %d attempt(s): %w", maxAttempts, lastErr)
 	}
-	
-	return resp, nil
+
+	// All attempts returned a 5xx status — surface it as an error.
+	// resp is nil here because we closed it above, so report via lastErr path never reached;
+	// re-issue last attempt's status via a sentinel message.
+	return nil, fmt.Errorf("request failed after %d attempt(s): server returned 5xx", maxAttempts)
 }
 
 func (c *Client) Get(ctx context.Context, url string) (*http.Response, error) {

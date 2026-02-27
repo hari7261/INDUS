@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 )
 
 type App struct {
@@ -74,11 +75,18 @@ func (a *App) printHelp() {
 	fmt.Fprintln(a.stderr, "  indus <command> [flags]")
 	fmt.Fprintln(a.stderr, "")
 	fmt.Fprintln(a.stderr, "Available Commands:")
-	
-	for _, cmd := range a.commands {
+
+	// Sort names for stable, deterministic output.
+	names := make([]string, 0, len(a.commands))
+	for name := range a.commands {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		cmd := a.commands[name]
 		fmt.Fprintf(a.stderr, "  %-12s %s\n", cmd.Name(), cmd.Description())
 	}
-	
+
 	fmt.Fprintln(a.stderr, "")
 	fmt.Fprintln(a.stderr, "Use \"indus <command> --help\" for more information about a command.")
 }

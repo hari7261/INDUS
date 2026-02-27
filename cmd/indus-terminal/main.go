@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -166,10 +167,10 @@ func (t *Terminal) handleCommand(ctx context.Context, line string) error {
 		// Run indus subcommand
 		return t.app.Run(ctx, args[1:])
 	default:
-		// Try INDUS command first
+		// Try INDUS command first.
 		err := t.app.Run(ctx, args)
-		if err != nil && strings.Contains(err.Error(), "nknown command") {
-			// Run as system command
+		if errors.Is(err, cli.ErrUnknownCommand) {
+			// Fall through to the host shell for unrecognised commands.
 			return t.runSystemCommand(ctx, args)
 		}
 		return err

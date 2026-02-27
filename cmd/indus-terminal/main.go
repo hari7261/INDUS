@@ -20,7 +20,7 @@ import (
 )
 
 var (
-	version   = "1.0.0"
+	version   = "1.1.0"
 	commit    = "initial"
 	buildTime = "2026-02-26T12:00:00Z"
 )

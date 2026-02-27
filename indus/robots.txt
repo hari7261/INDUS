@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hari7261.github.io/INDUS/sitemap.xml

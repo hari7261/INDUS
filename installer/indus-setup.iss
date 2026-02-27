@@ -5,7 +5,7 @@
 ; ============================================================
 
 #define AppName      "INDUS Terminal"
-#define AppVersion   GetFileVersion("..\dist\indus.exe")
+#define AppVersion   GetVersionNumbersString(".\..\dist\indus.exe")
 #define AppPublisher "hari7261"
 #define AppURL       "https://github.com/hari7261/indus-terminal"
 #define AppExeName   "indus.exe"
@@ -39,9 +39,6 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; Wizard appearance
 WizardStyle=modern
 WizardSizePercent=120
-WizardImageFile=wizard-banner.bmp
-WizardSmallImageFile=wizard-icon.bmp
-SetupIconFile=setup-icon.ico
 
 ; Uninstaller registered in "Apps & Features"
 UninstallDisplayIcon={app}\{#AppExeName}

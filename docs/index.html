@@ -615,18 +615,19 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
             </tr>
           </thead>
           <tbody>
-            <tr><td>Built-in HTTP client</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>Internal pipelines (no shell)</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Built-in HTTP client</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span><sup title="Invoke-WebRequest / curl alias — not a purpose-built API client">*</sup></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>In-process pipelines between built-in commands (no shell)</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
             <tr><td>Project scaffolding</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>Concurrent workload runner</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Concurrent workload runner</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
             <tr><td>10 prompt color themes</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
             <tr><td>System command fallback</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
             <tr><td>Zero external dependencies</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
             <tr><td>One-click installer</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
-            <tr><td>Right-click "Open here"</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Right-click "Open here"</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
           </tbody>
         </table>
       </div>
+      <p class="compare-note"><sup>*</sup> PowerShell HTTP via <code>Invoke-WebRequest</code> / <code>curl</code> alias — not a purpose-built API client with retry logic.</p>
     </div>
   </section>
 

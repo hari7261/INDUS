@@ -639,6 +639,11 @@ code {
 .no     { color: #f44336; font-size: 1.1rem; text-align: center; }
 .partial{ color: #ff9800; font-size: 1.1rem; text-align: center; }
 .col-indus.yes { background: rgba(255,153,51,0.04); }
+.compare-note {
+  margin-top: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
 
 /* ── CONFIG BLOCK ── */
 .config-block { margin-top: 3rem; }

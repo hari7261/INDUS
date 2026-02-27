@@ -81,12 +81,8 @@ jobs:
 
       # ── 7. Install Inno Setup ──────────────────────────────────────────
       - name: Install Inno Setup
-        shell: powershell
-        run: |
-          $url = "https://files.jrsoftware.org/is/6/innosetup-6.3.3.exe"
-          $out = "$env:TEMP\innosetup.exe"
-          Invoke-WebRequest -Uri $url -OutFile $out
-          Start-Process -FilePath $out -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART" -Wait
+        shell: cmd
+        run: choco install innosetup --yes --no-progress
 
       # ── 8. Compile installer ───────────────────────────────────────────
       - name: Build installer

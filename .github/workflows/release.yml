@@ -74,10 +74,20 @@ jobs:
           GOARCH: amd64
           CGO_ENABLED: "0"
         run: |
+          if not exist dist mkdir dist
           go build ^
             -ldflags "-s -w -X main.version=${{ steps.version.outputs.version }} -X main.commit=${{ steps.version.outputs.commit }} -X main.buildTime=${{ steps.version.outputs.build_time }}" ^
-            -o dist\indus.exe ^
+            -o dist\ind.exe ^
             .\cmd\indus-terminal
+          copy /Y dist\ind.exe dist\indus.exe >nul
+          if not exist dist\ind.exe (
+            echo "Binary build failed: dist\\ind.exe not found"
+            exit /b 1
+          )
+          if not exist dist\indus.exe (
+            echo "Alias build failed: dist\\indus.exe not found"
+            exit /b 1
+          )
 
       # ── 7. Install Inno Setup ──────────────────────────────────────────
       - name: Install Inno Setup
@@ -105,6 +115,7 @@ jobs:
         shell: powershell
         run: |
           $files = @(
+            "dist\ind.exe",
             "dist\indus.exe",
             "dist\indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe"
           )
@@ -127,10 +138,10 @@ jobs:
             ### Install
             1. Download **indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe**
             2. Run it — the wizard will install INDUS and add it to your PATH
-            3. Open a new terminal and type `indus` — or use the **INDUS Terminal** desktop shortcut
+            3. Open a new terminal and type `ind` (or `indus`) — or use the **INDUS Terminal** desktop shortcut
 
             ### Manual install (no wizard)
-            Download `indus.exe`, place it anywhere in your PATH, and run it.
+            Download `ind.exe`, place it anywhere in your PATH, and run it.
 
             ### What's new
             See [CHANGELOG](https://github.com/${{ github.repository }}/commits/${{ steps.version.outputs.tag }}) for details.
@@ -144,7 +155,9 @@ jobs:
             | Built   | `${{ steps.version.outputs.build_time }}` |
           files: |
             dist/indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe
+            dist/ind.exe
             dist/indus.exe
             dist/checksums.txt
           draft: false
           prerelease: ${{ contains(steps.version.outputs.tag, '-') }}
+

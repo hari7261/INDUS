@@ -6,8 +6,8 @@
 
 #define AppName      "INDUS Terminal"
 #define AppVersion   GetVersionNumbersString(".\..\dist\ind.exe")
-#define AppPublisher "hari7261"
-#define AppURL       "https://github.com/hari7261/indus-terminal"
+#define AppPublisher "Hariom Kumar Pandit"
+#define AppURL       "https://github.com/hari7261/INDUS"
 #define AppExeName   "ind.exe"
 #define AppId        "{{B4F2C8D1-3A7E-4F9B-82C6-1D5E3A7F9B2C}"
 
@@ -21,12 +21,13 @@ AppPublisherURL={#AppURL}
 AppSupportURL={#AppURL}/issues
 AppUpdatesURL={#AppURL}/releases
 
-; Default install to user-level (no admin required)
-DefaultDirName={localappdata}\INDUS
+; Standard machine install path
+DefaultDirName={autopf}\INDUS Terminal
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=no
-PrivilegesRequired=lowest
-PrivilegesRequiredOverridesAllowed=dialog
+PrivilegesRequired=admin
+PrivilegesRequiredOverridesAllowed=none
+ChangesEnvironment=yes
 
 ; Output
 OutputDir=..\dist
@@ -39,6 +40,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ; Wizard appearance
 WizardStyle=modern
 WizardSizePercent=120
+SetupIconFile=..\icon.ico
 
 ; Uninstaller registered in "Apps & Features"
 UninstallDisplayIcon={app}\{#AppExeName}
@@ -69,9 +71,9 @@ Source: "..\README.md";            DestDir: "{app}"; Flags: ignoreversion skipif
 
 ; ── Start Menu shortcuts ──────────────────────────────────────────────────
 [Icons]
-Name: "{group}\{#AppName}";         Filename: "{app}\{#AppExeName}"; WorkingDir: "{userdocs}"; Tasks: startmenuicon
+Name: "{group}\{#AppName}";         Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Tasks: startmenuicon
 Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}";    Tasks: startmenuicon
-Name: "{userdesktop}\{#AppName}";   Filename: "{app}\{#AppExeName}"; WorkingDir: "{userdocs}"; Tasks: desktopicon
+Name: "{userdesktop}\{#AppName}";   Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Tasks: desktopicon
 
 ; ── Registry ─────────────────────────────────────────────────────────────
 [Registry]

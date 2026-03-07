@@ -57,6 +57,19 @@ if exist %ISCC% (
     echo       Download: https://jrsoftware.org/isdl.php
 )
 
+:: optional code signing (set SIGN_PFX and SIGN_PFX_PASSWORD env vars)
+if not "%SIGN_PFX%"=="" (
+    where signtool >nul 2>&1
+    if %errorlevel%==0 (
+        echo [sign] Signing binaries...
+        signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\ind.exe
+        if exist dist\indus.exe signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus.exe
+        if exist dist\indus-setup.exe signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus-setup.exe
+    ) else (
+        echo [sign] signtool not found - skipping signing
+    )
+)
+
 echo.
 echo ========================================================
 echo  Build complete!
@@ -64,6 +77,9 @@ echo ========================================================
 echo.
 echo  dist\ind.exe          - Portable binary
 echo  dist\indus-setup.exe  - Windows installer wizard
+echo.
+echo  NOTE: Unsigned binaries can show Windows SmartScreen warnings.
+echo        Use code-signing cert (SIGN_PFX, SIGN_PFX_PASSWORD) for trusted publisher.
 echo.
 echo  To release: git tag v%VERSION% ^&^& git push --tags
 echo  GitHub Actions will auto-build ^& publish the release.

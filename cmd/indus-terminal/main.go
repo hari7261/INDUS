@@ -104,9 +104,17 @@ func (t *Terminal) Start(ctx context.Context) error {
 }
 
 func (t *Terminal) printBanner() {
-	fmt.Println("INDUS Terminal v" + version)
-	fmt.Println("Native command surface: ind <command> [options]")
-	fmt.Println("Type 'ind docs' for the documentation map or 'exit' to leave.")
+	fmt.Println("============================================================")
+	fmt.Println("  ___ _   _ ____  _   _ ____")
+	fmt.Println(" |_ _| \\ | |  _ \\| | | / ___|")
+	fmt.Println("  | ||  \\| | | | | | | \\___ \\")
+	fmt.Println("  | || |\\  | |_| | |_| |___) |")
+	fmt.Println(" |___|_| \\_|____/ \\___/|____/")
+	fmt.Println("")
+	fmt.Println(" INDUS Terminal v" + version)
+	fmt.Println(" Native command surface: ind <command> [options]")
+	fmt.Println(" Docs: ind docs | Help: help | Exit: exit")
+	fmt.Println("============================================================")
 	fmt.Println("")
 }
 

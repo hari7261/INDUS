@@ -76,9 +76,6 @@ Filename: "{app}\{#AppExeName}"; Description: "Launch INDUS Terminal"; Flags: no
 [Code]
 const
   UserEnvironmentKey = 'Environment';
-  HWND_BROADCAST = $ffff;
-  WM_SETTINGCHANGE = $001A;
-  SMTO_ABORTIFHUNG = $0002;
 
 function SendMessageTimeout(hWnd: HWND; Msg: UINT; wParam: WPARAM; lParam: string;
   fuFlags, uTimeout: UINT; var lpdwResult: DWORD): LRESULT;
@@ -133,7 +130,7 @@ procedure BroadcastEnvironmentChange();
 var
   ResultCode: DWORD;
 begin
-  SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 'Environment', SMTO_ABORTIFHUNG, 5000, ResultCode);
+  SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 'Environment', $0002, 5000, ResultCode);
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);

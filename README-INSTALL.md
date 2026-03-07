@@ -40,14 +40,10 @@ This now enforces:
 - Go unit tests
 - installer build validation (unless `SKIP_INSTALLER=1`)
 
-## 5. Signed release configuration
+## 5. Release signing policy (current)
 
-If these GitHub secrets are configured, CI signs Windows artifacts:
-
-- `WINDOWS_SIGN_PFX_BASE64`
-- `WINDOWS_SIGN_PFX_PASSWORD`
-
-If either secret is missing, CI still releases unsigned artifacts and logs a warning.
+The v1.4.3 release pipeline publishes unsigned Windows artifacts by default and does not require signing secrets.
+If code signing is reintroduced in a later release, it will be documented separately.
 
 ## 6. SmartScreen note
 

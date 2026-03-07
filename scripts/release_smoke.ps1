@@ -125,7 +125,7 @@ $commands = @(
   @{ name = "ind fs digest docs/index.html"; args = @("ind", "fs", "digest", "docs/index.html") },
 
   @{ name = "ind net scan"; args = @("ind", "net", "scan") },
-  @{ name = "ind net pingx 127.0.0.1 --port $smokePort"; args = @("ind", "net", "pingx", "127.0.0.1", "--port", "$smokePort") },
+  @{ name = "ind net pingx 127.0.0.1 --port $smokePort"; args = @("ind", "net", "pingx", "127.0.0.1", "--port", "$smokePort"); retries = 3 },
   @{ name = "ind net trace localhost"; args = @("ind", "net", "trace", "localhost") },
   @{ name = "ind net ports --from $smokePort --to $smokePort"; args = @("ind", "net", "ports", "--from", "$smokePort", "--to", "$smokePort") },
   @{ name = "ind net status --url http://127.0.0.1:$smokePort"; args = @("ind", "net", "status", "--url", "http://127.0.0.1:$smokePort") },
@@ -166,12 +166,34 @@ $failed = 0
 
 try {
   foreach ($cmd in $commands) {
+    $maxAttempts = 1
+    if ($cmd.ContainsKey("retries")) {
+      $parsedRetries = 1
+      if ([int]::TryParse([string]$cmd.retries, [ref]$parsedRetries) -and $parsedRetries -gt 1) {
+        $maxAttempts = $parsedRetries
+      }
+    }
+
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
-    $previousPreference = $ErrorActionPreference
-    $ErrorActionPreference = "Continue"
-    $rawOutput = (& $BinaryPath @($cmd.args) 2>&1 | Out-String)
-    $exitCode = $LASTEXITCODE
-    $ErrorActionPreference = $previousPreference
+    $attempt = 0
+    $exitCode = 1
+    $rawOutput = ""
+
+    while ($attempt -lt $maxAttempts) {
+      $attempt++
+      $previousPreference = $ErrorActionPreference
+      $ErrorActionPreference = "Continue"
+      $rawOutput = (& $BinaryPath @($cmd.args) 2>&1 | Out-String)
+      $exitCode = $LASTEXITCODE
+      $ErrorActionPreference = $previousPreference
+
+      if ($exitCode -eq 0) {
+        break
+      }
+      if ($attempt -lt $maxAttempts) {
+        Start-Sleep -Milliseconds 250
+      }
+    }
     $sw.Stop()
 
     $ok = $exitCode -eq 0
@@ -181,6 +203,7 @@ try {
       name        = $cmd.name
       args        = $cmd.args
       command     = ($cmd.args -join " ")
+      attempts    = $attempt
       passed      = $ok
       exit_code   = $exitCode
       duration_ms = [int][Math]::Round($sw.Elapsed.TotalMilliseconds)

@@ -1,7 +1,6 @@
 ; ============================================================
-;  INDUS Terminal - Inno Setup Installer Script
-;  https://jrsoftware.org/isinfo.php  (free tool)
-;  Build command: iscc installer\indus-setup.iss
+; INDUS Terminal - Inno Setup Installer Script
+; Build command: iscc installer\indus-setup.iss
 ; ============================================================
 
 #define AppName      "INDUS Terminal"
@@ -20,33 +19,24 @@ AppPublisher={#AppPublisher}
 AppPublisherURL={#AppURL}
 AppSupportURL={#AppURL}/issues
 AppUpdatesURL={#AppURL}/releases
-
-; Standard machine install path
-DefaultDirName={autopf}\INDUS Terminal
+DefaultDirName={localappdata}\Programs\INDUS Terminal
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=no
-PrivilegesRequired=admin
-PrivilegesRequiredOverridesAllowed=none
+PrivilegesRequired=lowest
+PrivilegesRequiredOverridesAllowed=dialog
 ChangesEnvironment=yes
-
-; Output
 OutputDir=..\dist
 OutputBaseFilename=indus-setup
 Compression=lzma2/ultra64
 SolidCompression=yes
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
-
-; Wizard appearance
 WizardStyle=modern
 WizardSizePercent=120
 SetupIconFile=..\icon.ico
-
-; Uninstaller registered in "Apps & Features"
+LicenseFile=..\LICENSE
 UninstallDisplayIcon={app}\{#AppExeName}
 UninstallDisplayName={#AppName}
-
-; Version info embedded in setup.exe
 VersionInfoVersion={#AppVersion}
 VersionInfoCompany={#AppPublisher}
 VersionInfoDescription={#AppName} Installer
@@ -55,47 +45,46 @@ VersionInfoProductName={#AppName}
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
-; ── Optional tasks shown on the "Select Additional Tasks" wizard page ──────
 [Tasks]
-Name: "desktopicon";    Description: "Create a &desktop shortcut";                                  GroupDescription: "Additional shortcuts:"
-Name: "startmenuicon";  Description: "Create a Start &Menu shortcut";                               GroupDescription: "Additional shortcuts:"
-Name: "contextmenu";    Description: "Add ""Open INDUS Terminal here"" to right-click context menu"; GroupDescription: "Shell integration:"
-Name: "addtopath";      Description: "Add INDUS to &PATH (use 'ind' from any terminal)";            GroupDescription: "System integration:"
+Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription: "Additional shortcuts:"
+Name: "startmenuicon"; Description: "Create a Start &Menu shortcut"; GroupDescription: "Additional shortcuts:"
+Name: "contextmenu"; Description: "Add ""Open INDUS Terminal here"" to right-click context menu"; GroupDescription: "Shell integration:"
+Name: "addtopath"; Description: "Add INDUS to &PATH (use 'ind' from any terminal)"; GroupDescription: "System integration:"
 
-; ── Files to install ──────────────────────────────────────────────────────
 [Files]
-Source: "..\dist\ind.exe";         DestDir: "{app}"; Flags: ignoreversion
-Source: "..\dist\indus.exe";       DestDir: "{app}"; Flags: ignoreversion
-Source: "..\LICENSE";              DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "..\README.md";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "..\dist\ind.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\indus.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\icon.ico"; DestDir: "{app}"; DestName: "indus.ico"; Flags: ignoreversion
+Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 
-; ── Start Menu shortcuts ──────────────────────────────────────────────────
 [Icons]
-Name: "{group}\{#AppName}";         Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Tasks: startmenuicon
-Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}";    Tasks: startmenuicon
-Name: "{userdesktop}\{#AppName}";   Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; Tasks: desktopicon
+Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\indus.ico"; Tasks: startmenuicon
+Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"; Tasks: startmenuicon
+Name: "{userdesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; WorkingDir: "{app}"; IconFilename: "{app}\indus.ico"; Tasks: desktopicon
 
-; ── Registry ─────────────────────────────────────────────────────────────
 [Registry]
-; Right-click "Open INDUS Terminal here" on folders
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\INDUS Terminal";             ValueType: string; ValueName: "";          ValueData: "Open INDUS Terminal here"; Flags: uninsdeletekey;   Tasks: contextmenu
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\INDUS Terminal";             ValueType: string; ValueName: "Icon";      ValueData: "{app}\{#AppExeName},0";    Tasks: contextmenu
-Root: HKCU; Subkey: "Software\Classes\Directory\shell\INDUS Terminal\command";     ValueType: string; ValueName: "";          ValueData: """{app}\{#AppExeName}""";  Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\INDUS Terminal"; ValueType: string; ValueName: ""; ValueData: "Open INDUS Terminal here"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\INDUS Terminal"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#AppExeName},0"; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\shell\INDUS Terminal\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#AppExeName}"" --cwd ""%1"""; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\INDUS Terminal"; ValueType: string; ValueName: ""; ValueData: "Open INDUS Terminal here"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\INDUS Terminal"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#AppExeName},0"; Tasks: contextmenu
+Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\INDUS Terminal\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#AppExeName}"" --cwd ""%V"""; Tasks: contextmenu
 
-; Right-click on folder background (inside a folder)
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\INDUS Terminal";          ValueType: string; ValueName: "";      ValueData: "Open INDUS Terminal here"; Flags: uninsdeletekey; Tasks: contextmenu
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\INDUS Terminal";          ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#AppExeName},0";    Tasks: contextmenu
-Root: HKCU; Subkey: "Software\Classes\Directory\Background\shell\INDUS Terminal\command";  ValueType: string; ValueName: "";      ValueData: """{app}\{#AppExeName}"""; Tasks: contextmenu
+[Run]
+Filename: "{app}\{#AppExeName}"; Description: "Launch INDUS Terminal"; Flags: nowait postinstall skipifsilent
 
-; ── PATH management (user-level, no admin needed) ────────────────────────
 [Code]
 const
-  EnvironmentKey = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
   UserEnvironmentKey = 'Environment';
+  HWND_BROADCAST = $ffff;
+  WM_SETTINGCHANGE = $001A;
+  SMTO_ABORTIFHUNG = $0002;
 
-// ---------------------------------------------------------------------------
-// AddToPath – appends {app} to the user PATH if not already present
-// ---------------------------------------------------------------------------
+function SendMessageTimeout(hWnd: HWND; Msg: UINT; wParam: WPARAM; lParam: string;
+  fuFlags, uTimeout: UINT; var lpdwResult: DWORD): LRESULT;
+  external 'SendMessageTimeoutW@user32.dll stdcall';
+
 procedure AddToUserPath(AppDir: string);
 var
   OldPath, NewPath: string;
@@ -112,14 +101,11 @@ begin
   end;
 end;
 
-// ---------------------------------------------------------------------------
-// RemoveFromPath – removes {app} from user PATH during uninstall
-// ---------------------------------------------------------------------------
 procedure RemoveFromUserPath(AppDir: string);
 var
   OldPath, NewPath, Segment: string;
   Parts: TStringList;
-  i: Integer;
+  I: Integer;
 begin
   if not RegQueryStringValue(HKCU, UserEnvironmentKey, 'Path', OldPath) then
     Exit;
@@ -128,12 +114,13 @@ begin
     Parts.Delimiter := ';';
     Parts.DelimitedText := OldPath;
     NewPath := '';
-    for i := 0 to Parts.Count - 1 do
+    for I := 0 to Parts.Count - 1 do
     begin
-      Segment := Trim(Parts[i]);
+      Segment := Trim(Parts[I]);
       if (Segment <> '') and (CompareText(Segment, AppDir) <> 0) then
       begin
-        if NewPath <> '' then NewPath := NewPath + ';';
+        if NewPath <> '' then
+          NewPath := NewPath + ';';
         NewPath := NewPath + Segment;
       end;
     end;
@@ -143,28 +130,30 @@ begin
   end;
 end;
 
-// Called after files are installed
+procedure BroadcastEnvironmentChange();
+var
+  ResultCode: DWORD;
+begin
+  SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, 'Environment', SMTO_ABORTIFHUNG, 5000, ResultCode);
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then
   begin
     if IsTaskSelected('addtopath') then
+    begin
       AddToUserPath(ExpandConstant('{app}'));
+      BroadcastEnvironmentChange();
+    end;
   end;
 end;
 
-// Called during uninstall
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
   if CurUninstallStep = usPostUninstall then
+  begin
     RemoveFromUserPath(ExpandConstant('{app}'));
-end;
-
-// ---------------------------------------------------------------------------
-// Notify Windows that PATH changed so it takes effect without a reboot
-// ---------------------------------------------------------------------------
-procedure DeinitializeSetup();
-begin
-  // Broadcast WM_SETTINGCHANGE so Explorer / new terminals pick up PATH
-  // (best effort – no harm if it fails)
+    BroadcastEnvironmentChange();
+  end;
 end;

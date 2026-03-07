@@ -2,87 +2,124 @@
 setlocal EnableDelayedExpansion
 
 echo ========================================================
-echo  INDUS Terminal - Build Script
+echo INDUS Terminal - Production Build
 echo ========================================================
 echo.
 
-:: ── version info ──────────────────────────────────────────
-set VERSION=1.4.0
-for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set COMMIT=%%i
-if "!COMMIT!"=="" set COMMIT=none
-set BUILD_TIME=%date:~-4%-%date:~3,2%-%date:~0,2%T%time:~0,2%:%time:~3,2%:%time:~6,2%Z
+set "VERSION=1.4.1"
+for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set "COMMIT=%%i"
+if "!COMMIT!"=="" set "COMMIT=none"
+for /f %%i in ('powershell -NoProfile -Command "(Get-Date).ToUniversalTime().ToString(\"yyyy-MM-ddTHH:mm:ssZ\")"') do set "BUILD_TIME=%%i"
 
 echo Version   : %VERSION%
 echo Commit    : %COMMIT%
 echo Build time: %BUILD_TIME%
 echo.
 
-:: ── create dist folder ────────────────────────────────────
 if not exist dist mkdir dist
 
-:: ── embed icon (optional - skip if rsrc not installed) ────
-where rsrc >nul 2>&1
-if %errorlevel%==0 (
-    echo [1/3] Embedding icon...
-    rsrc -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
-) else (
-    echo [1/3] rsrc not found - skipping icon embed
-    echo       Run: go install github.com/akavel/rsrc@latest
+set "RSRC_EXE="
+where rsrc.exe >nul 2>&1
+if !errorlevel! equ 0 set "RSRC_EXE=rsrc.exe"
+if not defined RSRC_EXE if exist "%USERPROFILE%\go\bin\rsrc.exe" set "RSRC_EXE=%USERPROFILE%\go\bin\rsrc.exe"
+
+if not defined RSRC_EXE (
+  echo [1/4] Installing rsrc tool...
+  go install github.com/akavel/rsrc@latest
+  if exist "%USERPROFILE%\go\bin\rsrc.exe" set "RSRC_EXE=%USERPROFILE%\go\bin\rsrc.exe"
+  if not defined RSRC_EXE (
+    where rsrc.exe >nul 2>&1
+    if !errorlevel! equ 0 set "RSRC_EXE=rsrc.exe"
+  )
 )
 
-:: ── build binary ───────────────────────────────────────────
-echo [2/3] Building ind.exe...
-set LDFLAGS=-s -w -X main.version=%VERSION% -X main.commit=%COMMIT% -X "main.buildTime=%BUILD_TIME%"
+if not defined RSRC_EXE (
+  echo ERROR: rsrc.exe is required for icon embedding.
+  echo Install manually: go install github.com/akavel/rsrc@latest
+  exit /b 1
+)
+
+if not exist build\icon.ico (
+  echo ERROR: build\icon.ico is missing.
+  exit /b 1
+)
+
+echo [1/4] Embedding icon resource...
+"%RSRC_EXE%" -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
+if !errorlevel! neq 0 (
+  echo ERROR: failed to embed icon resource.
+  exit /b 1
+)
+if not exist cmd\indus-terminal\rsrc.syso (
+  echo ERROR: cmd\indus-terminal\rsrc.syso was not generated.
+  exit /b 1
+)
+
+echo [2/4] Building dist\ind.exe...
+set "LDFLAGS=-s -w -X main.version=%VERSION% -X main.commit=%COMMIT% -X main.buildTime=%BUILD_TIME%"
 go build -ldflags "%LDFLAGS%" -o dist\ind.exe .\cmd\indus-terminal
-if %errorlevel% neq 0 (
-    echo ERROR: Go build failed!
-    pause & exit /b 1
+if !errorlevel! neq 0 (
+  echo ERROR: go build failed.
+  exit /b 1
 )
 copy /Y dist\ind.exe dist\indus.exe >nul
-echo       dist\ind.exe    OK
-echo       dist\indus.exe  compatibility alias OK
+if !errorlevel! neq 0 (
+  echo ERROR: failed to create dist\indus.exe alias.
+  exit /b 1
+)
 
-:: ── build installer (requires Inno Setup) ─────────────────
-echo [3/3] Building installer...
-set ISCC="C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
-if exist %ISCC% (
-    %ISCC% installer\indus-setup.iss
-    if %errorlevel% neq 0 (
-        echo WARNING: Installer build failed - binary still OK
-    ) else (
-        echo       dist\indus-setup.exe  OK
-    )
+echo [3/4] Running unit tests...
+go test ./...
+if !errorlevel! neq 0 (
+  echo ERROR: unit tests failed.
+  exit /b 1
+)
+
+if /i "%SKIP_INSTALLER%"=="1" (
+  echo [4/4] Installer build skipped (SKIP_INSTALLER=1).
 ) else (
-    echo       Inno Setup not found - skipping installer
-    echo       Download: https://jrsoftware.org/isdl.php
+  echo [4/4] Building installer...
+  set "ISCC=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+  if not exist "%ISCC%" (
+    echo ERROR: Inno Setup not found at "%ISCC%".
+    echo Install from https://jrsoftware.org/isdl.php
+    exit /b 1
+  )
+  "%ISCC%" installer\indus-setup.iss
+  if !errorlevel! neq 0 (
+    echo ERROR: installer build failed.
+    exit /b 1
+  )
+  if not exist dist\indus-setup.exe (
+    echo ERROR: dist\indus-setup.exe was not created.
+    exit /b 1
+  )
 )
 
-:: optional code signing (set SIGN_PFX and SIGN_PFX_PASSWORD env vars)
 if not "%SIGN_PFX%"=="" (
-    where signtool >nul 2>&1
-    if %errorlevel%==0 (
-        echo [sign] Signing binaries...
-        signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\ind.exe
-        if exist dist\indus.exe signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus.exe
-        if exist dist\indus-setup.exe signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus-setup.exe
-    ) else (
-        echo [sign] signtool not found - skipping signing
-    )
+  echo Signing binaries...
+  where signtool.exe >nul 2>&1
+  if !errorlevel! neq 0 (
+    echo ERROR: signtool.exe not found.
+    exit /b 1
+  )
+
+  signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\ind.exe
+  if !errorlevel! neq 0 exit /b 1
+  signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus.exe
+  if !errorlevel! neq 0 exit /b 1
+  if exist dist\indus-setup.exe (
+    signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus-setup.exe
+    if !errorlevel! neq 0 exit /b 1
+  )
 )
 
 echo.
 echo ========================================================
-echo  Build complete!
+echo Build complete.
 echo ========================================================
+echo dist\ind.exe
+echo dist\indus.exe
+if exist dist\indus-setup.exe echo dist\indus-setup.exe
 echo.
-echo  dist\ind.exe          - Portable binary
-echo  dist\indus-setup.exe  - Windows installer wizard
-echo.
-echo  NOTE: Unsigned binaries can show Windows SmartScreen warnings.
-echo        Use code-signing cert (SIGN_PFX, SIGN_PFX_PASSWORD) for trusted publisher.
-echo.
-echo  To release: git tag v%VERSION% ^&^& git push --tags
-echo  GitHub Actions will auto-build ^& publish the release.
-echo.
-pause
-endlocal
+exit /b 0

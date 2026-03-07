@@ -81,7 +81,7 @@ const sequence = [
   { type: 'prompt', text: 'ind proj create orbit-app --dir .' },
   { type: 'out',    text: 'project=orbit-app  root=.\\\\orbit-app' },
   { type: 'prompt', text: 'ind docs' },
-  { type: 'ok',     text: '✓ commands.html • versions.html • v1.4.0 notes' },
+  { type: 'ok',     text: '✓ commands.html • versions.html • v1.4.1 notes' },
 ];
 
 let seqIdx = 0;

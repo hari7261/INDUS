@@ -300,9 +300,9 @@ build.bat
 ### Publish a release
 
 ```bash
-git tag v1.4.0
+git tag v1.4.1
 git push --tags
-# GitHub Actions builds indus-setup-v1.4.0-windows-amd64.exe and publishes automatically
+# GitHub Actions builds indus-setup-v1.4.1-windows-amd64.exe and publishes automatically
 ```
 
 ---

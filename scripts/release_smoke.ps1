@@ -4,6 +4,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$PSNativeCommandUseErrorActionPreference = $false
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 if (-not $BinaryPath) {
@@ -13,10 +14,15 @@ if (-not $BinaryPath) {
 if (-not (Test-Path $BinaryPath)) {
   throw "Binary not found at $BinaryPath. Build first with: go build -o dist/ind.exe ./cmd/indus-terminal"
 }
+$BinaryPath = (Resolve-Path $BinaryPath).Path
 
 if (-not $ReportDir) {
   $ReportDir = Join-Path $repoRoot "dist"
 }
+elseif (-not [System.IO.Path]::IsPathRooted($ReportDir)) {
+  $ReportDir = Join-Path $repoRoot $ReportDir
+}
+$ReportDir = [System.IO.Path]::GetFullPath($ReportDir)
 
 New-Item -ItemType Directory -Force -Path $ReportDir | Out-Null
 
@@ -38,6 +44,51 @@ $env:APPDATA = $appData
 $env:LOCALAPPDATA = $localAppData
 
 Set-Location $smokeRoot
+
+$smokePort = 19081
+$listenerJob = Start-Job -ArgumentList $smokePort -ScriptBlock {
+  param($Port)
+  $listener = New-Object System.Net.Sockets.TcpListener([System.Net.IPAddress]::Parse("127.0.0.1"), [int]$Port)
+  $listener.Start()
+  try {
+    while ($true) {
+      $client = $listener.AcceptTcpClient()
+      try {
+        $stream = $client.GetStream()
+        $buffer = New-Object byte[] 2048
+        if ($stream.CanRead) {
+          $null = $stream.Read($buffer, 0, $buffer.Length)
+        }
+        $body = "indus-smoke-ok"
+        $response = "HTTP/1.1 200 OK`r`nContent-Type: text/plain`r`nContent-Length: $($body.Length)`r`nConnection: close`r`n`r`n$body"
+        $payload = [System.Text.Encoding]::ASCII.GetBytes($response)
+        $stream.Write($payload, 0, $payload.Length)
+        $stream.Flush()
+      } finally {
+        if ($stream) { $stream.Close() }
+        $client.Close()
+      }
+    }
+  } finally {
+    $listener.Stop()
+  }
+}
+Start-Sleep -Milliseconds 300
+$listenerReady = $false
+for ($i = 0; $i -lt 20; $i++) {
+  try {
+    $probe = New-Object System.Net.Sockets.TcpClient
+    $probe.Connect("127.0.0.1", $smokePort)
+    $probe.Close()
+    $listenerReady = $true
+    break
+  } catch {
+    Start-Sleep -Milliseconds 200
+  }
+}
+if (-not $listenerReady) {
+  throw "Failed to start local smoke listener on port $smokePort"
+}
 
 $commands = @(
   @{ name = "ind about"; args = @("ind", "about") },
@@ -73,12 +124,12 @@ $commands = @(
   @{ name = "ind fs sync docs docs-copy"; args = @("ind", "fs", "sync", "docs", "docs-copy") },
   @{ name = "ind fs digest docs/index.html"; args = @("ind", "fs", "digest", "docs/index.html") },
 
-  @{ name = "ind net scan example.com"; args = @("ind", "net", "scan", "example.com") },
-  @{ name = "ind net pingx example.com --port 443"; args = @("ind", "net", "pingx", "example.com", "--port", "443") },
-  @{ name = "ind net trace example.com"; args = @("ind", "net", "trace", "example.com") },
-  @{ name = "ind net ports --from 8080 --to 8090"; args = @("ind", "net", "ports", "--from", "8080", "--to", "8090") },
-  @{ name = "ind net status --url https://example.com"; args = @("ind", "net", "status", "--url", "https://example.com") },
-  @{ name = "ind net fetch https://example.com --method GET"; args = @("ind", "net", "fetch", "https://example.com", "--method", "GET") },
+  @{ name = "ind net scan"; args = @("ind", "net", "scan") },
+  @{ name = "ind net pingx 127.0.0.1 --port $smokePort"; args = @("ind", "net", "pingx", "127.0.0.1", "--port", "$smokePort") },
+  @{ name = "ind net trace localhost"; args = @("ind", "net", "trace", "localhost") },
+  @{ name = "ind net ports --from $smokePort --to $smokePort"; args = @("ind", "net", "ports", "--from", "$smokePort", "--to", "$smokePort") },
+  @{ name = "ind net status --url http://127.0.0.1:$smokePort"; args = @("ind", "net", "status", "--url", "http://127.0.0.1:$smokePort") },
+  @{ name = "ind net fetch http://127.0.0.1:$smokePort --method GET"; args = @("ind", "net", "fetch", "http://127.0.0.1:$smokePort", "--method", "GET") },
 
   @{ name = "ind dev bench --command 'ind sys stats' --runs 3"; args = @("ind", "dev", "bench", "--command", "ind sys stats", "--runs", "3") },
   @{ name = "ind dev watch --path . --seconds 1"; args = @("ind", "dev", "watch", "--path", ".", "--seconds", "1") },
@@ -113,27 +164,37 @@ $results = [System.Collections.Generic.List[object]]::new()
 $passed = 0
 $failed = 0
 
-foreach ($cmd in $commands) {
-  $sw = [System.Diagnostics.Stopwatch]::StartNew()
-  $rawOutput = (& $BinaryPath @($cmd.args) 2>&1 | Out-String)
-  $exitCode = $LASTEXITCODE
-  $sw.Stop()
+try {
+  foreach ($cmd in $commands) {
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $rawOutput = (& $BinaryPath @($cmd.args) 2>&1 | Out-String)
+    $exitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    $sw.Stop()
 
-  $ok = $exitCode -eq 0
-  if ($ok) { $passed++ } else { $failed++ }
+    $ok = $exitCode -eq 0
+    if ($ok) { $passed++ } else { $failed++ }
 
-  $results.Add([pscustomobject]@{
-    name        = $cmd.name
-    args        = $cmd.args
-    command     = ($cmd.args -join " ")
-    passed      = $ok
-    exit_code   = $exitCode
-    duration_ms = [int][Math]::Round($sw.Elapsed.TotalMilliseconds)
-    output      = $rawOutput.Trim()
-  })
+    $results.Add([pscustomobject]@{
+      name        = $cmd.name
+      args        = $cmd.args
+      command     = ($cmd.args -join " ")
+      passed      = $ok
+      exit_code   = $exitCode
+      duration_ms = [int][Math]::Round($sw.Elapsed.TotalMilliseconds)
+      output      = $rawOutput.Trim()
+    })
 
-  $state = if ($ok) { "PASS" } else { "FAIL" }
-  Write-Host ("[{0}] {1} ({2} ms)" -f $state, $cmd.name, [int][Math]::Round($sw.Elapsed.TotalMilliseconds))
+    $state = if ($ok) { "PASS" } else { "FAIL" }
+    Write-Host ("[{0}] {1} ({2} ms)" -f $state, $cmd.name, [int][Math]::Round($sw.Elapsed.TotalMilliseconds))
+  }
+} finally {
+  if ($listenerJob) {
+    Stop-Job -Job $listenerJob -ErrorAction SilentlyContinue | Out-Null
+    Remove-Job -Job $listenerJob -Force -ErrorAction SilentlyContinue | Out-Null
+  }
 }
 
 $summary = [pscustomobject]@{
@@ -148,6 +209,8 @@ $summary = [pscustomobject]@{
 
 $summaryPath = Join-Path $ReportDir "smoke-summary-$timestamp.txt"
 $jsonPath = Join-Path $ReportDir "smoke-report-$timestamp.json"
+$latestSummaryPath = Join-Path $ReportDir "smoke-summary.txt"
+$latestReportPath = Join-Path $ReportDir "smoke-report.json"
 
 $summaryText = @(
   "INDUS release smoke test",
@@ -166,9 +229,14 @@ Set-Content -Path $summaryPath -Value $summaryText
   results = $results
 } | ConvertTo-Json -Depth 6 | Set-Content -Path $jsonPath
 
+Copy-Item -Path $summaryPath -Destination $latestSummaryPath -Force
+Copy-Item -Path $jsonPath -Destination $latestReportPath -Force
+
 Write-Host ""
 Write-Host "Summary file: $summaryPath"
 Write-Host "JSON report : $jsonPath"
+Write-Host "Latest      : $latestSummaryPath"
+Write-Host "Latest JSON : $latestReportPath"
 
 if ($failed -gt 0) {
   Write-Error "$failed command(s) failed in smoke run."

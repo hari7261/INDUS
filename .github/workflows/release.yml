@@ -70,10 +70,14 @@ jobs:
       - name: Embed icon
         shell: cmd
         run: |
-          if exist build\icon.ico (
-            rsrc -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
-          ) else (
-            echo "No icon found, skipping rsrc"
+          if not exist build\icon.ico (
+            echo "Missing build\\icon.ico"
+            exit /b 1
+          )
+          rsrc -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
+          if not exist cmd\indus-terminal\rsrc.syso (
+            echo "Icon embed failed: cmd\\indus-terminal\\rsrc.syso not found"
+            exit /b 1
           )
 
       # ── 6. Build indus.exe ─────────────────────────────────────────────
@@ -98,6 +102,15 @@ jobs:
             echo "Alias build failed: dist\\indus.exe not found"
             exit /b 1
           )
+
+      - name: Run unit tests
+        shell: powershell
+        run: go test ./...
+
+      - name: Smoke test native commands
+        shell: powershell
+        run: |
+          .\scripts\release_smoke.ps1 -BinaryPath "$pwd\dist\ind.exe" -ReportDir "$pwd\dist"
 
       # ── 6.1 Prepare code-sign certificate ──────────────────────────────
       - name: Prepare code-sign cert
@@ -222,6 +235,8 @@ jobs:
             dist/ind.exe
             dist/indus.exe
             dist/checksums.txt
+            dist/smoke-summary.txt
+            dist/smoke-report.json
           draft: false
           prerelease: ${{ contains(steps.version.outputs.tag, '-') }}
 

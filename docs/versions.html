@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INDUS Versions | 1.3.0 to 1.4.0</title>
-  <meta name="description" content="Version matrix for INDUS Terminal, including the 1.3.0 legacy release and the 1.4.0 production upgrade.">
-  <meta name="keywords" content="Indus Terminal versions, Indus 1.4.0, Indus 1.3.0">
+  <title>INDUS Versions | 1.3.0 to 1.4.1</title>
+  <meta name="description" content="Version matrix for INDUS Terminal, including the 1.3.0 legacy baseline, 1.4.0 platform release, and 1.4.1 production hardening update.">
+  <meta name="keywords" content="Indus Terminal versions, Indus 1.4.1, Indus 1.4.0, Indus 1.3.0">
   <meta name="robots" content="index, follow">
   <meta property="og:title" content="INDUS Version Matrix">
   <meta property="og:description" content="Release table and migration notes for INDUS Terminal.">
@@ -26,7 +26,7 @@
         <a href="index.html">Overview</a>
         <a href="commands.html">Commands</a>
         <a href="versions.html" aria-current="page">Versions</a>
-        <a href="version/v1.4.0.html">v1.4.0</a>
+        <a href="version/v1.4.1.html">v1.4.1</a>
       </div>
       <div class="nav-tools">
         <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
@@ -38,14 +38,14 @@
     <section class="hero">
       <div class="panel">
         <span class="eyebrow">Release Matrix</span>
-        <h1>Two documented generations, one migration path.</h1>
-        <p>Release 1.4.0, published on March 8, 2026, is the current production line. Release 1.3.0, published on February 26, 2026, remains documented as the pre-registry architecture baseline.</p>
+        <h1>Three documented versions, one production command model.</h1>
+        <p>Release 1.4.1 is the current production patch line. It keeps the v1.4.0 command platform and hardens installer quality, startup UX, and release validation.</p>
       </div>
       <aside class="card">
         <h3>Versioning Strategy</h3>
         <p><span class="mono">Major.Minor.Patch</span> remains the release contract.</p>
         <ul class="list">
-          <li><span class="mono">1.4.1</span> bug-fix release</li>
+          <li><span class="mono">1.4.1</span> bug-fix and production hardening</li>
           <li><span class="mono">1.5.0</span> feature release</li>
           <li><span class="mono">2.0.0</span> major redesign</li>
         </ul>
@@ -64,13 +64,19 @@
                 <td><a href="version/v1.3.0.html"><code>1.3.0</code></a></td>
                 <td>February 26, 2026</td>
                 <td>Legacy baseline</td>
-                <td>Interactive shell loop with init/run/http/version commands and a single-page docs site.</td>
+                <td>Pre-registry shell with mixed command style and early docs.</td>
               </tr>
               <tr>
                 <td><a href="version/v1.4.0.html"><code>1.4.0</code></a></td>
                 <td>March 8, 2026</td>
+                <td>Platform release</td>
+                <td>58 native commands, registry-backed engine, versioned docs, and AI metadata index.</td>
+              </tr>
+              <tr>
+                <td><a href="version/v1.4.1.html"><code>1.4.1</code></a></td>
+                <td>March 8, 2026</td>
                 <td>Current production</td>
-                <td>58 native commands, registry-backed engine, versioned docs, AI metadata, and compatibility aliases.</td>
+                <td>Installer hardening, context-aware launch path, startup banner refresh, CI smoke + signing enforcement.</td>
               </tr>
             </tbody>
           </table>
@@ -80,15 +86,20 @@
 
     <section class="section">
       <div class="section-grid">
-        <article class="card span-6">
+        <article class="card span-4">
           <h2>1.3.0</h2>
-          <p>The 1.3.0 line documented an early INDUS shell with mixed command styles. It is preserved for migration clarity, not as the recommended production interface.</p>
+          <p>Legacy snapshot kept for migration reference.</p>
           <a class="ghost-button" href="version/v1.3.0.html">Open 1.3.0 Snapshot</a>
         </article>
-        <article class="card span-6">
+        <article class="card span-4">
           <h2>1.4.0</h2>
-          <p>The 1.4.0 line is the new production contract: <span class="mono">ind ...</span> commands, registry metadata, safe execution wrappers, and versioned docs.</p>
-          <a class="button" href="version/v1.4.0.html">Open 1.4.0 Release Notes</a>
+          <p>Introduced the production command architecture.</p>
+          <a class="ghost-button" href="version/v1.4.0.html">Open 1.4.0 Notes</a>
+        </article>
+        <article class="card span-4">
+          <h2>1.4.1</h2>
+          <p>Hardens production release quality and installer behavior.</p>
+          <a class="button" href="version/v1.4.1.html">Open 1.4.1 Notes</a>
         </article>
       </div>
     </section>
@@ -97,7 +108,7 @@
       <span class="small">Release line updated on March 8, 2026.</span>
       <div class="foot-links small">
         <a href="commands.html">Commands</a>
-        <a href="version/v1.4.0.html">Release Notes</a>
+        <a href="version/v1.4.1.html">Release Notes</a>
       </div>
     </footer>
   </main>

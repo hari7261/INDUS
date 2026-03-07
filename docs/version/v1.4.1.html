@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDUS v1.4.1 | Release Notes</title>
+  <meta name="description" content="INDUS Terminal v1.4.1 release notes: installer hardening, startup banner refresh, context-aware launch support, and stronger release verification.">
+  <meta name="keywords" content="Indus 1.4.1, release notes, installer, startup banner, production patch">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="INDUS v1.4.1 Release Notes">
+  <meta property="og:description" content="Production hardening release notes for INDUS Terminal v1.4.1.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hari7261.github.io/INDUS/version/v1.4.1.html">
+  <link rel="canonical" href="https://hari7261.github.io/INDUS/version/v1.4.1.html">
+  <link rel="icon" href="../icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark"></span><span>INDUS Docs</span></a>
+      <div class="nav-links">
+        <a href="../index.html">Overview</a>
+        <a href="../commands.html">Commands</a>
+        <a href="../versions.html">Versions</a>
+        <a href="v1.4.1.html" aria-current="page">v1.4.1</a>
+      </div>
+      <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="panel">
+        <span class="eyebrow">Released March 8, 2026</span>
+        <h1>v1.4.1 hardens INDUS for real production distribution.</h1>
+        <p>This patch keeps the v1.4.0 native command platform and focuses on installer quality, startup polish, and release reliability.</p>
+        <div class="pill-row">
+          <span class="pill">installer hardening</span>
+          <span class="pill">startup banner refresh</span>
+          <span class="pill">release smoke coverage</span>
+          <span class="pill">signed release enforcement</span>
+        </div>
+      </div>
+      <aside class="card">
+        <h3>Patch scope</h3>
+        <ul class="list">
+          <li>No command namespace breakage</li>
+          <li>No registry schema breakage</li>
+          <li>Backward compatibility retained</li>
+          <li>Production release safety increased</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-grid">
+        <article class="table-wrap span-12">
+          <table>
+            <thead>
+              <tr><th>Area</th><th>v1.4.1 change</th><th>Impact</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Startup UX</td><td>Tricolor INDUS banner with Namaste welcome restored in terminal runtime.</td><td>Consistent identity on first launch.</td></tr>
+              <tr><td>Launch control</td><td>Added <code>--cwd</code> bootstrap option for executable startup.</td><td>Context-menu launches open in the selected folder.</td></tr>
+              <tr><td>Installer</td><td>Per-user install defaults, icon-backed shortcuts, post-install launch option, and PATH broadcast.</td><td>More standard Windows installer experience.</td></tr>
+              <tr><td>Release CI</td><td>Icon embedding enforced, unit tests + smoke tests in pipeline, signature verification before release.</td><td>Higher confidence artifacts and fewer broken releases.</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-grid">
+        <article class="card span-6">
+          <h2>Migration notes</h2>
+          <ul class="list">
+            <li>Use installer artifacts for normal end-user installation.</li>
+            <li>Use <code>ind.exe --cwd "path"</code> for pinned workspace launch flows.</li>
+            <li>Provide code-signing secrets before pushing release tags.</li>
+          </ul>
+        </article>
+        <article class="card span-6">
+          <h2>Validation summary</h2>
+          <ul class="list">
+            <li>Go unit tests pass.</li>
+            <li>All native command smoke checks pass.</li>
+            <li>Release workflow now attaches smoke report artifacts.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="small">v1.4.1 is the current production release.</span>
+      <div class="foot-links small">
+        <a href="../commands.html">Command Reference</a>
+        <a href="../versions.html">Version Matrix</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="../script.js"></script>
+</body>
+</html>

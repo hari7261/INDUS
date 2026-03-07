@@ -1,0 +1,482 @@
+{
+  "version": "1.4.0",
+  "commands": {
+    "about": {
+      "description": "show the INDUS runtime profile and release posture",
+      "module": "core",
+      "category": "core",
+      "usage": "ind about",
+      "example": "ind about",
+      "since": "1.4.0",
+      "cache_ttl_ms": 10000
+    },
+    "doctor": {
+      "description": "run a full INDUS diagnostics sweep",
+      "module": "core",
+      "category": "core",
+      "usage": "ind doctor",
+      "example": "ind doctor",
+      "since": "1.4.0"
+    },
+    "docs": {
+      "description": "show documentation entry points and versioned docs",
+      "module": "core",
+      "category": "core",
+      "usage": "ind docs",
+      "example": "ind docs",
+      "since": "1.4.0",
+      "cache_ttl_ms": 10000
+    },
+    "scan": {
+      "description": "scan the local INDUS environment and summarize readiness",
+      "module": "core",
+      "category": "core",
+      "usage": "ind scan",
+      "example": "ind scan",
+      "since": "1.4.0",
+      "cache_ttl_ms": 5000
+    },
+    "status": {
+      "description": "show the active terminal, workspace, cache, and package status",
+      "module": "core",
+      "category": "core",
+      "usage": "ind status",
+      "example": "ind status",
+      "since": "1.4.0",
+      "cache_ttl_ms": 3000
+    },
+    "version": {
+      "description": "print the INDUS Terminal release, build, and registry version",
+      "module": "core",
+      "category": "core",
+      "usage": "ind version",
+      "example": "ind version",
+      "since": "1.4.0",
+      "cache_ttl_ms": 15000
+    },
+    "dev bench": {
+      "description": "benchmark a native INDUS command with latency metrics",
+      "module": "developer",
+      "category": "developer",
+      "usage": "ind dev bench [--command \"ind sys stats\"] [--runs 5]",
+      "example": "ind dev bench --command \"ind sys stats\" --runs 5",
+      "since": "1.4.0"
+    },
+    "dev cache": {
+      "description": "inspect or clear the INDUS execution cache",
+      "module": "developer",
+      "category": "developer",
+      "usage": "ind dev cache [--clear]",
+      "example": "ind dev cache",
+      "since": "1.4.0"
+    },
+    "dev debug": {
+      "description": "print the current execution context and registry bindings",
+      "module": "developer",
+      "category": "developer",
+      "usage": "ind dev debug",
+      "example": "ind dev debug",
+      "since": "1.4.0"
+    },
+    "dev reload": {
+      "description": "reload registry, config, and terminal state into memory",
+      "module": "developer",
+      "category": "developer",
+      "usage": "ind dev reload",
+      "example": "ind dev reload",
+      "since": "1.4.0"
+    },
+    "dev report": {
+      "description": "write a diagnostics report for the current INDUS session",
+      "module": "developer",
+      "category": "developer",
+      "usage": "ind dev report [--output report.json]",
+      "example": "ind dev report --output indus-report.json",
+      "since": "1.4.0"
+    },
+    "dev watch": {
+      "description": "watch a path with polling and report INDUS-friendly change events",
+      "module": "developer",
+      "category": "developer",
+      "usage": "ind dev watch [--path .] [--seconds 10]",
+      "example": "ind dev watch --path . --seconds 5",
+      "since": "1.4.0"
+    },
+    "env export": {
+      "description": "export managed INDUS environment values to a file",
+      "module": "environment",
+      "category": "environment",
+      "usage": "ind env export [--file indus-env.json]",
+      "example": "ind env export --file indus-env.json",
+      "since": "1.4.0"
+    },
+    "env import": {
+      "description": "import managed INDUS environment values from a file",
+      "module": "environment",
+      "category": "environment",
+      "usage": "ind env import --file indus-env.json",
+      "example": "ind env import --file indus-env.json",
+      "since": "1.4.0"
+    },
+    "env list": {
+      "description": "list environment variables managed by INDUS",
+      "module": "environment",
+      "category": "environment",
+      "usage": "ind env list",
+      "example": "ind env list",
+      "since": "1.4.0",
+      "cache_ttl_ms": 2000
+    },
+    "env set": {
+      "description": "set a managed environment value without shell syntax",
+      "module": "environment",
+      "category": "environment",
+      "usage": "ind env set KEY VALUE",
+      "example": "ind env set INDUS_PROFILE production",
+      "since": "1.4.0"
+    },
+    "env unset": {
+      "description": "remove a managed environment value from the INDUS state",
+      "module": "environment",
+      "category": "environment",
+      "usage": "ind env unset KEY",
+      "example": "ind env unset INDUS_PROFILE",
+      "since": "1.4.0"
+    },
+    "fs digest": {
+      "description": "compute a SHA-256 digest for a file using native INDUS tooling",
+      "module": "filesystem",
+      "category": "filesystem",
+      "usage": "ind fs digest <path>",
+      "example": "ind fs digest docs/index.html",
+      "since": "1.4.0"
+    },
+    "fs find": {
+      "description": "find files or directories by substring without shell utilities",
+      "module": "filesystem",
+      "category": "filesystem",
+      "usage": "ind fs find <pattern> [--path .]",
+      "example": "ind fs find config --path .",
+      "since": "1.4.0"
+    },
+    "fs inspect": {
+      "description": "inspect a file or directory with type, timestamps, and location data",
+      "module": "filesystem",
+      "category": "filesystem",
+      "usage": "ind fs inspect <path>",
+      "example": "ind fs inspect README.md",
+      "since": "1.4.0"
+    },
+    "fs size": {
+      "description": "measure total size for a file tree or a single file",
+      "module": "filesystem",
+      "category": "filesystem",
+      "usage": "ind fs size [path]",
+      "example": "ind fs size .",
+      "since": "1.4.0"
+    },
+    "fs sync": {
+      "description": "safely sync one directory tree into another",
+      "module": "filesystem",
+      "category": "filesystem",
+      "usage": "ind fs sync <source> <target>",
+      "example": "ind fs sync docs docs-copy",
+      "since": "1.4.0"
+    },
+    "fs tree": {
+      "description": "render a compact directory tree with a depth guard",
+      "module": "filesystem",
+      "category": "filesystem",
+      "usage": "ind fs tree [path] [--depth 2]",
+      "example": "ind fs tree . --depth 2",
+      "since": "1.4.0"
+    },
+    "net fetch": {
+      "description": "fetch a URL with native INDUS HTTP handling",
+      "module": "network",
+      "category": "network",
+      "usage": "ind net fetch <url> [--method GET] [--body data]",
+      "example": "ind net fetch https://example.com --method GET",
+      "since": "1.4.0"
+    },
+    "net pingx": {
+      "description": "measure TCP reachability latency to a host and port",
+      "module": "network",
+      "category": "network",
+      "usage": "ind net pingx <host> [--port 443]",
+      "example": "ind net pingx example.com --port 443",
+      "since": "1.4.0"
+    },
+    "net ports": {
+      "description": "scan a local TCP port range and report responsive ports",
+      "module": "network",
+      "category": "network",
+      "usage": "ind net ports [--from 3000] [--to 3010]",
+      "example": "ind net ports --from 8080 --to 8090",
+      "since": "1.4.0"
+    },
+    "net scan": {
+      "description": "show local network interfaces or resolve a target host",
+      "module": "network",
+      "category": "network",
+      "usage": "ind net scan [target]",
+      "example": "ind net scan example.com",
+      "since": "1.4.0"
+    },
+    "net status": {
+      "description": "report outbound network readiness and DNS availability",
+      "module": "network",
+      "category": "network",
+      "usage": "ind net status [--url https://example.com]",
+      "example": "ind net status --url https://example.com",
+      "since": "1.4.0",
+      "cache_ttl_ms": 2000
+    },
+    "net trace": {
+      "description": "trace the soft network path with resolution and dial attempts",
+      "module": "network",
+      "category": "network",
+      "usage": "ind net trace <host>",
+      "example": "ind net trace example.com",
+      "since": "1.4.0"
+    },
+    "pkg audit": {
+      "description": "validate installed INDUS packages against the local catalog",
+      "module": "package",
+      "category": "package",
+      "usage": "ind pkg audit",
+      "example": "ind pkg audit",
+      "since": "1.4.0"
+    },
+    "pkg install": {
+      "description": "install an INDUS-native package from the internal catalog",
+      "module": "package",
+      "category": "package",
+      "usage": "ind pkg install <name>",
+      "example": "ind pkg install aurora-kit",
+      "since": "1.4.0"
+    },
+    "pkg list": {
+      "description": "list installed INDUS-native packages",
+      "module": "package",
+      "category": "package",
+      "usage": "ind pkg list",
+      "example": "ind pkg list",
+      "since": "1.4.0",
+      "cache_ttl_ms": 2000
+    },
+    "pkg remove": {
+      "description": "remove an installed INDUS-native package",
+      "module": "package",
+      "category": "package",
+      "usage": "ind pkg remove <name>",
+      "example": "ind pkg remove aurora-kit",
+      "since": "1.4.0"
+    },
+    "pkg search": {
+      "description": "search the internal INDUS package catalog",
+      "module": "package",
+      "category": "package",
+      "usage": "ind pkg search <query>",
+      "example": "ind pkg search aurora",
+      "since": "1.4.0",
+      "cache_ttl_ms": 3000
+    },
+    "pkg update": {
+      "description": "update an installed INDUS-native package to the catalog version",
+      "module": "package",
+      "category": "package",
+      "usage": "ind pkg update <name>",
+      "example": "ind pkg update aurora-kit",
+      "since": "1.4.0"
+    },
+    "proj build": {
+      "description": "build the active project into an INDUS artifact bundle",
+      "module": "project",
+      "category": "project",
+      "usage": "ind proj build [path]",
+      "example": "ind proj build .",
+      "since": "1.4.0"
+    },
+    "proj clean": {
+      "description": "clean build artifacts and local INDUS project cache data",
+      "module": "project",
+      "category": "project",
+      "usage": "ind proj clean [path]",
+      "example": "ind proj clean .",
+      "since": "1.4.0"
+    },
+    "proj create": {
+      "description": "create a new INDUS project scaffold",
+      "module": "project",
+      "category": "project",
+      "usage": "ind proj create <name> [--dir .]",
+      "example": "ind proj create orbit-app --dir .",
+      "since": "1.4.0"
+    },
+    "proj init": {
+      "description": "initialize the current directory as an INDUS project",
+      "module": "project",
+      "category": "project",
+      "usage": "ind proj init [--name current-directory]",
+      "example": "ind proj init --name orbit-app",
+      "since": "1.4.0"
+    },
+    "proj list": {
+      "description": "list discovered INDUS projects beneath a path",
+      "module": "project",
+      "category": "project",
+      "usage": "ind proj list [--path .]",
+      "example": "ind proj list --path .",
+      "since": "1.4.0"
+    },
+    "proj run": {
+      "description": "run the active INDUS project manifest in simulation mode",
+      "module": "project",
+      "category": "project",
+      "usage": "ind proj run [path]",
+      "example": "ind proj run .",
+      "since": "1.4.0"
+    },
+    "sys clean": {
+      "description": "clean INDUS cache, reports, and stale runtime artifacts",
+      "module": "system",
+      "category": "system",
+      "usage": "ind sys clean",
+      "example": "ind sys clean",
+      "since": "1.4.0"
+    },
+    "sys doctor": {
+      "description": "validate the core runtime, registry, docs, and writable paths",
+      "module": "system",
+      "category": "system",
+      "usage": "ind sys doctor",
+      "example": "ind sys doctor",
+      "since": "1.4.0"
+    },
+    "sys info": {
+      "description": "show platform, process, and directory information",
+      "module": "system",
+      "category": "system",
+      "usage": "ind sys info",
+      "example": "ind sys info",
+      "since": "1.4.0",
+      "cache_ttl_ms": 5000
+    },
+    "sys stats": {
+      "description": "show fast local runtime and memory statistics",
+      "module": "system",
+      "category": "system",
+      "usage": "ind sys stats",
+      "example": "ind sys stats",
+      "since": "1.4.0",
+      "cache_ttl_ms": 5000
+    },
+    "sys watch": {
+      "description": "sample runtime stats on a short interval",
+      "module": "system",
+      "category": "system",
+      "usage": "ind sys watch [--interval 1s] [--count 5]",
+      "example": "ind sys watch --interval 500ms --count 4",
+      "since": "1.4.0"
+    },
+    "term clearx": {
+      "description": "clear the INDUS terminal viewport without using shell commands",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term clearx",
+      "example": "ind term clearx",
+      "since": "1.4.0"
+    },
+    "term doctor": {
+      "description": "check terminal theme, history, and interactive readiness",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term doctor",
+      "example": "ind term doctor",
+      "since": "1.4.0"
+    },
+    "term history": {
+      "description": "show recent native INDUS command history",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term history [--limit 10]",
+      "example": "ind term history --limit 10",
+      "since": "1.4.0"
+    },
+    "term reset": {
+      "description": "reset theme, cache, and transient terminal state",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term reset",
+      "example": "ind term reset",
+      "since": "1.4.0"
+    },
+    "term speed": {
+      "description": "show recent command latency and cache hit information",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term speed",
+      "example": "ind term speed",
+      "since": "1.4.0",
+      "cache_ttl_ms": 1000
+    },
+    "term theme": {
+      "description": "set or inspect the active INDUS prompt theme",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term theme [theme]",
+      "example": "ind term theme saffron",
+      "since": "1.4.0"
+    },
+    "work archive": {
+      "description": "archive the active workspace into a zip bundle",
+      "module": "workspace",
+      "category": "workspace",
+      "usage": "ind work archive [path]",
+      "example": "ind work archive .",
+      "since": "1.4.0"
+    },
+    "work clean": {
+      "description": "clean transient workspace artifacts and inactive state",
+      "module": "workspace",
+      "category": "workspace",
+      "usage": "ind work clean [path]",
+      "example": "ind work clean .",
+      "since": "1.4.0"
+    },
+    "work init": {
+      "description": "register a directory as an INDUS workspace",
+      "module": "workspace",
+      "category": "workspace",
+      "usage": "ind work init [name]",
+      "example": "ind work init orbit-space",
+      "since": "1.4.0"
+    },
+    "work list": {
+      "description": "list known INDUS workspaces and their status",
+      "module": "workspace",
+      "category": "workspace",
+      "usage": "ind work list",
+      "example": "ind work list",
+      "since": "1.4.0",
+      "cache_ttl_ms": 2000
+    },
+    "work pin": {
+      "description": "pin the active workspace for quick reuse",
+      "module": "workspace",
+      "category": "workspace",
+      "usage": "ind work pin [name]",
+      "example": "ind work pin orbit-space",
+      "since": "1.4.0"
+    },
+    "work switch": {
+      "description": "switch the active workspace without shell cd semantics",
+      "module": "workspace",
+      "category": "workspace",
+      "usage": "ind work switch <name-or-path>",
+      "example": "ind work switch orbit-space",
+      "since": "1.4.0"
+    }
+  }
+}

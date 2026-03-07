@@ -1,6 +1,6 @@
 .PHONY: build clean install
 
-VERSION ?= 1.0.0
+VERSION ?= 1.4.0
 COMMIT ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo "none")
 BUILD_TIME ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 
@@ -8,14 +8,39 @@ LDFLAGS := -X main.version=$(VERSION) \
            -X main.commit=$(COMMIT) \
            -X main.buildTime=$(BUILD_TIME)
 
+ifeq ($(OS),Windows_NT)
+  BIN_EXT := .exe
+  MKDIR_CMD := if not exist dist mkdir dist
+  COPY_CMD := copy /Y dist\ind$(BIN_EXT) dist\indus$(BIN_EXT) >nul
+  RM_FILE := del /F /Q
+  RM_DIR := rmdir /S /Q
+  DIST_PRIMARY := dist\ind$(BIN_EXT)
+  DIST_ALIAS := dist\indus$(BIN_EXT)
+  RSRC_FILE := cmd\indus-terminal\rsrc.syso
+  NULLDEV := nul
+else
+  BIN_EXT :=
+  MKDIR_CMD := mkdir -p dist
+  COPY_CMD := cp -f dist/ind$(BIN_EXT) dist/indus$(BIN_EXT)
+  RM_FILE := rm -f
+  RM_DIR := rm -rf
+  DIST_PRIMARY := dist/ind$(BIN_EXT)
+  DIST_ALIAS := dist/indus$(BIN_EXT)
+  RSRC_FILE := cmd/indus-terminal/rsrc.syso
+  NULLDEV := /dev/null
+endif
+
 build:
-	rsrc -ico build/icon.ico -o cmd/indus-terminal/rsrc.syso
-	go build -ldflags "$(LDFLAGS)" -o indus.exe ./cmd/indus-terminal
+	$(MKDIR_CMD)
+	-rsrc -ico build/icon.ico -o cmd/indus-terminal/rsrc.syso
+	go build -ldflags "$(LDFLAGS)" -o dist/ind$(BIN_EXT) ./cmd/indus-terminal
+	$(COPY_CMD)
 
 install:
-	@echo Run install.bat as administrator to install INDUS Terminal
+	@echo Use install.bat on Windows or copy dist/ind$(BIN_EXT) into your PATH on Unix-like systems.
 
 clean:
-	del /F /Q indus.exe 2>nul
-	del /F /Q cmd\indus-terminal\rsrc.syso 2>nul
-	rmdir /S /Q dist 2>nul
+	-$(RM_FILE) $(DIST_PRIMARY) 2>$(NULLDEV)
+	-$(RM_FILE) $(DIST_ALIAS) 2>$(NULLDEV)
+	-$(RM_FILE) $(RSRC_FILE) 2>$(NULLDEV)
+	-$(RM_DIR) dist 2>$(NULLDEV)

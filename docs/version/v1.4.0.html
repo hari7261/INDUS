@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDUS v1.4.0 | Release Notes</title>
+  <meta name="description" content="INDUS Terminal v1.4.0 release notes: native commands, registry-backed engine, versioned documentation, and AI-readable metadata.">
+  <meta name="keywords" content="Indus 1.4.0, release notes, native commands, command registry">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="INDUS v1.4.0 Release Notes">
+  <meta property="og:description" content="Production-ready release notes for INDUS Terminal v1.4.0.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hari7261.github.io/INDUS/version/v1.4.0.html">
+  <link rel="canonical" href="https://hari7261.github.io/INDUS/version/v1.4.0.html">
+  <link rel="icon" href="../icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark"></span><span>INDUS Docs</span></a>
+      <div class="nav-links">
+        <a href="../index.html">Overview</a>
+        <a href="../commands.html">Commands</a>
+        <a href="../versions.html">Versions</a>
+        <a href="v1.4.0.html" aria-current="page">v1.4.0</a>
+      </div>
+      <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="panel">
+        <span class="eyebrow">Released March 8, 2026</span>
+        <h1>v1.4.0 turns INDUS into a fully native command platform.</h1>
+        <p>This release introduces 58 native commands, a central registry at <span class="mono">core/commands/registry.json</span>, lazy-loaded modules, command caching, safe error wrappers, versioned docs, and AI-readable metadata.</p>
+        <div class="pill-row">
+          <span class="pill">58 commands</span>
+          <span class="pill">10 modules</span>
+          <span class="pill">registry version 1.4.0</span>
+          <span class="pill">AI command index</span>
+        </div>
+      </div>
+      <aside class="card">
+        <h3>Headline changes</h3>
+        <ul class="list">
+          <li>Independent <span class="mono">ind ...</span> namespace</li>
+          <li>Cache-aware command engine</li>
+          <li>Cross-platform console hooks</li>
+          <li>Versioned docs UI with SEO metadata</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-grid">
+        <article class="card span-6">
+          <h2>New command families</h2>
+          <ul class="list">
+            <li>Core: scan, doctor, status, docs, about, version</li>
+            <li>System: stats, info, clean, doctor, watch</li>
+            <li>Project: create, init, list, clean, build, run</li>
+            <li>Environment, filesystem, network, developer, package, terminal, and workspace modules</li>
+          </ul>
+        </article>
+        <article class="card span-6">
+          <h2>Engine architecture</h2>
+          <ul class="list">
+            <li>Registry lookups before execution</li>
+            <li>Module factories with lazy load on first hit</li>
+            <li>Async execution wrapper and panic recovery</li>
+            <li>Short-lived result caching for read commands</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-grid">
+        <article class="table-wrap span-12">
+          <table>
+            <thead>
+              <tr><th>Area</th><th>v1.4.0 change</th><th>Impact</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Command format</td><td><code>ind &lt;command&gt; [options]</code></td><td>Consistent parsing and no shell-name collisions on the native path.</td></tr>
+              <tr><td>Registry</td><td><code>core/commands/registry.json</code></td><td>Faster lookup, scalable module loading, and version tracking.</td></tr>
+              <tr><td>Docs</td><td>index, commands, versions, and release pages</td><td>Versioned navigation, SEO metadata, and command indexing.</td></tr>
+              <tr><td>Metadata</td><td>AI command index plus schema tags</td><td>AI tools and IDEs can crawl the command model directly.</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-grid">
+        <article class="card span-6">
+          <h2>Migration guide</h2>
+          <ul class="list">
+            <li>Replace bare commands with the <span class="mono">ind</span> prefix.</li>
+            <li>Use <span class="mono">ind proj ...</span> for project lifecycle work.</li>
+            <li>Use <span class="mono">ind net fetch</span> for native HTTP requests.</li>
+            <li>Open <a href="../commands.html">commands.html</a> for the full searchable reference.</li>
+          </ul>
+        </article>
+        <article class="card span-6">
+          <h2>Verification targets</h2>
+          <ul class="list">
+            <li>Local commands target under 50ms.</li>
+            <li>Complex commands target under 150ms.</li>
+            <li>Read commands opt into short cache TTLs.</li>
+            <li>Invalid input returns structured IND error codes.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="small">v1.4.0 is the current production release.</span>
+      <div class="foot-links small">
+        <a href="../commands.html">Command Reference</a>
+        <a href="../versions.html">Version Matrix</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="../script.js"></script>
+</body>
+</html>

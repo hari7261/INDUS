@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDUS Documentation | Commands v1.4.0</title>
+  <meta name="description" content="Professional INDUS command documentation for v1.4.0 with category navigation, command explanations, and one example for every command.">
+  <meta name="keywords" content="INDUS docs, INDUS commands, ind command reference, developer terminal documentation">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="INDUS Command Documentation">
+  <meta property="og:description" content="58 native INDUS commands with explanations and examples in a professional docs UI.">
+  <meta property="og:url" content="https://hari7261.github.io/INDUS/commands.html">
+  <meta property="og:image" content="https://hari7261.github.io/INDUS/images/image1.png">
+  <meta property="og:image:alt" content="INDUS Terminal documentation preview">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="INDUS Command Documentation">
+  <meta name="twitter:description" content="Professional INDUS docs with 58 native command examples.">
+  <meta name="twitter:image" content="https://hari7261.github.io/INDUS/images/image1.png">
+  <link rel="canonical" href="https://hari7261.github.io/INDUS/commands.html">
+  <link rel="icon" href="icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="commands.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "INDUS Commands Documentation",
+    "url": "https://hari7261.github.io/INDUS/commands.html",
+    "description": "Command reference for INDUS Terminal v1.4.0 with examples and category-based navigation."
+  }
+  </script>
+</head>
+<body>
+  <header class="top-header">
+    <div class="top-header-inner">
+      <a class="brand" href="index.html">
+        <img src="icon.ico" alt="INDUS Terminal logo" class="brand-logo" width="30" height="30">
+        <span class="brand-text">
+          <strong>INDUS Terminal</strong>
+          <small>Documentation</small>
+        </span>
+      </a>
+      <nav class="header-links" aria-label="Primary">
+        <a href="index.html">Overview</a>
+        <a href="commands.html" aria-current="page">Docs</a>
+        <a href="versions.html">Versions</a>
+        <a href="version/v1.4.0.html">Release Notes</a>
+      </nav>
+      <div class="header-search">
+        <label for="commandSearch" class="sr-only">Search commands</label>
+        <input id="commandSearch" type="search" placeholder="Search commands..." data-command-search>
+      </div>
+    </div>
+  </header>
+
+  <div class="notice-bar">
+    <a href="version/v1.4.0.html">INDUS v1.4.0 documentation update</a>
+    <span>58 native commands with examples</span>
+  </div>
+
+  <main class="docs-layout">
+    <aside class="docs-sidebar">
+      <div class="sidebar-brand">
+        <img src="icon.ico" alt="INDUS" width="24" height="24">
+        <div>
+          <strong>INDUS Docs</strong>
+          <p>v1.4.0</p>
+        </div>
+      </div>
+      <div class="sidebar-block">
+        <h2>Documentation</h2>
+        <a href="index.html" class="sidebar-link">Overview</a>
+        <a href="#quickstart" class="sidebar-link">Get Started</a>
+        <a href="#command-reference" class="sidebar-link">Command Reference</a>
+      </div>
+      <div class="sidebar-block">
+        <h3>Command Categories</h3>
+        <div class="sidebar-categories" data-category-sidebar></div>
+      </div>
+      <div class="sidebar-block sidebar-foot">
+        <p><strong data-total-count>0</strong> total commands</p>
+        <p><strong data-visible-count>0</strong> visible commands</p>
+      </div>
+    </aside>
+
+    <article class="docs-content">
+      <section id="quickstart" class="content-intro">
+        <p class="eyebrow">INDUS COMMAND DOCS</p>
+        <h1>Terminal commands for production workflows</h1>
+        <p>
+          This reference documents every native command in INDUS v1.4.0.
+          Command contract: <code>ind &lt;command&gt; [options]</code>.
+        </p>
+        <ul class="intro-list">
+          <li>Each command has one practical example.</li>
+          <li>Use the left sidebar to filter by category.</li>
+          <li>Use the top search to find commands instantly.</li>
+        </ul>
+      </section>
+
+      <section id="command-reference" class="content-reference">
+        <header class="section-header">
+          <h2>Complete command reference</h2>
+          <p data-category-count>0 categories visible</p>
+        </header>
+        <div data-command-sections></div>
+      </section>
+    </article>
+
+    <aside class="docs-toc">
+      <div class="toc-inner">
+        <h2>On this page</h2>
+        <ul data-page-toc></ul>
+      </div>
+    </aside>
+  </main>
+
+  <script src="commands.js"></script>
+</body>
+</html>

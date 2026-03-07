@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <!-- ── PRIMARY SEO ── -->
-  <title>INDUS Terminal — Production-Grade Developer Terminal for Windows</title>
-  <meta name="description" content="INDUS Terminal is a production-grade interactive terminal for Windows built with Go. Features built-in HTTP client, zero-dependency streaming pipelines, concurrent workload runner, project scaffolding, and 10 prompt color themes. Free &amp; open source." />
-  <meta name="keywords" content="INDUS terminal, Go terminal, Windows terminal, developer terminal, HTTP client terminal, CLI tool, API testing terminal, open source terminal, Go CLI, streaming pipeline terminal, Indian developer tools" />
+  <title>INDUS Terminal — Production-Grade Native Developer Terminal</title>
+  <meta name="description" content="INDUS Terminal v1.4.0 is a production-grade native developer terminal built with Go. Features 58 native ind commands, a registry-backed command engine, versioned documentation, and AI-readable command metadata." />
+  <meta name="keywords" content="INDUS terminal, ind commands, Go terminal, developer terminal, command registry, CLI tool, versioned documentation, AI-readable metadata, native command ecosystem" />
   <meta name="author" content="Hariom Kumar Pandit (hari7261)" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow" />
@@ -18,8 +18,8 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://hari7261.github.io/INDUS/" />
   <meta property="og:site_name"   content="INDUS Terminal" />
-  <meta property="og:title"       content="INDUS Terminal — Production-Grade Developer Terminal for Windows" />
-  <meta property="og:description" content="Built-in HTTP client, zero-shell streaming pipelines, concurrent workload runner, 10 color themes. Zero dependencies. Pure Go. Free &amp; open source." />
+  <meta property="og:title"       content="INDUS Terminal — Production-Grade Native Developer Terminal" />
+  <meta property="og:description" content="58 native ind commands, registry-backed execution, versioned docs, SEO metadata, and AI-readable command indexes." />
   <meta property="og:image"       content="https://hari7261.github.io/INDUS/images/image1.png" />
   <meta property="og:image:width"  content="1280" />
   <meta property="og:image:height" content="720" />
@@ -30,8 +30,8 @@
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:site"        content="@hari7261" />
   <meta name="twitter:creator"     content="@hari7261" />
-  <meta name="twitter:title"       content="INDUS Terminal — Production-Grade Developer Terminal for Windows" />
-  <meta name="twitter:description" content="HTTP client, streaming pipelines, workload runner. Zero dependencies. Pure Go. Free &amp; open source." />
+  <meta name="twitter:title"       content="INDUS Terminal — Production-Grade Native Developer Terminal" />
+  <meta name="twitter:description" content="58 native ind commands, registry-backed execution, versioned docs, and AI-readable metadata." />
   <meta name="twitter:image"       content="https://hari7261.github.io/INDUS/images/image1.png" />
   <meta name="twitter:image:alt"   content="INDUS Terminal screenshot" />
 
@@ -60,20 +60,20 @@
         "name": "INDUS Terminal",
         "url": "https://hari7261.github.io/INDUS/",
         "downloadUrl": "https://github.com/hari7261/INDUS/releases/latest",
-        "operatingSystem": "Windows",
+        "operatingSystem": "Windows, Linux, macOS",
         "applicationCategory": "DeveloperApplication",
-        "softwareVersion": "1.3.0",
-        "description": "Production-grade interactive terminal for Windows. Built-in HTTP client with retry logic, zero-shell streaming pipelines, concurrent workload runner, project scaffolding, and 10 prompt color themes. Zero external dependencies, pure Go.",
+        "softwareVersion": "1.4.0",
+        "description": "Production-grade native developer terminal with 58 ind commands, a registry-backed execution engine, versioned documentation, and AI-readable command metadata. Pure Go, zero heavy framework dependencies.",
         "screenshot": "https://hari7261.github.io/INDUS/images/image1.png",
         "featureList": [
-          "Built-in HTTP client (GET, POST, PUT, DELETE)",
-          "Internal streaming pipelines with | operator",
-          "Concurrent workload runner with worker pools",
-          "Project scaffolding (init command)",
-          "10 prompt color themes",
-          "Full Windows shell fallback",
-          "Zero external dependencies",
-          "One-click Inno Setup installer"
+          "58 native ind commands",
+          "Registry-backed command engine",
+          "Lazy module loading and short-lived command caching",
+          "Project, workspace, environment, filesystem, network, package, terminal, and developer tools",
+          "Versioned documentation UI",
+          "AI-readable command index",
+          "Structured error codes and safe fallback responses",
+          "One-click installer and portable binary"
         ],
         "license": "https://github.com/hari7261/INDUS/blob/master/LICENSE",
         "author": {
@@ -92,7 +92,7 @@
           "priceCurrency": "USD"
         },
         "applicationSubCategory": "Terminal Emulator",
-        "keywords": "Go terminal, Windows CLI, HTTP client, developer tools, open source, pipeline, API testing"
+        "keywords": "Go terminal, ind commands, CLI, command registry, versioned docs, AI metadata"
       },
       {
         "@type": "WebSite",
@@ -124,7 +124,7 @@
   <link rel="dns-prefetch" href="https://api.github.com" />
   <link rel="dns-prefetch" href="https://img.shields.io" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
 
@@ -142,7 +142,7 @@
         <li><a href="#features">Features</a></li>
         <li><a href="#install">Install</a></li>
         <li><a href="#usage">Usage</a></li>
-        <li><a href="#pipelines">Pipelines</a></li>
+        <li><a href="#pipelines">Engine</a></li>
         <li><a href="#colors">Colors</a></li>
         <li><a href="#releases">Releases</a></li>
         <li><a href="https://github.com/hari7261/INDUS" target="_blank" class="nav-github">
@@ -164,13 +164,13 @@
       </div>
       <h1 class="hero-title">INDUS<span class="hero-title-term">Terminal</span></h1>
       <p class="hero-sub">
-        Production-grade interactive terminal for API orchestration,<br class="hide-mobile"/>
-        developer tooling &amp; concurrent workloads.
+        Production-grade native terminal with 58 <code>ind</code> commands,<br class="hide-mobile"/>
+        a registry-backed engine, versioned docs, and AI-readable metadata.
       </p>
       <div class="hero-badges">
         <img src="https://img.shields.io/github/v/tag/hari7261/INDUS?sort=semver&label=latest&color=FF9933&labelColor=1a1a1a" alt="Latest" />
         <img src="https://img.shields.io/badge/Go-1.21+-00ADD8?logo=go&logoColor=white" alt="Go" />
-        <img src="https://img.shields.io/badge/platform-Windows-0078D6?logo=windows&logoColor=white" alt="Platform" />
+        <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-0078D6?logo=windows&logoColor=white" alt="Platform" />
         <img src="https://img.shields.io/badge/zero-dependencies-4CAF50" alt="Zero deps" />
       </div>
       <div class="hero-actions">
@@ -186,14 +186,14 @@
           <span class="dot dot-red"></span>
           <span class="dot dot-yellow"></span>
           <span class="dot dot-green"></span>
-          <span class="terminal-title">INDUS Terminal — v1.3.0</span>
+          <span class="terminal-title">INDUS Terminal — v1.4.0</span>
         </div>
         <div class="terminal-body">
           <pre class="term-banner"><span class="t-sf">████████████████████████████████████████████████████████████████████████████████████████████</span>
 <span class="t-sf">████████████████████████████████████████████████████████████████████████████████████████████</span>
 <span class="t-wh">████████████████████████████████████████████████████████████████████████████████████████████</span>
 <span class="t-wh">██</span>                                                                                       <span class="t-wh">██</span>
-<span class="t-wh">██  </span><span class="t-bl">██╗███╗   ██╗██████╗ ██╗   ██╗███████╗</span>   <span class="t-cy">Terminal v1.3.0</span>                         <span class="t-wh">██</span>
+<span class="t-wh">██  </span><span class="t-bl">██╗███╗   ██╗██████╗ ██╗   ██╗███████╗</span>   <span class="t-cy">Terminal v1.4.0</span>                         <span class="t-wh">██</span>
 <span class="t-wh">██  </span><span class="t-bl">██║████╗  ██║██╔══██╗██║   ██║██╔════╝</span>                                            <span class="t-wh">██</span>
 <span class="t-wh">██  </span><span class="t-bl">██║██╔██╗ ██║██║  ██║██║   ██║███████╗</span>   Production-Grade Interactive Terminal   <span class="t-wh">██</span>
 <span class="t-wh">██  </span><span class="t-bl">██║██║╚██╗██║██║  ██║██║   ██║╚════██║</span>   for Developers &amp; DevOps                 <span class="t-wh">██</span>
@@ -225,44 +225,44 @@
       <div class="section-header">
         <span class="section-tag">Core Features</span>
         <h2>Everything you need. Nothing you don't.</h2>
-        <p>All built with zero external dependencies — pure Go standard library.</p>
+        <p>All built around the native <code>ind &lt;command&gt; [options]</code> contract with a fast Go runtime underneath.</p>
       </div>
       <div class="features-grid">
         <div class="feature-card feature-card--accent">
           <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-          <h3>Internal Streaming Pipelines</h3>
-          <p>Pipe commands together with <code>|</code> — no OS shell, no subprocesses. Pure <code>io.Pipe</code> goroutines sharing a cancellable context.</p>
-          <div class="feature-code"><code>run --tasks 10 | http post https://api.example.com</code></div>
+          <h3>58 Native INDUS Commands</h3>
+          <p>System, project, environment, filesystem, network, developer, package, terminal, workspace, and core commands all resolve under one native command surface.</p>
+          <div class="feature-code"><code>ind sys stats &nbsp; ind env list &nbsp; ind proj create</code></div>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <h3>Built-in HTTP Client</h3>
-          <p>GET, POST, PUT, DELETE with retry + exponential back-off. Idempotent-only retries. 5xx surfaced as errors.</p>
-          <div class="feature-code"><code>http get https://api.github.com/users/hari7261</code></div>
+          <h3>Registry-Backed Resolution</h3>
+          <p>Commands resolve through <code>core/commands/registry.json</code>, giving fast lookup, scalable metadata, category ownership, and version tracking.</p>
+          <div class="feature-code"><code>core/commands/registry.json</code></div>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <h3>Concurrent Workload Runner</h3>
-          <p>Fan-out / fan-in worker pool. Machine-readable results to stdout, progress to stderr so it pipes cleanly.</p>
-          <div class="feature-code"><code>run --workers 8 --tasks 100</code></div>
+          <h3>Fast Execution Engine</h3>
+          <p>Lazy module loading, command caching, minimal spawning, and async-safe execution keep local commands fast and predictable.</p>
+          <div class="feature-code"><code>ind sys stats &nbsp; ind term speed</code></div>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
-          <h3>Project Initializer</h3>
-          <p>Scaffold a new Go project instantly. Creates <code>cmd/</code>, <code>internal/</code>, <code>pkg/</code>, <code>config/</code>, <code>README.md</code>.</p>
-          <div class="feature-code"><code>init --name my-api --dir ~/projects</code></div>
+          <h3>Project and Workspace Flows</h3>
+          <p>Create, initialize, build, run, archive, and switch workspaces without colliding with other terminal ecosystems.</p>
+          <div class="feature-code"><code>ind proj create orbit-app --dir .</code></div>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
-          <h3>10 Prompt Color Themes</h3>
-          <p>Switch accent colors instantly. Red, Green, Blue, Yellow, Cyan, Magenta, White, Orange, Pink, or Default.</p>
-          <div class="feature-code"><code>color r &nbsp; color g &nbsp; color o</code></div>
+          <h3>Versioned Documentation UI</h3>
+          <p>The landing page now connects to dedicated version pages, command reference pages, and release history without losing the original INDUS visual identity.</p>
+          <div class="feature-code"><code>docs/commands.html &nbsp; docs/versions.html</code></div>
         </div>
         <div class="feature-card">
           <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-          <h3>Full System Shell Fallback</h3>
-          <p>Every unrecognised command passes to your Windows shell — git, docker, npm, python, ipconfig all work.</p>
-          <div class="feature-code"><code>git log --oneline -5</code></div>
+          <h3>SEO and AI Metadata</h3>
+          <p>Structured schema, OpenGraph tags, and robots metadata make the command model readable to search engines and AI tooling.</p>
+          <div class="feature-code"><code>Machine-readable command index enabled</code></div>
         </div>
       </div>
     </div>
@@ -288,7 +288,7 @@
             <div class="step-num">1</div>
             <div class="step-body">
               <h4>Download the installer</h4>
-              <p>Go to the <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank">Latest Release</a> and download <code>indus-setup-vX.Y.Z-windows-amd64.exe</code></p>
+              <p>Go to the <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank">Latest Release</a> and download the INDUS setup package for the current release line.</p>
               <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank" class="btn btn-primary btn-sm">⬇ Download Latest</a>
             </div>
           </div>
@@ -303,12 +303,12 @@
             <div class="step-num">3</div>
             <div class="step-body">
               <h4>Open a new terminal</h4>
-              <p>Type <code>indus</code> in any new PowerShell / CMD window. PATH is set at user level — no admin required.</p>
+              <p>Type <code>ind</code> in any new PowerShell / CMD window. A compatibility alias for <code>indus</code> can still be shipped during migration.</p>
             </div>
           </div>
         </div>
         <div class="install-info-grid">
-          <div class="install-detail"><span class="detail-label">Install location</span><code>%LOCALAPPDATA%\INDUS\indus.exe</code></div>
+          <div class="install-detail"><span class="detail-label">Install location</span><code>%LOCALAPPDATA%\INDUS\ind.exe</code></div>
           <div class="install-detail"><span class="detail-label">PATH</span><code>Auto-added (user level)</code></div>
           <div class="install-detail"><span class="detail-label">Desktop shortcut</span><code>INDUS Terminal</code></div>
           <div class="install-detail"><span class="detail-label">Right-click</span><code>Open INDUS Terminal here</code></div>
@@ -322,16 +322,16 @@
           <div class="install-step">
             <div class="step-num">1</div>
             <div class="step-body">
-              <h4>Download <code>indus.exe</code></h4>
-              <p>Go to <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank">Latest Release</a> and download the standalone <code>indus.exe</code> binary.</p>
-              <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank" class="btn btn-primary btn-sm">⬇ Download indus.exe</a>
+              <h4>Download <code>ind.exe</code></h4>
+              <p>Go to <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank">Latest Release</a> and download the standalone <code>ind.exe</code> binary.</p>
+              <a href="https://github.com/hari7261/INDUS/releases/latest" target="_blank" class="btn btn-primary btn-sm">⬇ Download ind.exe</a>
             </div>
           </div>
           <div class="install-step">
             <div class="step-num">2</div>
             <div class="step-body">
               <h4>Drop it anywhere &amp; run</h4>
-              <p>Double-click <code>indus.exe</code> or run it from any folder. No install needed — fully portable.</p>
+              <p>Double-click <code>ind.exe</code> or run it from any folder. No install needed — fully portable.</p>
             </div>
           </div>
         </div>
@@ -341,17 +341,17 @@
         <div class="code-block-wrap">
           <div class="code-block-header">
             <span>PowerShell / CMD</span>
-            <button class="copy-btn" data-copy="git clone https://github.com/hari7261/INDUS.git&#10;cd INDUS&#10;go build -o indus.exe ./cmd/indus-terminal&#10;./indus.exe">Copy</button>
+            <button class="copy-btn" data-copy="git clone https://github.com/hari7261/INDUS.git&#10;cd INDUS&#10;go build -o ind.exe ./cmd/indus-terminal&#10;./ind.exe">Copy</button>
           </div>
           <pre class="code-block"><span class="c"># Clone the repo</span>
 git clone https://github.com/hari7261/INDUS.git
 cd INDUS
 
 <span class="c"># Build binary only (requires Go 1.21+)</span>
-go build -o indus.exe ./cmd/indus-terminal
+go build -o ind.exe ./cmd/indus-terminal
 
 <span class="c"># Run</span>
-./indus.exe</pre>
+./ind.exe</pre>
         </div>
         <div class="code-block-wrap mt">
           <div class="code-block-header">
@@ -360,7 +360,7 @@ go build -o indus.exe ./cmd/indus-terminal
           </div>
           <pre class="code-block"><span class="c"># Requires Inno Setup 6 (choco install innosetup)</span>
 build.bat
-<span class="c"># → dist\indus.exe</span>
+<span class="c"># → dist\ind.exe</span>
 <span class="c"># → dist\indus-setup.exe</span></pre>
         </div>
       </div>
@@ -373,67 +373,71 @@ build.bat
       <div class="section-header">
         <span class="section-tag">Quick Start</span>
         <h2>Start building immediately</h2>
-        <p>Every command you need, right away.</p>
+        <p>Native commands, registry-backed resolution, and versioned docs from the same landing page.</p>
       </div>
       <div class="usage-grid">
         <div class="usage-block">
-          <h4>HTTP Requests</h4>
+          <h4>System &amp; Network</h4>
           <div class="code-block-wrap">
-            <button class="copy-btn" data-copy="http get https://api.github.com/users/hari7261&#10;http post https://api.example.com/users '{&quot;name&quot;:&quot;John&quot;}'&#10;http put https://api.example.com/users/1 '{&quot;name&quot;:&quot;Jane&quot;}'&#10;http delete https://api.example.com/users/1">Copy</button>
-            <pre class="code-block"><span class="prompt">INDUS &gt;</span> http get https://api.github.com/users/hari7261
-<span class="prompt">INDUS &gt;</span> http post https://api.example.com/users <span class="str">'{"name":"John"}'</span>
-<span class="prompt">INDUS &gt;</span> http put https://api.example.com/users/1 <span class="str">'{"name":"Jane"}'</span>
-<span class="prompt">INDUS &gt;</span> http delete https://api.example.com/users/1</pre>
+            <button class="copy-btn" data-copy="ind sys stats&#10;ind net status --url https://example.com&#10;ind net pingx example.com --port 443&#10;ind net fetch https://example.com">Copy</button>
+            <pre class="code-block"><span class="prompt">INDUS &gt;</span> ind sys stats
+<span class="prompt">INDUS &gt;</span> ind net status --url https://example.com
+<span class="prompt">INDUS &gt;</span> ind net pingx example.com --port 443
+<span class="prompt">INDUS &gt;</span> ind net fetch https://example.com</pre>
           </div>
         </div>
         <div class="usage-block">
-          <h4>Pipelines</h4>
+          <h4>Project &amp; Workspace</h4>
           <div class="code-block-wrap">
-            <button class="copy-btn" data-copy="run --tasks 10 | http post https://httpbin.org/post&#10;version | http post https://my-logger.com/logs">Copy</button>
-            <pre class="code-block"><span class="prompt">INDUS &gt;</span> run --tasks 10 | http post https://httpbin.org/post
-<span class="prompt">INDUS &gt;</span> version | http post https://my-logger.com/logs</pre>
+            <button class="copy-btn" data-copy="ind proj create orbit-app --dir .&#10;ind proj build .\\orbit-app&#10;ind work init orbit-space&#10;ind work archive .">Copy</button>
+            <pre class="code-block"><span class="prompt">INDUS &gt;</span> ind proj create orbit-app --dir .
+<span class="prompt">INDUS &gt;</span> ind proj build .\orbit-app
+<span class="prompt">INDUS &gt;</span> ind work init orbit-space
+<span class="prompt">INDUS &gt;</span> ind work archive .</pre>
           </div>
         </div>
         <div class="usage-block">
-          <h4>Project Scaffold</h4>
+          <h4>Environment &amp; Files</h4>
           <div class="code-block-wrap">
-            <button class="copy-btn" data-copy="init --name my-service --dir C:\projects">Copy</button>
-            <pre class="code-block"><span class="prompt">INDUS &gt;</span> init --name my-service --dir C:\projects
-project_name=my-service
-project_dir=C:\projects\my-service</pre>
+            <button class="copy-btn" data-copy="ind env set INDUS_PROFILE production&#10;ind env list&#10;ind fs tree . --depth 2&#10;ind fs digest docs\\commands.html">Copy</button>
+            <pre class="code-block"><span class="prompt">INDUS &gt;</span> ind env set INDUS_PROFILE production
+<span class="prompt">INDUS &gt;</span> ind env list
+<span class="prompt">INDUS &gt;</span> ind fs tree . --depth 2
+<span class="prompt">INDUS &gt;</span> ind fs digest docs\commands.html</pre>
           </div>
         </div>
         <div class="usage-block">
-          <h4>Colors &amp; Shell</h4>
+          <h4>Docs &amp; Terminal</h4>
           <div class="code-block-wrap">
-            <button class="copy-btn" data-copy="color o&#10;git log --oneline -5&#10;docker ps&#10;ipconfig /all">Copy</button>
-            <pre class="code-block"><span class="prompt">INDUS &gt;</span> color o       <span class="c"># orange prompt</span>
-<span class="prompt">INDUS &gt;</span> git log --oneline -5
-<span class="prompt">INDUS &gt;</span> docker ps
-<span class="prompt">INDUS &gt;</span> ipconfig /all</pre>
+            <button class="copy-btn" data-copy="ind docs&#10;ind term theme saffron&#10;ind term history --limit 10&#10;ind version">Copy</button>
+            <pre class="code-block"><span class="prompt">INDUS &gt;</span> ind docs
+<span class="prompt">INDUS &gt;</span> ind term theme saffron
+<span class="prompt">INDUS &gt;</span> ind term history --limit 10
+<span class="prompt">INDUS &gt;</span> ind version</pre>
           </div>
         </div>
       </div>
 
       <div class="commands-table-wrap">
-        <h3>Built-in Commands</h3>
+        <h3>Native Command Samples</h3>
         <div class="table-wrap">
         <table class="commands-table">
-          <thead><tr><th>Command</th><th>Description</th><th>Pipeable</th></tr></thead>
+          <thead><tr><th>Command</th><th>Description</th><th>Category</th></tr></thead>
           <tbody>
-            <tr><td><code>http &lt;method&gt; &lt;url&gt;</code></td><td>HTTP GET / POST / PUT / DELETE</td><td><span class="icon-yes">✓</span></td></tr>
-            <tr><td><code>run --workers N --tasks N</code></td><td>Concurrent workload simulation</td><td><span class="icon-yes">✓</span></td></tr>
-            <tr><td><code>init --name N --dir D</code></td><td>Project scaffolding</td><td><span class="icon-yes">✓</span></td></tr>
-            <tr><td><code>version</code></td><td>Version + build info</td><td><span class="icon-yes">✓</span></td></tr>
-            <tr><td><code>color &lt;letter&gt;</code></td><td>Change prompt accent color</td><td>—</td></tr>
-            <tr><td><code>cd &lt;path&gt;</code></td><td>Change directory</td><td>—</td></tr>
-            <tr><td><code>pwd</code></td><td>Print working directory</td><td>—</td></tr>
-            <tr><td><code>clear</code> / <code>cls</code></td><td>Clear screen</td><td>—</td></tr>
-            <tr><td><code>help</code></td><td>Show all commands</td><td>—</td></tr>
-            <tr><td><code>exit</code> / <code>quit</code></td><td>Exit INDUS</td><td>—</td></tr>
+            <tr><td><code>ind sys stats</code></td><td>Show fast runtime and memory metrics</td><td>system</td></tr>
+            <tr><td><code>ind proj create</code></td><td>Create a new INDUS project scaffold</td><td>project</td></tr>
+            <tr><td><code>ind env list</code></td><td>List managed environment values</td><td>environment</td></tr>
+            <tr><td><code>ind fs tree</code></td><td>Render a compact file tree</td><td>filesystem</td></tr>
+            <tr><td><code>ind net scan</code></td><td>Resolve interfaces or a target host</td><td>network</td></tr>
+            <tr><td><code>ind dev bench</code></td><td>Benchmark a native command path</td><td>developer</td></tr>
+            <tr><td><code>ind pkg search</code></td><td>Search the internal package catalog</td><td>package</td></tr>
+            <tr><td><code>ind term theme</code></td><td>Set the active terminal theme</td><td>terminal</td></tr>
+            <tr><td><code>ind work init</code></td><td>Register the current folder as a workspace</td><td>workspace</td></tr>
+            <tr><td><code>ind version</code></td><td>Print release and registry information</td><td>core</td></tr>
           </tbody>
         </table>
         </div>
+        <p class="mt-sm">Full reference: <a href="commands.html">commands.html</a> • Release history: <a href="versions.html">versions.html</a> • Release notes: <a href="version/v1.4.0.html">v1.4.0</a></p>
       </div>
 
       <div class="config-block">
@@ -456,52 +460,51 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
   <section class="section section--alt" id="pipelines">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Pipelines</span>
-        <h2>Zero-process streaming pipelines</h2>
-        <p>Commands talk to each other via <code>io.Pipe</code> — no shell, no subprocesses, no temp files.</p>
+        <span class="section-tag">Command Engine</span>
+        <h2>Registry-backed native command execution</h2>
+        <p>The v1.4.0 runtime parses native <code>ind</code> commands, resolves them through the registry, and executes only the module it needs.</p>
       </div>
       <div class="pipeline-diagram">
         <div class="pipe-box pipe-box--input">
           <div class="pipe-label">Input</div>
-          <code>run --tasks 10 | http post https://api.example.com</code>
+          <code>ind sys stats</code>
         </div>
-        <div class="pipe-arrow">↓ splitPipeline()</div>
+        <div class="pipe-arrow">↓ parseCommandLine() + registry lookup</div>
         <div class="pipe-stages">
           <div class="pipe-stage">
-            <div class="pipe-stage-title">Stage 1 — goroutine</div>
-            <div class="pipe-stage-cmd"><code>run.RunStream(ctx, args, os.Stdin, pipeWriter)</code></div>
-            <div class="pipe-stage-sub">writes machine output to pipe write end</div>
+            <div class="pipe-stage-title">Stage 1 — parser</div>
+            <div class="pipe-stage-cmd"><code>tokens → command path → parsed options</code></div>
+            <div class="pipe-stage-sub">lightweight parsing without a heavy CLI framework</div>
           </div>
           <div class="pipe-connector">
             <div class="pipe-connector-line"></div>
-            <div class="pipe-connector-label">io.Pipe()</div>
+            <div class="pipe-connector-label">registry.json</div>
           </div>
           <div class="pipe-stage">
-            <div class="pipe-stage-title">Stage 2 — goroutine</div>
-            <div class="pipe-stage-cmd"><code>http.RunStream(ctx, args, pipeReader, os.Stdout)</code></div>
-            <div class="pipe-stage-sub">reads body from pipe, POSTs to URL</div>
+            <div class="pipe-stage-title">Stage 2 — lazy module</div>
+            <div class="pipe-stage-cmd"><code>system.Execute(ctx, invocation)</code></div>
+            <div class="pipe-stage-sub">cached reads, safe wrappers, and structured responses</div>
           </div>
         </div>
         <div class="pipe-rules">
-          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff4c4c" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> One failure cancels the entire chain via shared context</div>
-          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Diagnostic/progress always goes to <code>stderr</code> — never pollutes the pipe</div>
-          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff4c4c" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Ctrl+C stops all stages immediately</div>
-          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg> POST/PUT reads pipe as request body when no inline data given</div>
+          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff4c4c" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Panic recovery prevents a single command from crashing the terminal</div>
+          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Short-lived read commands can return cached results for rapid local execution</div>
+          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff4c4c" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Unknown or invalid input returns structured IND error codes with safe suggestions</div>
+          <div class="pipe-rule"><svg class="rule-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg> Module loading is lazy, so only the active command category enters memory</div>
         </div>
       </div>
 
-      <h3 class="mt-lg">Command Support Matrix</h3>
+      <h3 class="mt-lg">Execution Matrix</h3>
       <div class="table-wrap">
         <table class="commands-table">
-          <thead><tr><th>Command</th><th>Standalone</th><th>In Pipeline</th><th>Reads stdin</th></tr></thead>
+          <thead><tr><th>Command</th><th>Cached</th><th>Lazy Loaded</th><th>Failure Mode</th></tr></thead>
           <tbody>
-            <tr><td><code>version</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>—</td></tr>
-            <tr><td><code>run</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>—</td></tr>
-            <tr><td><code>init</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>—</td></tr>
-            <tr><td><code>http get</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>—</td></tr>
-            <tr><td><code>http post</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span> body from pipe</td></tr>
-            <tr><td><code>http put</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span> body from pipe</td></tr>
-            <tr><td><code>http delete</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>—</td></tr>
+            <tr><td><code>ind sys stats</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>Returns cache or <code>IND_ERR_004</code></td></tr>
+            <tr><td><code>ind status</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>Safe fallback response</td></tr>
+            <tr><td><code>ind proj create</code></td><td>—</td><td><span class="icon-yes">✓</span></td><td>Writes scaffold or returns structured error</td></tr>
+            <tr><td><code>ind env list</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>Managed state snapshot</td></tr>
+            <tr><td><code>ind dev reload</code></td><td>—</td><td><span class="icon-yes">✓</span></td><td>Reloads registry and clears cache</td></tr>
+            <tr><td><code>ind term speed</code></td><td><span class="icon-yes">✓</span></td><td><span class="icon-yes">✓</span></td><td>Shows recent engine metrics</td></tr>
           </tbody>
         </table>
       </div>
@@ -512,66 +515,66 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
   <section class="section" id="colors">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Prompt Colors</span>
-        <h2>10 accent themes</h2>
-        <p>Change your prompt color any time with a single command.</p>
+        <span class="section-tag">Terminal Palette</span>
+        <h2>The original INDUS color language</h2>
+        <p>This landing page keeps the original palette preview. In the runtime, terminal theming is managed through <code>ind term theme ...</code>.</p>
       </div>
       <div class="colors-grid">
         <div class="color-swatch" style="--c:#e74c3c" onclick="showColorDemo('r','Red')">
           <div class="swatch-dot"></div>
           <div class="swatch-info">
-            <code>color r</code>
+            <code>palette red</code>
             <span>Red</span>
           </div>
           <div class="swatch-preview" style="color:#e74c3c">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#2ecc71" onclick="showColorDemo('g','Green')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color g</code><span>Green</span></div>
+          <div class="swatch-info"><code>palette green</code><span>Green</span></div>
           <div class="swatch-preview" style="color:#2ecc71">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#3498db" onclick="showColorDemo('b','Blue')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color b</code><span>Blue</span></div>
+          <div class="swatch-info"><code>palette blue</code><span>Blue</span></div>
           <div class="swatch-preview" style="color:#3498db">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#f1c40f" onclick="showColorDemo('y','Yellow')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color y</code><span>Yellow</span></div>
+          <div class="swatch-info"><code>palette yellow</code><span>Yellow</span></div>
           <div class="swatch-preview" style="color:#f1c40f">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch active" style="--c:#00bcd4" onclick="showColorDemo('c','Cyan')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color c</code><span>Cyan ★ default</span></div>
+          <div class="swatch-info"><code>palette cyan</code><span>Cyan</span></div>
           <div class="swatch-preview" style="color:#00bcd4">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#9b59b6" onclick="showColorDemo('m','Magenta')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color m</code><span>Magenta</span></div>
+          <div class="swatch-info"><code>palette magenta</code><span>Magenta</span></div>
           <div class="swatch-preview" style="color:#9b59b6">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#ecf0f1" onclick="showColorDemo('w','White')">
           <div class="swatch-dot" style="border:1px solid #555"></div>
-          <div class="swatch-info"><code>color w</code><span>White</span></div>
+          <div class="swatch-info"><code>palette white</code><span>White</span></div>
           <div class="swatch-preview" style="color:#ecf0f1">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#FF9933" onclick="showColorDemo('o','Orange')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color o</code><span>Orange</span></div>
+          <div class="swatch-info"><code>palette orange</code><span>Orange</span></div>
           <div class="swatch-preview" style="color:#FF9933">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#ff6b9d" onclick="showColorDemo('p','Pink')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color p</code><span>Pink</span></div>
+          <div class="swatch-info"><code>palette pink</code><span>Pink</span></div>
           <div class="swatch-preview" style="color:#ff6b9d">INDUS ~/projects &gt;</div>
         </div>
         <div class="color-swatch" style="--c:#00bcd4" onclick="showColorDemo('d','Default')">
           <div class="swatch-dot"></div>
-          <div class="swatch-info"><code>color d</code><span>Default (reset)</span></div>
+          <div class="swatch-info"><code>palette default</code><span>Default</span></div>
           <div class="swatch-preview" style="color:#00bcd4">INDUS ~/projects &gt;</div>
         </div>
       </div>
-      <p class="colors-note">Click any card to preview. Color persists for the session.</p>
+      <p class="colors-note">Click any card to preview the original palette. Runtime theme controls are documented on <a href="commands.html">commands.html</a>.</p>
     </div>
   </section>
 
@@ -615,19 +618,19 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
             </tr>
           </thead>
           <tbody>
-            <tr><td>Built-in HTTP client</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span><sup title="Invoke-WebRequest / curl alias — not a purpose-built API client">*</sup></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>In-process pipelines between built-in commands (no shell)</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>Project scaffolding</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>Concurrent workload runner</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>10 prompt color themes</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
-            <tr><td>System command fallback</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
-            <tr><td>Zero external dependencies</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
+            <tr><td>Native <code>ind</code> command surface</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Registry-backed command lookup</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Versioned documentation UI</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td></tr>
+            <tr><td>AI-readable command index</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Project and workspace lifecycle</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
+            <tr><td>Environment, filesystem, and network toolsets</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td></tr>
+            <tr><td>Structured error codes</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td></tr>
             <tr><td>One-click installer</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
-            <tr><td>Right-click "Open here"</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td><td class="yes"><span class="icon-yes">✓</span></td></tr>
+            <tr><td>Cross-platform runtime target</td><td class="col-indus yes"><span class="icon-yes">✓</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="partial"><span class="icon-warn">!</span></td><td class="no"><span class="icon-no">✕</span></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="compare-note"><sup>*</sup> PowerShell HTTP via <code>Invoke-WebRequest</code> / <code>curl</code> alias — not a purpose-built API client with retry logic.</p>
+      <p class="compare-note">INDUS v1.4.0 is built as an independent native command ecosystem, not a thin wrapper around host-shell primitives.</p>
     </div>
   </section>
 
@@ -642,12 +645,12 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
         <div class="roadmap-col">
           <h4><svg class="rm-svg rm-svg--done" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Shipped</h4>
           <ul class="roadmap-list done">
-            <li>HTTP client (GET / POST / PUT / DELETE)</li>
-            <li>Retry + exponential back-off</li>
-            <li>Internal streaming pipelines (<code>|</code>)</li>
-            <li>10 prompt color themes</li>
-            <li>One-click Inno Setup installer</li>
-            <li>Auto GitHub Releases via CI</li>
+            <li>58 native <code>ind</code> commands</li>
+            <li>Registry-backed command lookup</li>
+            <li>Lazy loading and short-lived command caching</li>
+            <li>Versioned docs pages and release snapshots</li>
+            <li>SEO metadata and machine-readable command indexing</li>
+            <li>Installer and portable binary outputs</li>
           </ul>
         </div>
         <div class="roadmap-col">
@@ -655,11 +658,48 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
           <ul class="roadmap-list">
             <li>Command history (↑ / ↓)</li>
             <li>Tab completion</li>
-            <li><code>grep</code> built-in for pipeline filtering</li>
+            <li>Script execution for native INDUS workflows</li>
             <li>Script file execution (<code>.indus</code>)</li>
             <li>Plugin system</li>
-            <li>Cross-platform support (Linux / macOS)</li>
+            <li>Expanded cross-platform packaging</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DOCS HUB ── -->
+  <section class="section" id="docs-hub">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Documentation</span>
+        <h2>Versioned reference pages</h2>
+        <p>The landing page keeps the original INDUS presentation while the detailed reference moves into dedicated documentation pages.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card feature-card--accent">
+          <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <h3>Command Reference</h3>
+          <p>Search the full native command catalog for system, project, environment, filesystem, network, package, developer, terminal, workspace, and core commands.</p>
+          <div class="hero-actions">
+            <a href="commands.html" class="btn btn-primary btn-sm">Open commands.html</a>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3>Version History</h3>
+          <p>Track the 1.3.0 legacy baseline and the 1.4.0 production line in one place, with release dates, migration context, and change summaries.</p>
+          <div class="hero-actions">
+            <a href="versions.html" class="btn btn-outline btn-sm">Open versions.html</a>
+          </div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg class="feat-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="12 22.08 12 17"/><polyline points="12 17 7.5 14.6"/><polyline points="12 17 16.5 14.6"/></svg></div>
+          <h3>Release Notes</h3>
+          <p>Review architecture changes, migration guidance, and release verification targets for the current production version.</p>
+          <div class="hero-actions">
+            <a href="version/v1.4.0.html" class="btn btn-outline btn-sm">Open v1.4.0 notes</a>
+          </div>
         </div>
       </div>
     </div>
@@ -678,14 +718,15 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
           <h5>Resources</h5>
           <a href="#features">Features</a>
           <a href="#install">Install</a>
-          <a href="#usage">Docs</a>
+          <a href="commands.html">Command Reference</a>
+          <a href="versions.html">Versions</a>
           <a href="#releases">Releases</a>
         </div>
         <div class="footer-col">
           <h5>Project</h5>
           <a href="https://github.com/hari7261/INDUS" target="_blank">GitHub</a>
           <a href="https://github.com/hari7261/INDUS/issues" target="_blank">Issues</a>
-          <a href="https://github.com/hari7261/INDUS/releases" target="_blank">Changelog</a>
+          <a href="https://github.com/hari7261/INDUS/releases" target="_blank">GitHub Releases</a>
           <a href="https://github.com/hari7261/INDUS/blob/master/README.md" target="_blank">README</a>
         </div>
         <div class="footer-col">
@@ -721,6 +762,6 @@ max_retries = 3     <span class="c"># Retry count for idempotent methods</span><
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>

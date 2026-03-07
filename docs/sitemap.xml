@@ -1,66 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-  <!-- Main page -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://hari7261.github.io/INDUS/</loc>
-    <lastmod>2025-07-01</lastmod>
+    <lastmod>2026-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://hari7261.github.io/INDUS/images/image1.png</image:loc>
-      <image:caption>INDUS Terminal — Production-grade developer terminal for Windows</image:caption>
-      <image:title>INDUS Terminal banner</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://hari7261.github.io/INDUS/images/image.png</image:loc>
-      <image:caption>INDUS Terminal screenshot showing HTTP client and pipeline features</image:caption>
-      <image:title>INDUS Terminal in action</image:title>
-    </image:image>
   </url>
-
-  <!-- Section anchors (treated as distinct crawl targets) -->
   <url>
-    <loc>https://hari7261.github.io/INDUS/#features</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://hari7261.github.io/INDUS/commands.html</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hari7261.github.io/INDUS/versions.html</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc>https://hari7261.github.io/INDUS/#install</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://hari7261.github.io/INDUS/#usage</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://hari7261.github.io/INDUS/#pipelines</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://hari7261.github.io/INDUS/#colors</loc>
+    <loc>https://hari7261.github.io/INDUS/version/v1.3.0.html</loc>
+    <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
-    <loc>https://hari7261.github.io/INDUS/#releases</loc>
+    <loc>https://hari7261.github.io/INDUS/version/v1.4.0.html</loc>
+    <lastmod>2026-03-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
-    <loc>https://hari7261.github.io/INDUS/#compare</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://hari7261.github.io/INDUS/commands.json</loc>
+    <lastmod>2026-03-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
-
 </urlset>

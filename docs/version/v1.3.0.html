@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDUS v1.3.0 | Legacy Snapshot</title>
+  <meta name="description" content="Legacy architecture snapshot for INDUS Terminal 1.3.0, released on February 26, 2026.">
+  <meta name="keywords" content="Indus 1.3.0, legacy docs, terminal architecture">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="INDUS v1.3.0 Legacy Snapshot">
+  <meta property="og:description" content="Architecture and migration context for the 1.3.0 release.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hari7261.github.io/INDUS/version/v1.3.0.html">
+  <link rel="canonical" href="https://hari7261.github.io/INDUS/version/v1.3.0.html">
+  <link rel="icon" href="../icon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark"></span><span>INDUS Docs</span></a>
+      <div class="nav-links">
+        <a href="../index.html">Overview</a>
+        <a href="../commands.html">Commands</a>
+        <a href="../versions.html">Versions</a>
+        <a href="v1.3.0.html" aria-current="page">v1.3.0</a>
+      </div>
+      <div class="nav-tools">
+        <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="panel">
+        <span class="eyebrow">Released February 26, 2026</span>
+        <h1>v1.3.0 was the pre-registry INDUS shell.</h1>
+        <p>The 1.3.0 line exposed a smaller built-in set around <span class="mono">init</span>, <span class="mono">run</span>, <span class="mono">http</span>, and <span class="mono">version</span>, then fell back to host shell commands for anything else.</p>
+      </div>
+      <aside class="card">
+        <h3>Legacy characteristics</h3>
+        <ul class="list">
+          <li>Single-page documentation site</li>
+          <li>No central registry JSON</li>
+          <li>Windows-focused entrypoint code</li>
+          <li>Mixed native and shell execution model</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-grid">
+        <article class="card span-6">
+          <h2>Built-in commands</h2>
+          <ul class="list">
+            <li><span class="mono">init</span> project scaffold</li>
+            <li><span class="mono">run</span> simulated workload runner</li>
+            <li><span class="mono">http</span> HTTP GET/POST/PUT/DELETE</li>
+            <li><span class="mono">version</span> release output</li>
+          </ul>
+        </article>
+        <article class="card span-6">
+          <h2>Migration to 1.4.0</h2>
+          <ul class="list">
+            <li><span class="mono">init</span> becomes <span class="mono">ind proj init</span></li>
+            <li><span class="mono">run</span> maps to <span class="mono">ind dev bench</span></li>
+            <li><span class="mono">http</span> becomes <span class="mono">ind net fetch</span></li>
+            <li>Shell fallback is removed from the native path</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="small">Legacy snapshot retained for migration context.</span>
+      <div class="foot-links small">
+        <a href="v1.4.0.html">See v1.4.0</a>
+        <a href="../commands.html">Current Commands</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="../script.js"></script>
+</body>
+</html>

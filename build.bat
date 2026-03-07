@@ -7,7 +7,7 @@ echo ========================================================
 echo.
 
 :: ── version info ──────────────────────────────────────────
-set VERSION=1.3.0
+set VERSION=1.4.0
 for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set COMMIT=%%i
 if "!COMMIT!"=="" set COMMIT=none
 set BUILD_TIME=%date:~-4%-%date:~3,2%-%date:~0,2%T%time:~0,2%:%time:~3,2%:%time:~6,2%Z
@@ -31,14 +31,16 @@ if %errorlevel%==0 (
 )
 
 :: ── build binary ───────────────────────────────────────────
-echo [2/3] Building indus.exe...
+echo [2/3] Building ind.exe...
 set LDFLAGS=-s -w -X main.version=%VERSION% -X main.commit=%COMMIT% -X "main.buildTime=%BUILD_TIME%"
-go build -ldflags "%LDFLAGS%" -o dist\indus.exe .\cmd\indus-terminal
+go build -ldflags "%LDFLAGS%" -o dist\ind.exe .\cmd\indus-terminal
 if %errorlevel% neq 0 (
     echo ERROR: Go build failed!
     pause & exit /b 1
 )
-echo       dist\indus.exe  OK
+copy /Y dist\ind.exe dist\indus.exe >nul
+echo       dist\ind.exe    OK
+echo       dist\indus.exe  compatibility alias OK
 
 :: ── build installer (requires Inno Setup) ─────────────────
 echo [3/3] Building installer...
@@ -60,7 +62,7 @@ echo ========================================================
 echo  Build complete!
 echo ========================================================
 echo.
-echo  dist\indus.exe        - Portable binary
+echo  dist\ind.exe          - Portable binary
 echo  dist\indus-setup.exe  - Windows installer wizard
 echo.
 echo  To release: git tag v%VERSION% ^&^& git push --tags

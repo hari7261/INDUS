@@ -55,11 +55,17 @@ jobs:
           echo "commit=$COMMIT"    >> "$GITHUB_OUTPUT"
           echo "build_time=$BUILD_TIME" >> "$GITHUB_OUTPUT"
 
-      - name: Enforce signing secrets
+      - name: Resolve signing mode
+        id: signing_mode
         shell: powershell
         run: |
-          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_SIGN_PFX_BASE64) -or [string]::IsNullOrWhiteSpace($env:WINDOWS_SIGN_PFX_PASSWORD)) {
-            throw "Release blocked: configure WINDOWS_SIGN_PFX_BASE64 and WINDOWS_SIGN_PFX_PASSWORD secrets."
+          $enabled = -not [string]::IsNullOrWhiteSpace($env:WINDOWS_SIGN_PFX_BASE64) -and -not [string]::IsNullOrWhiteSpace($env:WINDOWS_SIGN_PFX_PASSWORD)
+          if ($enabled) {
+            "enabled=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+            Write-Host "Code signing enabled."
+          } else {
+            "enabled=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+            Write-Host "::warning::Code signing disabled (missing WINDOWS_SIGN_PFX_BASE64 or WINDOWS_SIGN_PFX_PASSWORD). Releasing unsigned artifacts."
           }
 
       # ── 4. Install rsrc (icon embedder) ───────────────────────────────
@@ -114,6 +120,7 @@ jobs:
 
       # ── 6.1 Prepare code-sign certificate ──────────────────────────────
       - name: Prepare code-sign cert
+        if: ${{ steps.signing_mode.outputs.enabled == 'true' }}
         shell: powershell
         run: |
           $pfxPath = Join-Path $env:RUNNER_TEMP "indus-codesign.pfx"
@@ -122,6 +129,7 @@ jobs:
 
       # ── 6.2 Sign binaries ───────────────────────────────────────────────
       - name: Sign binaries
+        if: ${{ steps.signing_mode.outputs.enabled == 'true' }}
         shell: powershell
         run: |
           $signtool = Get-Command signtool.exe -ErrorAction SilentlyContinue
@@ -159,6 +167,7 @@ jobs:
 
       # ── 9.1 Sign installer ──────────────────────────────────────────────
       - name: Sign installer
+        if: ${{ steps.signing_mode.outputs.enabled == 'true' }}
         shell: powershell
         run: |
           $signtool = Get-Command signtool.exe -ErrorAction SilentlyContinue
@@ -174,6 +183,7 @@ jobs:
 
       # ── 10. Generate SHA-256 checksums ────────────────────────────────
       - name: Verify Authenticode signatures
+        if: ${{ steps.signing_mode.outputs.enabled == 'true' }}
         shell: powershell
         run: |
           $files = @(

@@ -40,14 +40,14 @@ This now enforces:
 - Go unit tests
 - installer build validation (unless `SKIP_INSTALLER=1`)
 
-## 5. Signed release requirement
+## 5. Signed release configuration
 
-Production release workflow requires these GitHub secrets:
+If these GitHub secrets are configured, CI signs Windows artifacts:
 
 - `WINDOWS_SIGN_PFX_BASE64`
 - `WINDOWS_SIGN_PFX_PASSWORD`
 
-Unsigned binaries are blocked in CI for tagged releases.
+If either secret is missing, CI still releases unsigned artifacts and logs a warning.
 
 ## 6. SmartScreen note
 

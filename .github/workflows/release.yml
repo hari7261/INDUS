@@ -55,6 +55,13 @@ jobs:
           echo "commit=$COMMIT"    >> "$GITHUB_OUTPUT"
           echo "build_time=$BUILD_TIME" >> "$GITHUB_OUTPUT"
 
+      - name: Enforce signing secrets
+        shell: powershell
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:WINDOWS_SIGN_PFX_BASE64) -or [string]::IsNullOrWhiteSpace($env:WINDOWS_SIGN_PFX_PASSWORD)) {
+            throw "Release blocked: configure WINDOWS_SIGN_PFX_BASE64 and WINDOWS_SIGN_PFX_PASSWORD secrets."
+          }
+
       # ── 4. Install rsrc (icon embedder) ───────────────────────────────
       - name: Install rsrc
         run: go install github.com/akavel/rsrc@latest
@@ -92,18 +99,16 @@ jobs:
             exit /b 1
           )
 
-      # ── 6.1 Prepare code-sign certificate (optional) ───────────────────
+      # ── 6.1 Prepare code-sign certificate ──────────────────────────────
       - name: Prepare code-sign cert
-        if: ${{ env.WINDOWS_SIGN_PFX_BASE64 != '' && env.WINDOWS_SIGN_PFX_PASSWORD != '' }}
         shell: powershell
         run: |
           $pfxPath = Join-Path $env:RUNNER_TEMP "indus-codesign.pfx"
           [System.IO.File]::WriteAllBytes($pfxPath, [System.Convert]::FromBase64String($env:WINDOWS_SIGN_PFX_BASE64))
           "INDUS_PFX_PATH=$pfxPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-      # ── 6.2 Sign binaries (optional) ────────────────────────────────────
+      # ── 6.2 Sign binaries ───────────────────────────────────────────────
       - name: Sign binaries
-        if: ${{ env.INDUS_PFX_PATH != '' }}
         shell: powershell
         run: |
           $signtool = Get-Command signtool.exe -ErrorAction SilentlyContinue
@@ -139,9 +144,8 @@ jobs:
         run: |
           rename dist\indus-setup.exe indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe
 
-      # ── 9.1 Sign installer (optional) ───────────────────────────────────
+      # ── 9.1 Sign installer ──────────────────────────────────────────────
       - name: Sign installer
-        if: ${{ env.INDUS_PFX_PATH != '' }}
         shell: powershell
         run: |
           $signtool = Get-Command signtool.exe -ErrorAction SilentlyContinue
@@ -156,6 +160,21 @@ jobs:
           & $toolPath sign /fd SHA256 /f "$env:INDUS_PFX_PATH" /p "$env:WINDOWS_SIGN_PFX_PASSWORD" /tr $timestamp /td SHA256 "dist\indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe"
 
       # ── 10. Generate SHA-256 checksums ────────────────────────────────
+      - name: Verify Authenticode signatures
+        shell: powershell
+        run: |
+          $files = @(
+            "dist\ind.exe",
+            "dist\indus.exe",
+            "dist\indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe"
+          )
+          foreach ($f in $files) {
+            $sig = Get-AuthenticodeSignature $f
+            if ($sig.Status -ne "Valid") {
+              throw "Signature invalid for $f: $($sig.Status) - $($sig.StatusMessage)"
+            }
+          }
+
       - name: Generate checksums
         shell: powershell
         run: |

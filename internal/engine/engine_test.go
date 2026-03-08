@@ -19,7 +19,7 @@ func newTestEngine(t testing.TB) *Engine {
 	t.Setenv("INDUS_CONFIG", filepath.Join(root, "config.cfg"))
 
 	engine, err := New(Options{
-		Version:   "1.4.0-test",
+		Version:   "1.5.0-test",
 		Commit:    "test",
 		BuildTime: "2026-03-08T00:00:00Z",
 	})
@@ -31,10 +31,10 @@ func newTestEngine(t testing.TB) *Engine {
 
 func TestRegistryCommandCount(t *testing.T) {
 	engine := newTestEngine(t)
-	if got := len(engine.registry); got < 50 {
-		t.Fatalf("expected at least 50 commands, got %d", got)
+	if got := len(engine.registry); got < 55 {
+		t.Fatalf("expected at least 55 commands, got %d", got)
 	}
-	if engine.RegistryVersion() != "1.4.0" {
+	if engine.RegistryVersion() != "1.5.0" {
 		t.Fatalf("unexpected registry version: %s", engine.RegistryVersion())
 	}
 }

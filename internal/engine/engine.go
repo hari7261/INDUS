@@ -127,7 +127,18 @@ func (e *Engine) ExecuteTokens(ctx context.Context, session *Session, tokens []s
 	commandString := "ind " + strings.Join(normalized, " ")
 	meta, args, ok := e.resolve(normalized)
 	if !ok {
-		return Response{Warning: warning, Err: unknownCommandError(commandString)}
+		// Try to execute as a system command (fallback for git, python, docker, etc.)
+		systemResponse := e.executeSystemCommand(ctx, session, normalized)
+		systemResponse.Warning = warning
+		if systemResponse.Err != nil {
+			// If system command also fails and it's not a known system command, show INDUS error
+			if !isLikelySystemCommand(normalized[0]) {
+				return Response{Warning: warning, Err: unknownCommandError(commandString)}
+			}
+		}
+		// Record metrics for system commands too
+		e.recordMetric(strings.Join(normalized, " "), systemResponse.Duration, false)
+		return systemResponse
 	}
 
 	invocation := Invocation{

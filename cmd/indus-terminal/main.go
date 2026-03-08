@@ -14,14 +14,14 @@ import (
 )
 
 var (
-	version   = "1.4.5"
+	version   = "1.5.0"
 	commit    = "initial"
 	buildTime = "2026-03-08T00:00:00Z"
 )
 
 func main() {
 	enableConsoleFeatures()
-	setConsoleTitle("INDUS Terminal")
+	setConsoleTitle("INDUS")
 
 	runtime, err := engine.New(engine.Options{
 		Version:   version,

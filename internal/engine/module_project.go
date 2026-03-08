@@ -74,7 +74,7 @@ func (m *projectModule) list(inv Invocation) Response {
 	defer m.engine.putBuffer(buffer)
 
 	found := 0
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err := safeWalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}

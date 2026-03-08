@@ -1,12 +1,12 @@
-# INDUS CLI - Complete Capabilities
+# INDUS CLI - Complete Capabilities (v1.5.0)
 
 ## 🎯 What Can INDUS Do?
 
-INDUS is a production-grade CLI that combines built-in developer tools with full system command access.
+INDUS is a production-grade CLI that combines built-in developer tools with full system command access. **Version 1.5.0** brings enhanced system command execution, development toolchain detection, and production-ready stability.
 
 ---
 
-## 🚀 Built-in INDUS Commands
+## 🚀 Built-in INDUS Commands (103 Commands)
 
 ### 1. Project Initialization
 ```bash
@@ -96,7 +96,55 @@ version
 
 ---
 
-## 💻 System Command Passthrough
+### 5. Development Toolchain Detection (NEW in v1.5.0)
+```bash
+# Scan all installed development tools
+ind tools scan
+
+# Check if a specific tool is available
+ind tools check python
+ind tools check docker
+ind tools check git
+```
+
+**What it does:**
+- Detects 30+ development tools and languages
+- Shows version information for each tool
+- Identifies missing toolchains
+- Supports: Python, Node.js, Go, Rust, Java, C++, Docker, Kubernetes, Git, and more
+- Helps verify development environment setup
+
+**Use cases:**
+- Environment setup validation
+- CI/CD environment verification
+- Onboarding new developers
+- Troubleshooting missing dependencies
+- System auditing
+
+**Example Output:**
+```
+platform=windows/amd64
+installed=12
+missing=18
+
+INSTALLED:
+  Python         Python 3.11.0
+  Node.js        v18.16.0
+  Git            git version 2.40.0
+  Docker         Docker version 24.0.2
+  Go             go version go1.21.0
+  ...
+
+NOT FOUND:
+  Rust
+  Java
+  Kubernetes
+  ...
+```
+
+---
+
+## 💻 System Command Passthrough (FULLY FUNCTIONAL in v1.5.0)
 
 INDUS can run **ANY Windows command** directly:
 

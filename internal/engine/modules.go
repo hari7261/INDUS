@@ -11,6 +11,7 @@ func defaultModuleFactories() map[string]moduleFactory {
 		"project":     func(e *Engine) Module { return &projectModule{engine: e} },
 		"system":      func(e *Engine) Module { return &systemModule{engine: e} },
 		"terminal":    func(e *Engine) Module { return &terminalModule{engine: e} },
+		"toolchain":   func(e *Engine) Module { return &toolchainModule{engine: e} },
 		"workspace":   func(e *Engine) Module { return &workspaceModule{engine: e} },
 	}
 }

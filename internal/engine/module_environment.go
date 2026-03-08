@@ -71,7 +71,9 @@ func (m *environmentModule) unset(inv Invocation) Response {
 	}
 
 	key := inv.Parsed.Positionals[0]
-	_ = os.Unsetenv(key)
+	if err := os.Unsetenv(key); err != nil {
+		return Response{Err: commandFailedError(inv.Command, err)}
+	}
 
 	if err := m.engine.state.Update(func(state *PersistentState) {
 		delete(state.ManagedEnv, key)
@@ -107,8 +109,13 @@ func (m *environmentModule) importEnv(inv Invocation) Response {
 		return Response{Err: commandFailedError(inv.Command, err)}
 	}
 
+	setCount := 0
 	for key, value := range values {
-		_ = os.Setenv(key, value)
+		if err := os.Setenv(key, value); err != nil {
+			// Continue setting other variables, but track failures
+			continue
+		}
+		setCount++
 	}
 
 	if err := m.engine.state.Update(func(state *PersistentState) {
@@ -117,6 +124,12 @@ func (m *environmentModule) importEnv(inv Invocation) Response {
 		}
 	}); err != nil {
 		return Response{Err: commandFailedError(inv.Command, err)}
+	}
+
+	if setCount < len(values) {
+		return Response{
+			Output: fmt.Sprintf("imported=%d\nsource=%s\nwarning=%d_variables_failed_to_set", setCount, path, len(values)-setCount),
+		}
 	}
 
 	return Response{Output: fmt.Sprintf("imported=%d\nsource=%s", len(values), path)}

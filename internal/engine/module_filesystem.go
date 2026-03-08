@@ -48,7 +48,7 @@ func (m *filesystemModule) tree(inv Invocation) Response {
 	defer m.engine.putBuffer(buffer)
 
 	fmt.Fprintf(buffer, "root=%s\n", root)
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err = safeWalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -88,7 +88,7 @@ func (m *filesystemModule) find(inv Invocation) Response {
 	defer m.engine.putBuffer(buffer)
 
 	matches := 0
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err := safeWalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}

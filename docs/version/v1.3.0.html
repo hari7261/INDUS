@@ -3,87 +3,400 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INDUS v1.3.0 | Legacy Snapshot</title>
-  <meta name="description" content="Legacy architecture snapshot for INDUS Terminal 1.3.0, released on February 26, 2026.">
-  <meta name="keywords" content="Indus 1.3.0, legacy docs, terminal architecture">
+  <title>INDUS v1.3.0 Release Notes | Legacy Baseline | By Hariom Kumar Pandit</title>
+  <meta name="description" content="INDUS Terminal v1.3.0 - Legacy baseline release with foundational command system and native Windows integration. Built by Hariom Kumar Pandit.">
+  <meta name="keywords" content="INDUS v1.3.0, legacy terminal, baseline release, Hariom Kumar Pandit">
+  <meta name="author" content="Hariom Kumar Pandit">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="INDUS v1.3.0 Legacy Snapshot">
-  <meta property="og:description" content="Architecture and migration context for the 1.3.0 release.">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://hari7261.github.io/INDUS/version/v1.3.0.html">
+  <meta name="google-site-verification" content="K_ErJLZZUJW2-LkuoiAf2LOXKa87FX_ETHBtdYp5EbE" />
+  
+  <link rel="stylesheet" href="../main.css">
+  <link rel="icon" type="image/x-icon" href="../icon.ico">
   <link rel="canonical" href="https://hari7261.github.io/INDUS/version/v1.3.0.html">
-  <link rel="icon" href="../icon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#1a1a1a',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#FF9933',
+        lineColor: '#FF9933',
+        secondaryColor: '#0f0f0f',
+        tertiaryColor: '#121212',
+        background: '#0a0a0a',
+        mainBkg: '#1a1a1a',
+        secondBkg: '#121212',
+        labelBackground: '#0a0a0a',
+        labelTextColor: '#fff',
+        nodeBorder: '#FF9933',
+        clusterBkg: '#121212',
+        clusterBorder: '#333',
+        edgeLabelBackground: '#0a0a0a',
+        defaultLinkColor: '#FF9933',
+        titleColor: '#FF9933',
+        textColor: '#fff'
+      }
+    });
+  </script>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="../index.html"><span class="brand-mark"></span><span>INDUS Docs</span></a>
-      <div class="nav-links">
-        <a href="../index.html">Overview</a>
-        <a href="../commands.html">Commands</a>
-        <a href="../versions.html">Versions</a>
-        <a href="v1.3.0.html" aria-current="page">v1.3.0</a>
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <img src="../icon.ico" alt="INDUS Logo" width="32" height="32" style="border-radius: 6px;">
+      INDUS
+    </a>
+    
+    <ul class="nav-menu">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../commands.html">Commands</a></li>
+      <li><a href="../versions.html">Versions</a></li>
+      <li><a href="https://github.com/hari7261/INDUS">GitHub</a></li>
+    </ul>
+    
+    <div class="nav-cta">
+      <a href="https://github.com/hari7261/INDUS/releases/tag/v1.3.0" class="btn btn-secondary">
+        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Download v1.3.0
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding: 4rem 0 3rem;">
+  <div class="container-narrow">
+    <span class="hero-badge">Legacy Baseline — February 26, 2026</span>
+    
+    <h1 class="hero-title" style="font-size: 3.5rem; margin-bottom: 1.5rem;">
+      v1.3.0
+    </h1>
+    
+    <p style="font-size: 1.25rem; max-width: 700px; margin: 0 auto 2rem;">
+      The foundational release that established INDUS as a <strong>native Windows developer terminal</strong> 
+      with hardcoded command routing, basic modules, and essential development workflows.
+    </p>
+    
+    <div class="stats-grid" style="max-width: 800px; margin: 0 auto;">
+      <div class="stat-card">
+        <div class="stat-value">45+</div>
+        <div class="stat-label">Base Commands</div>
       </div>
-      <div class="nav-tools">
-        <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+      <div class="stat-card">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Core Modules</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">Pre-Registry</div>
+        <div class="stat-label">Hardcoded Routes</div>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <main class="page-shell">
-    <section class="hero">
-      <div class="panel">
-        <span class="eyebrow">Released February 26, 2026</span>
-        <h1>v1.3.0 was the pre-registry INDUS shell.</h1>
-        <p>The 1.3.0 line exposed a smaller built-in set around <span class="mono">init</span>, <span class="mono">run</span>, <span class="mono">http</span>, and <span class="mono">version</span>, then fell back to host shell commands for anything else.</p>
+<section class="section" style="background: var(--bg-elevated);">
+  <div class="container">
+    <div class="section-header">
+      <h2>v1.3.0 Pre-Registry Architecture</h2>
+      <p>Simple switch-based command routing before the registry system</p>
+    </div>
+    
+    <div class="mermaid-container">
+      <div class="mermaid">
+graph TB
+    User[User Input] -->|ind command| Parser[Command Parser]
+    
+    Parser -->|switch/case| Help[Help Command]
+    Parser -->|switch/case| Version[Version Command]
+    Parser -->|switch/case| List[List Command]
+    Parser -->|switch/case| Sysinfo[Sysinfo Command]
+    Parser -->|switch/case| Project[Project Commands]
+    Parser -->|switch/case| Env[Environment Commands]
+    Parser -->|switch/case| Git[Git Commands]
+    Parser -->|switch/case| Network[Network Commands]
+    
+    Help --> Output[Terminal Output]
+    Version --> Output
+    List --> Output
+    Sysinfo --> Output
+    Project --> Output
+    Env --> Output
+    Git --> Output
+    Network --> Output
+    
+    Parser -.->|Unknown command| Error[Error Handler]
+    Error -.-> Output
+    
+    Future[v1.4.0 Registry<br/>Coming Soon] -.->|Will replace| Parser
+    
+    style User fill:#FF9933,stroke:#FF9933,color:#0a0a0a
+    style Parser fill:#1a1a1a,stroke:#FF9933
+    style Future fill:#1a1a1a,stroke:#4CAF50,stroke-dasharray: 5 5
+    style Error fill:#1a1a1a,stroke:#F44336
+    style Output fill:#FF9933,stroke:#FF9933,color:#0a0a0a
       </div>
-      <aside class="card">
-        <h3>Legacy characteristics</h3>
-        <ul class="list">
-          <li>Single-page documentation site</li>
-          <li>No central registry JSON</li>
-          <li>Windows-focused entrypoint code</li>
-          <li>Mixed native and shell execution model</li>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>v1.3.0 Core Features</h2>
+      <p>Foundation of the INDUS terminal experience</p>
+    </div>
+    
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(33, 150, 243, 0.1);">
+          <svg class="icon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3>Native Windows Integration</h3>
+        <p>Built specifically for Windows with native console APIs, Windows Installer (Inno Setup), and PATH integration.</p>
+        <ul style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); list-style: none; padding: 0;">
+          <li>✓ Windows Console API</li>
+          <li>✓ Native PATH setup</li>
+          <li>✓ Start Menu integration</li>
         </ul>
-      </aside>
-    </section>
-
-    <section class="section">
-      <div class="section-grid">
-        <article class="card span-6">
-          <h2>Built-in commands</h2>
-          <ul class="list">
-            <li><span class="mono">init</span> project scaffold</li>
-            <li><span class="mono">run</span> simulated workload runner</li>
-            <li><span class="mono">http</span> HTTP GET/POST/PUT/DELETE</li>
-            <li><span class="mono">version</span> release output</li>
-          </ul>
-        </article>
-        <article class="card span-6">
-          <h2>Migration to 1.4.0</h2>
-          <ul class="list">
-            <li><span class="mono">init</span> becomes <span class="mono">ind proj init</span></li>
-            <li><span class="mono">run</span> maps to <span class="mono">ind dev bench</span></li>
-            <li><span class="mono">http</span> becomes <span class="mono">ind net fetch</span></li>
-            <li>Shell fallback is removed from the native path</li>
-          </ul>
-        </article>
       </div>
-    </section>
-
-    <footer class="footer">
-      <span class="small">Legacy snapshot retained for migration context.</span>
-      <div class="foot-links small">
-        <a href="v1.4.0.html">See v1.4.0</a>
-        <a href="../commands.html">Current Commands</a>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(76, 175, 80, 0.1);">
+          <svg class="icon-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </div>
+        <h3>45+ Core Commands</h3>
+        <p>Essential developer commands across 8 modules: system info, project management, environment variables, Git, networking.</p>
+        <div class="code-group" style="margin-top: 1rem;">
+          <div class="code-body">
+<pre><code><span style="color: #FF9933;">→</span> ind help
+<span style="color: #B0B0B0;">Available commands:</span>
+<span style="color: #4CAF50;">help, version, sysinfo, project, env...</span></code></pre>
+          </div>
+        </div>
       </div>
-    </footer>
-  </main>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(156, 39, 176, 0.1);">
+          <svg class="icon-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+        </div>
+        <h3>Developer-Centric Design</h3>
+        <p>Built for developers with Git integration, project scaffolding, environment management, and workflow automation.</p>
+        <ul style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); list-style: none; padding: 0;">
+          <li>✓ Git status/commit/push</li>
+          <li>✓ Project templates</li>
+          <li>✓ Environment variables</li>
+        </ul>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 152, 51, 0.1);">
+          <svg class="icon-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3>System Information</h3>
+        <p>Comprehensive system metrics: CPU, memory, disk, OS details, network info — all accessible via simple commands.</p>
+        <div class="code-group" style="margin-top: 1rem;">
+          <div class="code-body">
+<pre><code><span style="color: #FF9933;">→</span> ind sysinfo
+<span style="color: #B0B0B0;">OS: Windows 11 Pro</span>
+<span style="color: #B0B0B0;">CPU: Intel i7-12700K (12 cores)</span>
+<span style="color: #B0B0B0;">RAM: 32GB DDR4</span></code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(244, 67, 54, 0.1);">
+          <svg class="icon-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3>Hardcoded Command Routes</h3>
+        <p>All commands implemented via switch/case statements. Simple, direct, but limited extensibility (solved in v1.4.0).</p>
+        <div class="code-group" style="margin-top: 1rem;">
+          <div class="code-body">
+<pre><code><span style="color: #707070;">// v1.3.0 approach</span>
+<span style="color: #9C27B0;">switch</span> (command) {
+  <span style="color: #9C27B0;">case</span> <span style="color: #FFB74D;">"help"</span>: <span style="color: #707070;">/* ... */</span>
+  <span style="color: #9C27B0;">case</span> <span style="color: #FFB74D;">"version"</span>: <span style="color: #707070;">/* ... */</span>
+}</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 193, 7, 0.1);">
+          <svg class="icon-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3>Foundational Build System</h3>
+        <p>Go-based compilation with Windows-focused build scripts (build.bat), installer generation, and basic CI/CD.</p>
+        <ul style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); list-style: none; padding: 0;">
+          <li>✓ Go 1.21+ compilation</li>
+          <li>✓ Inno Setup installer</li>
+          <li>✓ Windows-first tooling</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script src="../script.js"></script>
+<section class="section" style="background: var(--bg-elevated);">
+  <div class="container-narrow">
+    <div class="section-header">
+      <h2>Command Modules (Pre-Registry)</h2>
+      <p>Core functionality organized into 8 logical modules</p>
+    </div>
+    
+    <div class="code-group">
+      <div class="code-header">Module Overview</div>
+      <div class="code-body">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border-color);">
+              <th style="padding: 1rem; text-align: left; color: var(--saffron);">Module</th>
+              <th style="padding: 1rem; text-align: left; color: var(--saffron);">Description</th>
+              <th style="padding: 1rem; text-align: left; color: var(--saffron);">Examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Core</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">Basic terminal operations</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>help</code>, <code>version</code>, <code>list</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">System</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">System metrics & info</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>sysinfo</code>, <code>cpu</code>, <code>memory</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Project</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">Project scaffolding</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>project create</code>, <code>project init</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Environment</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">Environment variables</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>env list</code>, <code>env get</code>, <code>env set</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Filesystem</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">File operations</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>tree</code>, <code>size</code>, <code>search</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Network</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">Network utilities</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>ping</code>, <code>ports</code>, <code>ipinfo</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Developer</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">Git & dev tools</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>git status</code>, <code>git commit</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Package</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">Package management</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>pkg list</code>, <code>pkg install</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-narrow">
+    <div class="section-header">
+      <h2>What Came After v1.3.0</h2>
+      <p>Evolution path to modern INDUS</p>
+    </div>
+    
+    <div class="feature-grid" style="grid-template-columns: 1fr;">
+      <div class="feature-card">
+        <h3>🚀 v1.4.0 — Registry System</h3>
+        <p>Replaced hardcoded switch/case with JSON-backed command registry. 58 commands across 10 modules. Performance optimizations and extensibility foundation.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🛡️ v1.4.1 — Production Hardening</h3>
+        <p>Installer improvements, CI enforcement, startup banner refresh. Zero breaking changes. Recommended production upgrade.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>⚡ v1.5.0 — System Passthrough (Current)</h3>
+        <p>103 commands, 11 modules, 30+ toolchain detection. Unknown commands pass through to system shell. Ultimate developer productivity terminal.</p>
+      </div>
+    </div>
+    
+    <div class="code-group" style="margin-top: 2rem;">
+      <div class="code-header">Installation (Legacy)</div>
+      <div class="code-body">
+<pre><code><span style="color: #707070;"># Download v1.3.0 (legacy baseline)</span>
+https://github.com/hari7261/INDUS/releases/tag/v1.3.0
+
+<span style="color: #707070;"># Note: v1.3.0 is maintained for historical reference</span>
+<span style="color: #707070;"># Recommended: Upgrade to v1.5.0 for latest features</span>
+
+<span style="color: #4CAF50;">→</span> ind version
+<span style="color: #B0B0B0;">INDUS v1.3.0 (Pre-Registry Build)</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <div class="footer-brand">
+          <img src="../icon.ico" alt="INDUS Logo" width="28" height="28" style="border-radius: 6px;">
+          INDUS
+        </div>
+        <p class="footer-description">
+          v1.3.0 — Legacy Baseline — February 26, 2026
+        </p>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Documentation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../commands.html">Commands</a></li>
+          <li><a href="../versions.html">All Versions</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Newer Versions</h4>
+        <ul class="footer-links">
+          <li><a href="v1.5.0.html">v1.5.0 (Current)</a></li>
+          <li><a href="v1.4.1.html">v1.4.1</a></li>
+          <li><a href="v1.4.0.html">v1.4.0</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>Built by <strong>Hariom Kumar Pandit</strong> • Licensed under MIT • © 2026</p>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

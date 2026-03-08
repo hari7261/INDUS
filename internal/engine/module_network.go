@@ -123,12 +123,15 @@ func (m *networkModule) trace(inv Invocation) Response {
 
 func (m *networkModule) ports(inv Invocation) Response {
 	from, err := inv.Parsed.Int(3000, "from")
-	if err != nil {
-		return Response{Err: invalidArgumentError(inv.Command, "invalid --from value")}
+	if err != nil || from < 1 || from > 65535 {
+		return Response{Err: invalidArgumentError(inv.Command, "invalid --from value (must be 1-65535)")}
 	}
 	to, err := inv.Parsed.Int(3010, "to")
-	if err != nil || to < from {
-		return Response{Err: invalidArgumentError(inv.Command, "invalid --to value")}
+	if err != nil || to < 1 || to > 65535 {
+		return Response{Err: invalidArgumentError(inv.Command, "invalid --to value (must be 1-65535)")}
+	}
+	if to < from {
+		return Response{Err: invalidArgumentError(inv.Command, "--to must be greater than or equal to --from")}
 	}
 
 	buffer := m.engine.getBuffer()

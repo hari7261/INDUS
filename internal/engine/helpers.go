@@ -141,7 +141,7 @@ func copyFile(source, target string) error {
 }
 
 func copyTree(source, target string) error {
-	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, err error) error {
+	return safeWalkDir(source, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -162,7 +162,7 @@ func directorySize(root string) (int64, int, error) {
 	var total int64
 	count := 0
 
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err := safeWalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -246,7 +246,7 @@ func zipDirectory(source, target string) error {
 
 func fileCountSnapshot(root string) (map[string]time.Time, error) {
 	snapshot := map[string]time.Time{}
-	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err := safeWalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -261,4 +261,63 @@ func fileCountSnapshot(root string) (map[string]time.Time, error) {
 		return nil
 	})
 	return snapshot, err
+}
+
+// symlinkChecker tracks visited paths to detect symlink loops
+type symlinkChecker struct {
+	visited map[string]bool
+}
+
+func newSymlinkChecker() *symlinkChecker {
+	return &symlinkChecker{
+		visited: make(map[string]bool),
+	}
+}
+
+// check returns true if the path can be visited (not a loop), false otherwise
+func (sc *symlinkChecker) check(path string) (bool, error) {
+	// Get the absolute path with symlinks resolved
+	absPath, err := filepath.EvalSymlinks(path)
+	if err != nil {
+		// If we can't resolve symlinks, it might be a broken link or permission issue
+		// Allow the operation to continue and let the caller handle the error
+		return true, nil
+	}
+
+	// Check if we've already visited this resolved path
+	if sc.visited[absPath] {
+		return false, nil
+	}
+
+	// Mark as visited
+	sc.visited[absPath] = true
+	return true, nil
+}
+
+// safeWalkDir is a safer version of filepath.WalkDir that detects symlink loops
+func safeWalkDir(root string, fn func(path string, entry fs.DirEntry, err error) error) error {
+	checker := newSymlinkChecker()
+
+	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return fn(path, entry, err)
+		}
+
+		// Check for symlink loops
+		if entry.Type()&fs.ModeSymlink != 0 || entry.IsDir() {
+			canVisit, checkErr := checker.check(path)
+			if checkErr != nil {
+				return fn(path, entry, checkErr)
+			}
+			if !canVisit {
+				// Skip this path - it's a symlink loop
+				if entry.IsDir() {
+					return filepath.SkipDir
+				}
+				return nil
+			}
+		}
+
+		return fn(path, entry, err)
+	})
 }

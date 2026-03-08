@@ -50,6 +50,8 @@
   { "command": "ind term reset", "description": "reset theme, cache, and transient terminal state", "category": "terminal", "module": "terminal", "example": "ind term reset", "since": "1.4.0" },
   { "command": "ind term speed", "description": "show recent command latency and cache hit information", "category": "terminal", "module": "terminal", "example": "ind term speed", "since": "1.4.0" },
   { "command": "ind term theme", "description": "set or inspect the active INDUS prompt theme", "category": "terminal", "module": "terminal", "example": "ind term theme saffron", "since": "1.4.0" },
+  { "command": "ind tools scan", "description": "scan and detect all installed development toolchains", "category": "toolchain", "module": "toolchain", "example": "ind tools scan", "since": "1.5.0" },
+  { "command": "ind tools check", "description": "check if a specific development tool is installed", "category": "toolchain", "module": "toolchain", "example": "ind tools check python", "since": "1.5.0" },
   { "command": "ind version", "description": "print the INDUS Terminal release, build, and registry version", "category": "core", "module": "core", "example": "ind version", "since": "1.4.0" },
   { "command": "ind work archive", "description": "archive the active workspace into a zip bundle", "category": "workspace", "module": "workspace", "example": "ind work archive .", "since": "1.4.0" },
   { "command": "ind work clean", "description": "clean transient workspace artifacts and inactive state", "category": "workspace", "module": "workspace", "example": "ind work clean .", "since": "1.4.0" },

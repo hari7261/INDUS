@@ -3,134 +3,418 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INDUS v1.4.0 | Release Notes</title>
-  <meta name="description" content="INDUS Terminal v1.4.0 release notes: native commands, registry-backed engine, versioned documentation, and AI-readable metadata.">
-  <meta name="keywords" content="Indus 1.4.0, release notes, native commands, command registry">
+  <title>INDUS v1.4.0 Release Notes | Platform Release | By Hariom Kumar Pandit</title>
+  <meta name="description" content="INDUS Terminal v1.4.0 - Major platform release introducing registry-backed architecture with 58 commands across 10 modules. Built by Hariom Kumar Pandit.">
+  <meta name="keywords" content="INDUS v1.4.0, registry release, platform architecture, Hariom Kumar Pandit">
+  <meta name="author" content="Hariom Kumar Pandit">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="INDUS v1.4.0 Release Notes">
-  <meta property="og:description" content="Production-ready release notes for INDUS Terminal v1.4.0.">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://hari7261.github.io/INDUS/version/v1.4.0.html">
+  <meta name="google-site-verification" content="K_ErJLZZUJW2-LkuoiAf2LOXKa87FX_ETHBtdYp5EbE" />
+  
+  <link rel="stylesheet" href="../main.css">
+  <link rel="icon" type="image/x-icon" href="../icon.ico">
   <link rel="canonical" href="https://hari7261.github.io/INDUS/version/v1.4.0.html">
-  <link rel="icon" href="../icon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#1a1a1a',
+        primaryTextColor: '#fff',
+        primaryBorderColor: '#FF9933',
+        lineColor: '#FF9933',
+        secondaryColor: '#0f0f0f',
+        tertiaryColor: '#121212',
+        background: '#0a0a0a',
+        mainBkg: '#1a1a1a',
+        secondBkg: '#121212',
+        labelBackground: '#0a0a0a',
+        labelTextColor: '#fff',
+        nodeBorder: '#FF9933',
+        clusterBkg: '#121212',
+        clusterBorder: '#333',
+        edgeLabelBackground: '#0a0a0a',
+        defaultLinkColor: '#FF9933',
+        titleColor: '#FF9933',
+        textColor: '#fff'
+      }
+    });
+  </script>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="../index.html"><span class="brand-mark"></span><span>INDUS Docs</span></a>
-      <div class="nav-links">
-        <a href="../index.html">Overview</a>
-        <a href="../commands.html">Commands</a>
-        <a href="../versions.html">Versions</a>
-        <a href="v1.4.0.html" aria-current="page">v1.4.0</a>
+
+<nav class="nav">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-brand">
+      <img src="../icon.ico" alt="INDUS Logo" width="32" height="32" style="border-radius: 6px;">
+      INDUS
+    </a>
+    
+    <ul class="nav-menu">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../commands.html">Commands</a></li>
+      <li><a href="../versions.html">Versions</a></li>
+      <li><a href="https://github.com/hari7261/INDUS">GitHub</a></li>
+    </ul>
+    
+    <div class="nav-cta">
+      <a href="https://github.com/hari7261/INDUS/releases/tag/v1.4.0" class="btn btn-secondary">
+        <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Download v1.4.0
+      </a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="padding: 4rem 0 3rem;">
+  <div class="container-narrow">
+    <span class="hero-badge">Platform Release — March 8, 2026</span>
+    
+    <h1 class="hero-title" style="font-size: 3.5rem; margin-bottom: 1.5rem;">
+      v1.4.0
+    </h1>
+    
+    <p style="font-size: 1.25rem; max-width: 700px; margin: 0 auto 2rem;">
+      Major architectural evolution introducing the <strong>Command Registry System</strong> — a JSON-backed 
+      command infrastructure that replaces hardcoded command routing with dynamic, extensible, cached execution.
+    </p>
+    
+    <div class="stats-grid" style="max-width: 800px; margin: 0 auto;">
+      <div class="stat-card">
+        <div class="stat-value">58</div>
+        <div class="stat-label">Registry Commands</div>
       </div>
-      <div class="nav-tools">
-        <button class="theme-toggle" type="button" data-theme-toggle>Dark</button>
+      <div class="stat-card">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Command Modules</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">registry.json</div>
+        <div class="stat-label">Dynamic Config</div>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <main class="page-shell">
-    <section class="hero">
-      <div class="panel">
-        <span class="eyebrow">Released March 8, 2026</span>
-        <h1>v1.4.0 turns INDUS into a fully native command platform.</h1>
-        <p>This release introduces 58 native commands, a central registry at <span class="mono">core/commands/registry.json</span>, lazy-loaded modules, command caching, safe error wrappers, versioned docs, and AI-readable metadata.</p>
-        <div class="pill-row">
-          <span class="pill">58 commands</span>
-          <span class="pill">10 modules</span>
-          <span class="pill">registry version 1.4.0</span>
-          <span class="pill">AI command index</span>
+<section class="section" style="background: var(--bg-elevated);">
+  <div class="container">
+    <div class="section-header">
+      <h2>Registry-Backed Architecture (New in v1.4.0)</h2>
+      <p>From hardcoded switches to dynamic JSON-backed command routing</p>
+    </div>
+    
+    <div class="mermaid-container">
+      <div class="mermaid">
+graph TB
+    User[User Input] -->|ind command| Parser[Command Parser]
+    
+    Parser --> Registry[Command Registry<br/>registry.json v1.4.0]
+    
+    Registry -->|Lookup & Cache| Core[Core Module<br/>6 commands]
+    Registry -->|Lookup & Cache| System[System Module<br/>8 commands]
+    Registry -->|Lookup & Cache| Project[Project Module<br/>7 commands]
+    Registry -->|Lookup & Cache| Environment[Environment Module<br/>9 commands]
+    Registry -->|Lookup & Cache| Filesystem[Filesystem Module<br/>5 commands]
+    Registry -->|Lookup & Cache| Network[Network Module<br/>6 commands]
+    Registry -->|Lookup & Cache| Developer[Developer Module<br/>4 commands]
+    Registry -->|Lookup & Cache| Package[Package Module<br/>7 commands]
+    Registry -->|Lookup & Cache| Terminal[Terminal Module<br/>3 commands]
+    Registry -->|Lookup & Cache| Workspace[Workspace Module<br/>3 commands]
+    
+    Core --> Output[Terminal Output]
+    System --> Output
+    Project --> Output
+    Environment --> Output
+    Filesystem --> Output
+    Network --> Output
+    Developer --> Output
+    Package --> Output
+    Terminal --> Output
+    Workspace --> Output
+    
+    Legacy[Pre-Registry<br/>v1.3.0] -.->|Migrated from| Parser
+    Legacy -.->|Hardcoded switches| Output
+    
+    style User fill:#FF9933,stroke:#FF9933,color:#0a0a0a
+    style Parser fill:#1a1a1a,stroke:#FF9933
+    style Registry fill:#1a1a1a,stroke:#9C27B0
+    style Legacy fill:#1a1a1a,stroke:#666,stroke-dasharray: 5 5
+    style Output fill:#FF9933,stroke:#FF9933,color:#0a0a0a
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>What's New in v1.4.0</h2>
+      <p>Registry system introduction and command expansion</p>
+    </div>
+    
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(156, 39, 176, 0.1);">
+          <svg class="icon-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3>Command Registry System</h3>
+        <p>Introduced <code>registry.json</code> as the single source of truth for all commands. Dynamic loading, metadata-driven execution, and extensibility.</p>
+        <ul style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); list-style: none; padding: 0;">
+          <li>✓ JSON-backed command definitions</li>
+          <li>✓ Dynamic command loading</li>
+          <li>✓ Metadata-rich command info</li>
+          <li>✓ Cache-optimized execution</li>
+        </ul>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(33, 150, 243, 0.1);">
+          <svg class="icon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </div>
+        <h3>10 Command Modules</h3>
+        <p>Commands organized into logical modules: Core, System, Project, Environment, Filesystem, Network, Developer, Package, Terminal, Workspace.</p>
+        <div class="code-group" style="margin-top: 1rem;">
+          <div class="code-body">
+<pre><code><span style="color: #FF9933;">→</span> ind list
+<span style="color: #B0B0B0;">58 commands across 10 modules</span>
+<span style="color: #4CAF50;">✓ Core, System, Project, Environment...</span></code></pre>
+          </div>
         </div>
       </div>
-      <aside class="card">
-        <h3>Headline changes</h3>
-        <ul class="list">
-          <li>Independent <span class="mono">ind ...</span> namespace</li>
-          <li>Cache-aware command engine</li>
-          <li>Cross-platform console hooks</li>
-          <li>Versioned docs UI with SEO metadata</li>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(76, 175, 80, 0.1);">
+          <svg class="icon-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3>Performance Optimizations</h3>
+        <p>Command caching, lazy module loading, and optimized registry lookups reduce startup time and execution overhead.</p>
+        <ul style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); list-style: none; padding: 0;">
+          <li>✓ In-memory command cache</li>
+          <li>✓ Lazy module initialization</li>
+          <li>✓ Fast registry lookups</li>
         </ul>
-      </aside>
-    </section>
-
-    <section class="section">
-      <div class="section-grid">
-        <article class="card span-6">
-          <h2>New command families</h2>
-          <ul class="list">
-            <li>Core: scan, doctor, status, docs, about, version</li>
-            <li>System: stats, info, clean, doctor, watch</li>
-            <li>Project: create, init, list, clean, build, run</li>
-            <li>Environment, filesystem, network, developer, package, terminal, and workspace modules</li>
-          </ul>
-        </article>
-        <article class="card span-6">
-          <h2>Engine architecture</h2>
-          <ul class="list">
-            <li>Registry lookups before execution</li>
-            <li>Module factories with lazy load on first hit</li>
-            <li>Async execution wrapper and panic recovery</li>
-            <li>Short-lived result caching for read commands</li>
-          </ul>
-        </article>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="section-grid">
-        <article class="table-wrap span-12">
-          <table>
-            <thead>
-              <tr><th>Area</th><th>v1.4.0 change</th><th>Impact</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Command format</td><td><code>ind &lt;command&gt; [options]</code></td><td>Consistent parsing and no shell-name collisions on the native path.</td></tr>
-              <tr><td>Registry</td><td><code>core/commands/registry.json</code></td><td>Faster lookup, scalable module loading, and version tracking.</td></tr>
-              <tr><td>Docs</td><td>index, commands, versions, and release pages</td><td>Versioned navigation, SEO metadata, and command indexing.</td></tr>
-              <tr><td>Metadata</td><td>AI command index plus schema tags</td><td>AI tools and IDEs can crawl the command model directly.</td></tr>
-            </tbody>
-          </table>
-        </article>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 152, 51, 0.1);">
+          <svg class="icon-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+          </svg>
+        </div>
+        <h3>Enhanced Command Help</h3>
+        <p>Rich help system with command categories, usage examples, and module-level documentation powered by registry metadata.</p>
+        <div class="code-group" style="margin-top: 1rem;">
+          <div class="code-body">
+<pre><code><span style="color: #FF9933;">→</span> ind help project
+<span style="color: #B0B0B0;">Project Module: 7 commands</span>
+<span style="color: #4CAF50;">project create, project init, ...</span></code></pre>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <section class="section">
-      <div class="section-grid">
-        <article class="card span-6">
-          <h2>Migration guide</h2>
-          <ul class="list">
-            <li>Replace bare commands with the <span class="mono">ind</span> prefix.</li>
-            <li>Use <span class="mono">ind proj ...</span> for project lifecycle work.</li>
-            <li>Use <span class="mono">ind net fetch</span> for native HTTP requests.</li>
-            <li>Open <a href="../commands.html">commands.html</a> for the full searchable reference.</li>
-          </ul>
-        </article>
-        <article class="card span-6">
-          <h2>Verification targets</h2>
-          <ul class="list">
-            <li>Local commands target under 50ms.</li>
-            <li>Complex commands target under 150ms.</li>
-            <li>Read commands opt into short cache TTLs.</li>
-            <li>Invalid input returns structured IND error codes.</li>
-          </ul>
-        </article>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(244, 67, 54, 0.1);">
+          <svg class="icon-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <h3>Registry Version 1.4.0</h3>
+        <p>The registry tracks its own version, allowing future backward compatibility checks and migration paths.</p>
+        <div class="code-group" style="margin-top: 1rem;">
+          <div class="code-body">
+<pre><code>{
+  <span style="color: #4CAF50;">"registryVersion"</span>: <span style="color: #FFB74D;">"1.4.0"</span>,
+  <span style="color: #4CAF50;">"commands"</span>: { <span style="color: #707070;">/* 58 commands */</span> }
+}</code></pre>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <footer class="footer">
-      <span class="small">v1.4.0 is the current production release.</span>
-      <div class="foot-links small">
-        <a href="../commands.html">Command Reference</a>
-        <a href="../versions.html">Version Matrix</a>
+      
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(255, 193, 7, 0.1);">
+          <svg class="icon-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3>Backward Compatibility</h3>
+        <p>All v1.3.0 commands remain functional. Old hardcoded paths migrated seamlessly to registry-backed execution.</p>
+        <ul style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); list-style: none; padding: 0;">
+          <li>✓ Zero breaking changes</li>
+          <li>✓ Command aliases preserved</li>
+          <li>✓ Drop-in upgrade</li>
+        </ul>
       </div>
-    </footer>
-  </main>
+    </div>
+  </div>
+</section>
 
-  <script src="../script.js"></script>
+<section class="section" style="background: var(--bg-elevated);">
+  <div class="container-narrow">
+    <div class="section-header">
+      <h2>Command Module Breakdown</h2>
+      <p>58 commands organized into 10 logical modules</p>
+    </div>
+    
+    <div class="code-group">
+      <div class="code-header">registry.json Structure</div>
+      <div class="code-body">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border-color);">
+              <th style="padding: 1rem; text-align: left; color: var(--saffron);">Module</th>
+              <th style="padding: 1rem; text-align: left; color: var(--saffron);">Commands</th>
+              <th style="padding: 1rem; text-align: left; color: var(--saffron);">Examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Core</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">6</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>help</code>, <code>version</code>, <code>list</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">System</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">8</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>sysinfo</code>, <code>cpu</code>, <code>memory</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Project</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">7</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>project create</code>, <code>project init</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Environment</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">9</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>env list</code>, <code>env get</code>, <code>env set</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Filesystem</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">5</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>tree</code>, <code>size</code>, <code>search</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Network</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">6</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>ping</code>, <code>ports</code>, <code>ipinfo</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Developer</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">4</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>git status</code>, <code>lint</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Package</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">7</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>pkg list</code>, <code>pkg install</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Terminal</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">3</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>clear</code>, <code>theme</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-color);">
+              <td style="padding: 1rem; color: var(--text-primary);">Workspace</td>
+              <td style="padding: 1rem; color: var(--text-secondary);">3</td>
+              <td style="padding: 1rem; color: var(--text-secondary);"><code>workspace init</code>, <code>workspace status</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-narrow">
+    <div class="section-header">
+      <h2>Migration from v1.3.0</h2>
+      <p>Seamless upgrade path with zero breaking changes</p>
+    </div>
+    
+    <div class="feature-grid" style="grid-template-columns: 1fr;">
+      <div class="feature-card">
+        <h3>✅ No Breaking Changes</h3>
+        <p>All v1.3.0 commands work identically. The registry system is transparent to end users — same commands, same behavior, enhanced internals.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🎯 Performance Wins</h3>
+        <p>Faster command lookup (registry cache), reduced startup time (lazy loading), cleaner codebase (JSON-driven instead of switch statements).</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>📈 Extensibility Foundation</h3>
+        <p>The registry enables future plugin systems, custom commands, and third-party modules without core changes.</p>
+      </div>
+    </div>
+    
+    <div class="code-group" style="margin-top: 2rem;">
+      <div class="code-header">Upgrade Instructions</div>
+      <div class="code-body">
+<pre><code><span style="color: #707070;"># Download v1.4.0 installer</span>
+https://github.com/hari7261/INDUS/releases/tag/v1.4.0
+
+<span style="color: #707070;"># Run installer (automatically upgrades from v1.3.0)</span>
+.\indus-setup-v1.4.0.exe
+
+<span style="color: #707070;"># Verify registry system</span>
+<span style="color: #4CAF50;">→</span> ind version
+<span style="color: #B0B0B0;">INDUS v1.4.0 • Registry v1.4.0 • 58 commands</span>
+
+<span style="color: #707070;"># Test command lookup</span>
+<span style="color: #4CAF50;">→</span> ind list
+<span style="color: #B0B0B0;">58 commands across 10 modules (registry-backed)</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <div class="footer-brand">
+          <img src="../icon.ico" alt="INDUS Logo" width="28" height="28" style="border-radius: 6px;">
+          INDUS
+        </div>
+        <p class="footer-description">
+          v1.4.0 — Platform Release — March 8, 2026
+        </p>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Documentation</h4>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../commands.html">Commands</a></li>
+          <li><a href="../versions.html">All Versions</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Other Versions</h4>
+        <ul class="footer-links">
+          <li><a href="v1.5.0.html">v1.5.0 (Current)</a></li>
+          <li><a href="v1.4.1.html">v1.4.1</a></li>
+          <li><a href="v1.3.0.html">v1.3.0</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>Built by <strong>Hariom Kumar Pandit</strong> • Licensed under MIT • © 2026</p>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

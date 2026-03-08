@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "commands": {
     "about": {
       "description": "show the INDUS runtime profile and release posture",
@@ -428,6 +428,24 @@
       "usage": "ind term theme [theme]",
       "example": "ind term theme saffron",
       "since": "1.4.0"
+    },
+    "tools scan": {
+      "description": "scan and detect all installed development toolchains",
+      "module": "toolchain",
+      "category": "toolchain",
+      "usage": "ind tools scan",
+      "example": "ind tools scan",
+      "since": "1.5.0",
+      "cache_ttl_ms": 10000
+    },
+    "tools check": {
+      "description": "check if a specific development tool is installed",
+      "module": "toolchain",
+      "category": "toolchain",
+      "usage": "ind tools check <tool>",
+      "example": "ind tools check python",
+      "since": "1.5.0",
+      "cache_ttl_ms": 5000
     },
     "work archive": {
       "description": "archive the active workspace into a zip bundle",

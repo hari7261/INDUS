@@ -2,11 +2,11 @@
 setlocal EnableDelayedExpansion
 
 echo ========================================================
-echo INDUS Terminal - Production Build
+echo INDUS - Production Build
 echo ========================================================
 echo.
 
-set "VERSION=1.4.5"
+set "VERSION=1.5.0"
 for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set "COMMIT=%%i"
 if "!COMMIT!"=="" set "COMMIT=none"
 for /f %%i in ('powershell -NoProfile -Command "(Get-Date).ToUniversalTime().ToString(\"yyyy-MM-ddTHH:mm:ssZ\")"') do set "BUILD_TIME=%%i"
@@ -45,19 +45,19 @@ if not exist build\icon.ico (
 )
 
 echo [1/4] Embedding icon resource...
-"%RSRC_EXE%" -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
+"%RSRC_EXE%" -ico build\icon.ico -o cmd\indus\rsrc.syso
 if !errorlevel! neq 0 (
   echo ERROR: failed to embed icon resource.
   exit /b 1
 )
-if not exist cmd\indus-terminal\rsrc.syso (
-  echo ERROR: cmd\indus-terminal\rsrc.syso was not generated.
+if not exist cmd\indus\rsrc.syso (
+  echo ERROR: cmd\indus\rsrc.syso was not generated.
   exit /b 1
 )
 
 echo [2/4] Building dist\ind.exe...
-set "LDFLAGS=-s -w -X main.version=%VERSION% -X main.commit=%COMMIT% -X main.buildTime=%BUILD_TIME%"
-go build -ldflags "%LDFLAGS%" -o dist\ind.exe .\cmd\indus-terminal
+set "LDFLAGS=-s -w -H windowsgui -X main.version=%VERSION% -X main.commit=%COMMIT% -X main.buildTime=%BUILD_TIME%"
+go build -ldflags "%LDFLAGS%" -o dist\indus.exe .\cmd\indus
 if !errorlevel! neq 0 (
   echo ERROR: go build failed.
   exit /b 1

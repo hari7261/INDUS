@@ -48,6 +48,26 @@ Download `indus.exe` from [Releases](https://github.com/hari7261/INDUS/releases/
 
 ## ✨ Features
 
+### 🆕 What's New in v1.5.0
+
+**Major Production Enhancements:**
+- ✅ **Full System Command Passthrough** - Run ANY Windows/system command directly (git, docker, python, npm, etc.)
+- ✅ **Development Toolchain Detection** - Automatically detect and verify 30+ dev tools (Python, Node.js, Go, Rust, Java, and more)
+- ✅ **Enhanced Error Handling** - Fixed critical bugs in environment variable management
+- ✅ **Symlink Loop Protection** - Safe filesystem operations with automatic loop detection
+- ✅ **Port Validation** - Proper TCP port range validation (1-65535)
+- ✅ **Improved Console** - Better console initialization and independence
+- ✅ **103 Built-in Commands** - Two new commands: `tools scan` and `tools check`
+- ✅ **Production Ready** - All known issues resolved, comprehensive bug fixes
+
+**Bug Fixes:**
+- Fixed environment module error silencing
+- Fixed package audit logic issues
+- Added proper error propagation throughout codebase
+- Improved filesystem operation safety
+
+---
+
 ### 🖥️ Interactive Shell
 
 ![INDUS Terminal Interface](images/image.png)
@@ -255,7 +275,7 @@ Color persists for the session. Not yet saved across restarts (planned).
 ```
 indus/
 ├── cmd/
-│   └── indus-terminal/       # Binary entrypoint, terminal REPL
+│   └── indus/                # Binary entrypoint, REPL
 ├── internal/
 │   ├── cli/
 │   │   ├── app.go            # Command registry + help
@@ -289,7 +309,7 @@ git clone https://github.com/hari7261/INDUS.git
 cd INDUS
 
 # 2. Build binary only
-go build -o indus.exe ./cmd/indus-terminal
+go build -o indus.exe ./cmd/indus
 
 # 3. Build binary + installer (requires Inno Setup 6)
 build.bat

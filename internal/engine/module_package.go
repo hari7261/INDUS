@@ -161,26 +161,24 @@ func (m *packageModule) audit() Response {
 		return Response{Output: "audit=clean\npackages=0"}
 	}
 
-	status := "clean"
+	driftCount := 0
 	for _, key := range sortedPackageKeys(state.Packages) {
 		entry := state.Packages[key]
 		catalog, ok := packageCatalog[key]
 		if !ok {
-			status = "drift"
+			driftCount++
 			fmt.Fprintf(buffer, "%s missing_from_catalog\n", entry.Name)
 			continue
 		}
 		if catalog.Version != entry.Version {
-			status = "drift"
+			driftCount++
 			fmt.Fprintf(buffer, "%s installed=%s catalog=%s\n", entry.Name, entry.Version, catalog.Version)
 		}
 	}
 
-	if buffer.Len() == 0 {
-		fmt.Fprintln(buffer, "audit=clean")
-		fmt.Fprintf(buffer, "packages=%d", len(state.Packages))
-		return Response{Output: strings.TrimSpace(buffer.String())}
+	if driftCount == 0 {
+		return Response{Output: fmt.Sprintf("audit=clean\npackages=%d", len(state.Packages))}
 	}
 
-	return Response{Output: fmt.Sprintf("audit=%s\n%s", status, strings.TrimSpace(buffer.String()))}
+	return Response{Output: fmt.Sprintf("audit=drift\ndrift_count=%d\npackages=%d\n%s", driftCount, len(state.Packages), strings.TrimSpace(buffer.String()))}
 }

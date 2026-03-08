@@ -62,17 +62,27 @@ jobs:
           CGO_ENABLED: "0"
         run: |
           if not exist dist mkdir dist
+          echo Building console version (ind.exe)...
           go build ^
             -ldflags "-s -w -X main.version=${{ steps.version.outputs.version }} -X main.commit=${{ steps.version.outputs.commit }} -X main.buildTime=${{ steps.version.outputs.build_time }}" ^
             -o dist\ind.exe ^
             .\cmd\indus-terminal
           copy /Y dist\ind.exe dist\indus.exe >nul
+          echo Building GUI version (indus-gui.exe)...
+          go build ^
+            -ldflags "-s -w -H windowsgui -X main.version=${{ steps.version.outputs.version }} -X main.commit=${{ steps.version.outputs.commit }} -X main.buildTime=${{ steps.version.outputs.build_time }}" ^
+            -o dist\indus-gui.exe ^
+            .\cmd\indus-terminal
           if not exist dist\ind.exe (
             echo "Binary build failed: dist\\ind.exe not found"
             exit /b 1
           )
           if not exist dist\indus.exe (
             echo "Alias build failed: dist\\indus.exe not found"
+            exit /b 1
+          )
+          if not exist dist\indus-gui.exe (
+            echo "GUI build failed: dist\\indus-gui.exe not found"
             exit /b 1
           )
 
@@ -109,6 +119,7 @@ jobs:
           $files = @(
             "dist\ind.exe",
             "dist\indus.exe",
+            "dist\indus-gui.exe",
             "dist\indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe"
           )
           $lines = foreach ($f in $files) {
@@ -132,7 +143,8 @@ jobs:
             3. Open a new terminal and run `ind` (or `indus`)
 
             ### Manual install
-            Download `ind.exe`, place it in PATH, and run it.
+            - **CLI version**: Download `ind.exe` or `indus.exe`, place in PATH
+            - **GUI version**: Download `indus-gui.exe` for standalone window (double-click to launch)
 
             ---
             **Build info**
@@ -145,6 +157,7 @@ jobs:
             dist/indus-setup-${{ steps.version.outputs.tag }}-windows-amd64.exe
             dist/ind.exe
             dist/indus.exe
+            dist/indus-gui.exe
             dist/checksums.txt
             dist/smoke-summary.txt
             dist/smoke-report.json

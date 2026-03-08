@@ -76,6 +76,7 @@ Filename: "{app}\{#AppExeName}"; Description: "Launch INDUS Terminal"; Flags: no
 [Code]
 const
   UserEnvironmentKey = 'Environment';
+  WM_SETTINGCHANGE = $001A;
 
 function SendMessageTimeout(hWnd: HWND; Msg: UINT; wParam: LongInt; lParam: string;
   fuFlags, uTimeout: UINT; var lpdwResult: DWORD): LongInt;

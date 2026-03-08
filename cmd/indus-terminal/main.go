@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	version   = "1.4.4"
+	version   = "1.4.5"
 	commit    = "initial"
 	buildTime = "2026-03-08T00:00:00Z"
 )

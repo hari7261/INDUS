@@ -21,7 +21,7 @@ var packageCatalog = map[string]catalogEntry{
 	"flux-board":  {Name: "flux-board", Version: "2.0.0", Description: "workspace flow helpers"},
 	"net-mapper":  {Name: "net-mapper", Version: "1.5.2", Description: "network probing utilities"},
 	"orbit-kit":   {Name: "orbit-kit", Version: "0.9.8", Description: "project manifest helpers"},
-	"pulse-core":  {Name: "pulse-core", Version: "1.4.4", Description: "runtime telemetry adapters"},
+	"pulse-core":  {Name: "pulse-core", Version: "1.4.5", Description: "runtime telemetry adapters"},
 	"trace-slate": {Name: "trace-slate", Version: "1.0.4", Description: "developer trace report pack"},
 }
 

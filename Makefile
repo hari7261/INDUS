@@ -1,6 +1,6 @@
 .PHONY: build clean install
 
-VERSION ?= 1.4.3
+VERSION ?= 1.4.4
 COMMIT ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo "none")
 BUILD_TIME ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 

@@ -6,7 +6,7 @@ echo INDUS Terminal - Production Build
 echo ========================================================
 echo.
 
-set "VERSION=1.4.3"
+set "VERSION=1.4.4"
 for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set "COMMIT=%%i"
 if "!COMMIT!"=="" set "COMMIT=none"
 for /f %%i in ('powershell -NoProfile -Command "(Get-Date).ToUniversalTime().ToString(\"yyyy-MM-ddTHH:mm:ssZ\")"') do set "BUILD_TIME=%%i"

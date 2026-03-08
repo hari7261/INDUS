@@ -77,8 +77,8 @@ Filename: "{app}\{#AppExeName}"; Description: "Launch INDUS Terminal"; Flags: no
 const
   UserEnvironmentKey = 'Environment';
 
-function SendMessageTimeout(hWnd: HWND; Msg: UINT; wParam: WPARAM; lParam: string;
-  fuFlags, uTimeout: UINT; var lpdwResult: DWORD): LRESULT;
+function SendMessageTimeout(hWnd: HWND; Msg: UINT; wParam: LongInt; lParam: string;
+  fuFlags, uTimeout: UINT; var lpdwResult: DWORD): LongInt;
   external 'SendMessageTimeoutW@user32.dll stdcall';
 
 procedure AddToUserPath(AppDir: string);

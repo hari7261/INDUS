@@ -1,9 +1,12 @@
 # Binaries
-indus.exe
+*.exe
+indus
 dist/
+build/
 
 # Build artifacts
 cmd/indus-terminal/rsrc.syso
+*.syso
 
 # Test projects
 testproject/

@@ -3,20 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>INDUS v1.4.1 Release Notes | Production Hardening | By Hariom Kumar Pandit</title>
   <meta name="description" content="INDUS Terminal v1.4.1 - Production hardening release with installer improvements, CI enforcement, and bug fixes. Built by Hariom Kumar Pandit.">
   <meta name="keywords" content="INDUS v1.4.1, production patch, installer hardening, Hariom Kumar Pandit">
   <meta name="author" content="Hariom Kumar Pandit">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="google-site-verification" content="K_ErJLZZUJW2-LkuoiAf2LOXKa87FX_ETHBtdYp5EbE" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="INDUS">
+  <meta property="og:url" content="https://hari7261.github.io/INDUS/version/v1.4.1.html">
+  <meta property="og:title" content="INDUS v1.4.1 Release Notes | Production Hardening | By Hariom Kumar Pandit">
+  <meta property="og:description" content="INDUS Terminal v1.4.1 - Production hardening release with installer improvements, CI enforcement, and bug fixes. Built by Hariom Kumar Pandit.">
+  <meta property="og:image" content="https://hari7261.github.io/INDUS/images/image1.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://hari7261.github.io/INDUS/version/v1.4.1.html">
+  <meta property="twitter:title" content="INDUS v1.4.1 Release Notes | Production Hardening | By Hariom Kumar Pandit">
+  <meta property="twitter:description" content="INDUS Terminal v1.4.1 - Production hardening release with installer improvements, CI enforcement, and bug fixes. Built by Hariom Kumar Pandit.">
+  <meta property="twitter:creator" content="@hari7261">
+  <meta property="twitter:image" content="https://hari7261.github.io/INDUS/images/image1.png">
+
   
-  <link rel="stylesheet" href="../main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="preload" as="style" href="../main.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "INDUS v1.4.1 Release Notes | Production Hardening | By Hariom Kumar Pandit",
+  "description": "INDUS Terminal v1.4.1 - Production hardening release with installer improvements, CI enforcement, and bug fixes. Built by Hariom Kumar Pandit.",
+  "url": "https://hari7261.github.io/INDUS/version/v1.4.1.html",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "INDUS",
+    "url": "https://hari7261.github.io/INDUS/"
+  },
+  "about": {
+    "@type": "SoftwareApplication",
+    "name": "INDUS",
+    "operatingSystem": "Windows"
+  }
+}
+  </script>
+
+<link rel="stylesheet" href="../main.css">
   <link rel="icon" type="image/x-icon" href="../icon.ico">
   <link rel="canonical" href="https://hari7261.github.io/INDUS/version/v1.4.1.html">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
-    mermaid.initialize({ 
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window.mermaid) return;
+      mermaid.initialize({ 
       startOnLoad: true,
       theme: 'dark',
       themeVariables: {
@@ -40,6 +86,7 @@
         textColor: '#fff'
       }
     });
+    });
   </script>
 </head>
 <body>
@@ -47,7 +94,7 @@
 <nav class="nav">
   <div class="nav-container">
     <a href="../index.html" class="nav-brand">
-      <img src="../icon.ico" alt="INDUS Logo" width="32" height="32" style="border-radius: 6px;">
+      <img src="../icon.ico" alt="INDUS Logo" width="32" height="32" loading="eager" decoding="async" fetchpriority="high" style="border-radius: 6px;">
       INDUS
     </a>
     

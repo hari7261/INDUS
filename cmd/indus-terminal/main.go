@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	version   = "1.5.2"
+	version   = "1.5.3"
 	commit    = "initial"
 	buildTime = "2026-03-08T00:00:00Z"
 )
@@ -160,35 +160,29 @@ func (t *Terminal) printBanner() {
 		"    ~    ~      ~    ~   ",
 	}
 
-	for i := 0; i < 5; i++ {
-		frame := waves[i%len(waves)]
-
-		fmt.Printf("\r%s%s%s", saffron, frame, reset)
-		time.Sleep(70 * time.Millisecond)
-
-		fmt.Printf("\r%s%s%s", white, frame, reset)
-		time.Sleep(70 * time.Millisecond)
-
-		fmt.Printf("\r%s%s%s", green, frame, reset)
-		time.Sleep(70 * time.Millisecond)
+	for i := 0; i < len(waves); i++ {
+		frame := waves[i]
+		switch i {
+		case 0:
+			fmt.Printf("%s  %s%s\n", saffron, frame, reset)
+		case 1:
+			fmt.Printf("%s  %s%s\n", white, frame, reset)
+		default:
+			fmt.Printf("%s  %s%s\n", green, frame, reset)
+		}
+		time.Sleep(50 * time.Millisecond)
 	}
-	fmt.Print("\r\n")
 
+	fmt.Println("")
 	fmt.Printf("%s%s%s\n", saffron, bar, reset)
 	fmt.Printf("%s%s%s\n", white, bar, reset)
 	fmt.Printf("%s%s%s\n", green, bar, reset)
+	fmt.Println("")
 
-	bot := []string{
-		"        ▄▄▄",
-		"       (◉_◉)",
-		"      /|███|\\",
-		"       /   \\",
-	}
-
-	fmt.Printf("%s  ██╗███╗   ██╗██████╗ ██╗   ██╗███████╗%s%s\n", saffron, reset, saffron+bot[0]+reset)
-	fmt.Printf("%s  ██║████╗  ██║██╔══██╗██║   ██║██╔════╝%s%s\n", saffron, reset, saffron+bot[1]+reset)
-	fmt.Printf("%s  ██║██╔██╗ ██║██║  ██║██║   ██║███████╗%s%s\n", white, reset, saffron+bot[2]+reset)
-	fmt.Printf("%s  ██║██║╚██╗██║██║  ██║██║   ██║╚════██║%s%s\n", white, reset, saffron+bot[3]+reset)
+	fmt.Printf("%s  ██╗███╗   ██╗██████╗ ██╗   ██╗███████╗%s%s        ▄▄▄%s\n", saffron, reset, white, reset)
+	fmt.Printf("%s  ██║████╗  ██║██╔══██╗██║   ██║██╔════╝%s%s       (◉_◉)%s\n", saffron, reset, white, reset)
+	fmt.Printf("%s  ██║██╔██╗ ██║██║  ██║██║   ██║███████╗%s%s      /|███|\\%s\n", white, reset, white, reset)
+	fmt.Printf("%s  ██║██║╚██╗██║██║  ██║██║   ██║╚════██║%s%s       /   \\%s\n", white, reset, white, reset)
 	fmt.Printf("%s  ██║██║ ╚████║██████╔╝╚██████╔╝███████║%s\n", green, reset)
 	fmt.Printf("%s  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚══════╝%s\n", green, reset)
 

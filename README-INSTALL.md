@@ -42,7 +42,7 @@ This now enforces:
 
 ## 5. Release signing policy (current)
 
-The v1.5.2 release pipeline publishes unsigned Windows artifacts by default and does not require signing secrets.
+The v1.5.3 release pipeline publishes unsigned Windows artifacts by default and does not require signing secrets.
 If code signing is reintroduced in a later release, it will be documented separately.
 
 ## 6. SmartScreen note

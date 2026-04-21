@@ -1,4 +1,4 @@
-# INDUS CLI - Complete Capabilities (v1.5.2)
+# INDUS CLI - Complete Capabilities (v1.5.3)
 
 ## 🎯 What Can INDUS Do?
 
@@ -96,7 +96,7 @@ version
 
 ---
 
-### 5. Development Toolchain Detection (NEW in v1.5.2)
+### 5. Development Toolchain Detection (NEW in v1.5.3)
 ```bash
 # Scan all installed development tools
 ind tools scan
@@ -144,7 +144,7 @@ NOT FOUND:
 
 ---
 
-## 💻 System Command Passthrough (FULLY FUNCTIONAL in v1.5.2)
+## 💻 System Command Passthrough (FULLY FUNCTIONAL in v1.5.3)
 
 INDUS can run **ANY Windows command** directly:
 

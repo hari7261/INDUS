@@ -48,7 +48,7 @@ Download `indus.exe` from [Releases](https://github.com/hari7261/INDUS/releases/
 
 ## ✨ Features
 
-### 🆕 What's New in v1.5.3
+### 🆕 What's New in v1.5.4
 
 **Major Production Enhancements:**
 - ✅ **Full System Command Passthrough** - Run ANY Windows/system command directly (git, docker, python, npm, etc.)
@@ -394,4 +394,5 @@ Namaste! 🙏 &nbsp;|&nbsp; Made in India 🇮🇳
 [⬆ Back to top](#indus-terminal-)
 
 </div>
+
 

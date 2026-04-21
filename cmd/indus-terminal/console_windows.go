@@ -9,22 +9,25 @@ import (
 )
 
 var (
-	kernel32         = syscall.NewLazyDLL("kernel32.dll")
-	user32           = syscall.NewLazyDLL("user32.dll")
-	setConsoleTitleW = kernel32.NewProc("SetConsoleTitleW")
-	getConsoleMode   = kernel32.NewProc("GetConsoleMode")
-	setConsoleMode   = kernel32.NewProc("SetConsoleMode")
-	allocConsole     = kernel32.NewProc("AllocConsole")
-	getConsoleWindow = kernel32.NewProc("GetConsoleWindow")
-	attachConsole    = kernel32.NewProc("AttachConsole")
-	freeConsole      = kernel32.NewProc("FreeConsole")
-	showWindow       = user32.NewProc("ShowWindow")
+	kernel32           = syscall.NewLazyDLL("kernel32.dll")
+	user32             = syscall.NewLazyDLL("user32.dll")
+	setConsoleTitleW   = kernel32.NewProc("SetConsoleTitleW")
+	getConsoleMode     = kernel32.NewProc("GetConsoleMode")
+	setConsoleMode     = kernel32.NewProc("SetConsoleMode")
+	setConsoleCP       = kernel32.NewProc("SetConsoleCP")
+	setConsoleOutputCP = kernel32.NewProc("SetConsoleOutputCP")
+	allocConsole       = kernel32.NewProc("AllocConsole")
+	getConsoleWindow   = kernel32.NewProc("GetConsoleWindow")
+	attachConsole      = kernel32.NewProc("AttachConsole")
+	freeConsole        = kernel32.NewProc("FreeConsole")
+	showWindow         = user32.NewProc("ShowWindow")
 )
 
 const (
 	ATTACH_PARENT_PROCESS = ^uint32(0) // -1
 	SW_SHOW               = 5
 	SW_MAXIMIZE           = 3
+	utf8CodePage          = 65001
 )
 
 func enableConsoleFeatures() {
@@ -51,6 +54,11 @@ func enableConsoleFeatures() {
 			os.Stderr = stdout
 		}
 	}
+
+	// Force UTF-8 so Unicode banner glyphs render correctly in cmd.exe and
+	// in the dedicated console allocated by the GUI build.
+	setConsoleCP.Call(uintptr(utf8CodePage))
+	setConsoleOutputCP.Call(uintptr(utf8CodePage))
 
 	// Enable ANSI escape code support (virtual terminal processing)
 	var mode uint32

@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0a0a0a">
   <meta name="color-scheme" content="dark">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>INDUS Commands | 103 Built-in Commands | By Hariom Kumar Pandit</title>
-  <meta name="description" content="Complete command reference for INDUS Terminal v1.5.0 - 103 built-in commands across 11 modules. Built by Hariom Kumar Pandit.">
+  <title>INDUS Commands | 60 Built-in Commands | By Hariom Kumar Pandit</title>
+  <meta name="description" content="Complete command reference for INDUS Terminal v1.5.2 - 60 built-in commands across 11 modules. Built by Hariom Kumar Pandit.">
   <meta name="keywords" content="INDUS commands, terminal commands, CLI reference, developer tools, Hariom Kumar Pandit">
   <meta name="author" content="Hariom Kumar Pandit">
   <meta name="creator" content="Hariom Kumar Pandit">
@@ -28,14 +28,14 @@
   <meta property="og:site_name" content="INDUS">
   <meta property="og:url" content="https://hari7261.github.io/INDUS/commands.html">
   <meta property="og:title" content="INDUS Commands - Complete Reference">
-  <meta property="og:description" content="103 built-in commands across 11 modules for INDUS Terminal v1.5.0">
+  <meta property="og:description" content="60 built-in commands across 11 modules for INDUS Terminal v1.5.2">
   <meta property="og:image" content="https://hari7261.github.io/INDUS/images/image1.png">
   
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://hari7261.github.io/INDUS/commands.html">
   <meta property="twitter:title" content="INDUS Commands - Complete Reference">
-  <meta property="twitter:description" content="103 built-in commands across 11 modules for INDUS Terminal v1.5.0">
+  <meta property="twitter:description" content="60 built-in commands across 11 modules for INDUS Terminal v1.5.2">
   <meta property="twitter:creator" content="@hari7261">
   <meta property="twitter:image" content="https://hari7261.github.io/INDUS/images/image1.png">
   
@@ -47,8 +47,8 @@
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "INDUS Commands | 103 Built-in Commands | By Hariom Kumar Pandit",
-  "description": "Complete command reference for INDUS Terminal v1.5.0 - 103 built-in commands across 11 modules. Built by Hariom Kumar Pandit.",
+  "name": "INDUS Commands | 60 Built-in Commands | By Hariom Kumar Pandit",
+  "description": "Complete command reference for INDUS Terminal v1.5.2 - 60 built-in commands across 11 modules. Built by Hariom Kumar Pandit.",
   "url": "https://hari7261.github.io/INDUS/commands.html",
   "isPartOf": {
     "@type": "WebSite",
@@ -116,11 +116,11 @@
     </ul>
     
     <div class="nav-cta">
-      <a href="https://github.com/hari7261/INDUS/releases/tag/v1.5.0" class="btn btn-primary">
+      <a href="https://github.com/hari7261/INDUS/releases/tag/v1.5.2" class="btn btn-primary">
         <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
         </svg>
-        Download v1.5.0
+        Download v1.5.2
       </a>
     </div>
     
@@ -135,20 +135,20 @@
 <!-- ═══════════════ HEADER ═══════════════ -->
 <section class="hero" style="padding: 4rem 0 3rem;">
   <div class="container-narrow">
-    <span class="hero-badge">v1.5.0 — 103 Commands</span>
+    <span class="hero-badge">v1.5.2 ? 60 Commands</span>
     
     <h1 class="hero-title" style="font-size: 3.5rem; margin-bottom: 1.5rem;">
       Command Reference
     </h1>
     
     <p style="font-size: 1.25rem; max-width: 700px; margin: 0 auto 2rem;">
-      Complete documentation for all 103 built-in INDUS commands organized across 11 modules. 
+      Complete documentation for all 60 built-in INDUS commands organized across 11 modules. 
       Each command includes syntax, description, and practical examples.
     </p>
     
     <div class="stats-grid" style="max-width: 800px; margin: 0 auto;">
       <div class="stat-card">
-        <div class="stat-value">103</div>
+        <div class="stat-value">60</div>
         <div class="stat-label">Commands</div>
       </div>
       <div class="stat-card">
@@ -168,14 +168,14 @@
   <div class="container">
     <div class="section-header">
       <h2>Command Module Architecture</h2>
-      <p>How commands are organized and executed in INDUS v1.5.0</p>
+      <p>How commands are organized and executed in INDUS v1.5.2</p>
     </div>
     
     <div class="mermaid-container">
       <div class="mermaid">
 graph TB
     Input[User Command] -->|ind command| Parser[Command Parser]
-    Parser --> Registry[Command Registry<br/>103 Commands]
+    Parser --> Registry[Command Registry<br/>60 Commands]
     
     Registry --> Core[Core Module<br/>5 commands]
     Registry --> System[System Module<br/>5 commands]
@@ -215,7 +215,7 @@ graph TB
   <div class="container">
     <div class="section-header">
       <h2>Commands by Module</h2>
-      <p>Browse all 103 commands organized by functional module</p>
+      <p>Browse all 60 commands organized by functional module</p>
     </div>
     
     <!-- CORE MODULE -->
@@ -396,7 +396,7 @@ graph TB
 <pre><code><span style="color: #4CAF50;">→</span> ind net ping example.com --count 5
 <span style="color: #B0B0B0;">Test network connectivity with ICMP ping</span>
 
-<span style="color: #4CAF50;">→</span> ind net http get https://api.github.com
+<span style="color: #4CAF50;">→</span> ind net fetch https://api.github.com --method GET
 <span style="color: #B0B0B0;">Make HTTP GET request with response details</span>
 
 <span style="color: #4CAF50;">→</span> ind net http post https://api.com/endpoint --data '{"key":"value"}'
@@ -459,7 +459,7 @@ graph TB
           INDUS
         </div>
         <p class="footer-description">
-          Production-grade Windows CLI terminal with 103 built-in commands. 
+          Production-grade Windows CLI terminal with 60 built-in commands. 
           Built by Hariom Kumar Pandit.
         </p>
       </div>
@@ -498,7 +498,7 @@ graph TB
       <p>
         Built by <strong>Hariom Kumar Pandit</strong> • 
         Licensed under MIT • 
-        INDUS v1.5.0 • 
+        INDUS v1.5.2 ? 
         © 2026 • 
         <a href="https://www.dreamsbuilder.tech" style="color: var(--saffron);">DreamsBuilder Tech</a>
       </p>

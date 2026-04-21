@@ -132,3 +132,61 @@ func TestSysStatsUsesCache(t *testing.T) {
 		t.Fatal("expected second sys stats call to use cache")
 	}
 }
+
+func TestDevBenchAcceptsQuotedCommandFlagValue(t *testing.T) {
+	engine := newTestEngine(t)
+	session := engine.NewSession(t.TempDir())
+
+	response := engine.ExecuteTokens(context.Background(), session, []string{
+		"dev", "bench", "--command", "ind sys stats", "--runs", "2",
+	}, ModeExecutable)
+	if response.Err != nil {
+		t.Fatalf("dev bench failed: %v", response.Err)
+	}
+	if !strings.Contains(response.Output, "command=ind sys stats") {
+		t.Fatalf("unexpected output: %q", response.Output)
+	}
+}
+
+func TestDevBenchAcceptsSplitCommandFlagValue(t *testing.T) {
+	engine := newTestEngine(t)
+	session := engine.NewSession(t.TempDir())
+
+	response := engine.ExecuteTokens(context.Background(), session, []string{
+		"dev", "bench", "--command", "ind", "sys", "stats", "--runs", "2",
+	}, ModeExecutable)
+	if response.Err != nil {
+		t.Fatalf("dev bench failed: %v", response.Err)
+	}
+	if !strings.Contains(response.Output, "command=ind sys stats") {
+		t.Fatalf("unexpected output: %q", response.Output)
+	}
+}
+
+func TestLegacyHTTPAliasMapsToNetFetch(t *testing.T) {
+	engine := newTestEngine(t)
+
+	tokens, warning := engine.normalizeTokens([]string{"ind", "http", "get", "https://api.github.com"}, ModeExecutable)
+	if warning != "" {
+		t.Fatalf("unexpected warning: %q", warning)
+	}
+
+	want := []string{"net", "fetch", "https://api.github.com", "--method", "GET"}
+	if strings.Join(tokens, "|") != strings.Join(want, "|") {
+		t.Fatalf("unexpected tokens: got %v want %v", tokens, want)
+	}
+}
+
+func TestLegacyNetHTTPAliasMapsDataToBody(t *testing.T) {
+	engine := newTestEngine(t)
+
+	tokens, warning := engine.normalizeTokens([]string{"ind", "net", "http", "post", "https://api.example.com", "--data", "{\"ok\":true}"}, ModeExecutable)
+	if warning != "" {
+		t.Fatalf("unexpected warning: %q", warning)
+	}
+
+	want := []string{"net", "fetch", "https://api.example.com", "--method", "POST", "--body", "{\"ok\":true}"}
+	if strings.Join(tokens, "|") != strings.Join(want, "|") {
+		t.Fatalf("unexpected tokens: got %v want %v", tokens, want)
+	}
+}

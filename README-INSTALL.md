@@ -11,7 +11,7 @@
 After install, you can run:
 
 ```powershell
-ind version
+indus version
 ```
 
 ## 2. What the installer configures
@@ -24,7 +24,7 @@ ind version
 
 ## 3. Portable install (no wizard)
 
-1. Download `ind.exe`.
+1. Download `indus.exe`.
 2. Place it in any folder.
 3. Run directly, or add that folder to PATH manually.
 
@@ -42,7 +42,7 @@ This now enforces:
 
 ## 5. Release signing policy (current)
 
-The v1.4.5 release pipeline publishes unsigned Windows artifacts by default and does not require signing secrets.
+The v1.5.2 release pipeline publishes unsigned Windows artifacts by default and does not require signing secrets.
 If code signing is reintroduced in a later release, it will be documented separately.
 
 ## 6. SmartScreen note

@@ -48,7 +48,7 @@ Download `indus.exe` from [Releases](https://github.com/hari7261/INDUS/releases/
 
 ## ✨ Features
 
-### 🆕 What's New in v1.5.0
+### 🆕 What's New in v1.5.2
 
 **Major Production Enhancements:**
 - ✅ **Full System Command Passthrough** - Run ANY Windows/system command directly (git, docker, python, npm, etc.)
@@ -57,7 +57,8 @@ Download `indus.exe` from [Releases](https://github.com/hari7261/INDUS/releases/
 - ✅ **Symlink Loop Protection** - Safe filesystem operations with automatic loop detection
 - ✅ **Port Validation** - Proper TCP port range validation (1-65535)
 - ✅ **Improved Console** - Better console initialization and independence
-- ✅ **103 Built-in Commands** - Two new commands: `tools scan` and `tools check`
+- ✅ **GUI-Only Windows Release** - Windows artifacts now ship as a single `indus.exe` GUI-first executable
+- ✅ **60 Built-in Commands** - Two new commands: `tools scan` and `tools check`
 - ✅ **Production Ready** - All known issues resolved, comprehensive bug fixes
 
 **Bug Fixes:**

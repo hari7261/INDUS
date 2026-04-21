@@ -230,12 +230,24 @@ func (e *Engine) normalizeTokens(tokens []string, mode Mode) ([]string, string) 
 		return nil, ""
 	}
 
+	if translated, ok := translateHTTPLegacyTokens(tokens); ok {
+		return translated, ""
+	}
+
 	first := strings.ToLower(tokens[0])
 	switch first {
 	case "ind":
-		return append([]string(nil), tokens[1:]...), ""
+		normalized := append([]string(nil), tokens[1:]...)
+		if translated, ok := translateHTTPLegacyTokens(normalized); ok {
+			return translated, ""
+		}
+		return normalized, ""
 	case "indus":
-		return append([]string(nil), tokens[1:]...), "Deprecated command detected.\nUse:\nind " + strings.Join(tokens[1:], " ")
+		normalized := append([]string(nil), tokens[1:]...)
+		if translated, ok := translateHTTPLegacyTokens(normalized); ok {
+			return translated, "Deprecated command detected.\nUse:\nind " + strings.Join(translated, " ")
+		}
+		return normalized, "Deprecated command detected.\nUse:\nind " + strings.Join(tokens[1:], " ")
 	}
 
 	if alias, ok := legacyAliases()[first]; ok {
@@ -251,6 +263,59 @@ func (e *Engine) normalizeTokens(tokens []string, mode Mode) ([]string, string) 
 	}
 
 	return append([]string(nil), tokens...), ""
+}
+
+func translateHTTPLegacyTokens(tokens []string) ([]string, bool) {
+	if len(tokens) < 2 {
+		return nil, false
+	}
+
+	switch {
+	case strings.EqualFold(tokens[0], "http"):
+		return translateHTTPInvocation(tokens[1:])
+	case len(tokens) >= 3 && strings.EqualFold(tokens[0], "net") && strings.EqualFold(tokens[1], "http"):
+		return translateHTTPInvocation(tokens[2:])
+	default:
+		return nil, false
+	}
+}
+
+func translateHTTPInvocation(tokens []string) ([]string, bool) {
+	if len(tokens) < 2 {
+		return nil, false
+	}
+
+	method := strings.ToUpper(tokens[0])
+	switch method {
+	case "GET", "POST", "PUT", "DELETE", "PATCH", "HEAD":
+	default:
+		return nil, false
+	}
+
+	translated := []string{"net", "fetch", tokens[1], "--method", method}
+	bodyAllowed := method == "POST" || method == "PUT" || method == "PATCH"
+	bodySet := false
+
+	for i := 2; i < len(tokens); i++ {
+		token := tokens[i]
+
+		switch {
+		case token == "--data" && i+1 < len(tokens):
+			translated = append(translated, "--body", tokens[i+1])
+			bodySet = true
+			i++
+		case strings.HasPrefix(token, "--data="):
+			translated = append(translated, "--body", strings.TrimPrefix(token, "--data="))
+			bodySet = true
+		case bodyAllowed && !bodySet && !strings.HasPrefix(token, "-"):
+			translated = append(translated, "--body", token)
+			bodySet = true
+		default:
+			translated = append(translated, token)
+		}
+	}
+
+	return translated, true
 }
 
 func (e *Engine) resolve(tokens []string) (CommandMeta, []string, bool) {

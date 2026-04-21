@@ -61,10 +61,10 @@ go build -ldflags="-H windowsgui" -o indus-gui.exe ./cmd/indus
 ### Production Build (Both Versions)
 ```bash
 # Build console version
-go build -ldflags="-s -w -X main.version=1.5.0 -X main.commit=$(git rev-parse --short HEAD)" -o build/indus.exe ./cmd/indus
+go build -ldflags="-s -w -X main.version=1.5.2 -X main.commit=$(git rev-parse --short HEAD)" -o build/indus.exe ./cmd/indus-terminal
 
 # Build GUI version  
-go build -ldflags="-s -w -H windowsgui -X main.version=1.5.0 -X main.commit=$(git rev-parse --short HEAD)" -o build/indus-gui.exe ./cmd/indus
+go build -ldflags="-s -w -H windowsgui -X main.version=1.5.2 -X main.commit=$(git rev-parse --short HEAD)" -o build/indus-gui.exe ./cmd/indus-terminal
 ```
 
 ---
@@ -188,8 +188,7 @@ For Inno Setup installer to use standalone GUI version:
 
 ```iss
 [Files]
-Source: "dist\ind.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\indus-gui.exe"; DestDir: "{app}"; Flags: ignoreversion; DestName: "indus-standalone.exe"
+Source: "dist\indus.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\INDUS Terminal"; Filename: "{app}\indus-standalone.exe"
@@ -197,5 +196,4 @@ Name: "{autodesktop}\INDUS Terminal"; Filename: "{app}\indus-standalone.exe"
 ```
 
 This way:
-- `ind.exe` / `indus.exe` - for command line (in PATH)
-- `indus-standalone.exe` - for desktop/Start Menu (GUI version)
+- `indus.exe` - single GUI-first executable for PATH, shortcuts, and desktop launch

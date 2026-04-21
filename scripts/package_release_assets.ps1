@@ -1,5 +1,5 @@
 param(
-  [string]$Version = "1.4.5"
+  [string]$Version = "1.5.2"
 )
 
 $ErrorActionPreference = "Stop"
@@ -12,7 +12,7 @@ if (Test-Path $assetsDir) {
 }
 New-Item -ItemType Directory -Force -Path $assetsDir | Out-Null
 
-$windowsBinary = Join-Path $repoRoot "dist\ind-v$Version-windows-amd64.exe"
+$windowsBinary = Join-Path $repoRoot "dist\indus-v$Version-windows-amd64.exe"
 $linuxAmd64Binary = Join-Path $repoRoot "dist\ind-v$Version-linux-amd64"
 $linuxArm64Binary = Join-Path $repoRoot "dist\ind-v$Version-linux-arm64"
 $darwinAmd64Binary = Join-Path $repoRoot "dist\ind-v$Version-darwin-amd64"
@@ -26,8 +26,8 @@ foreach ($file in @($windowsBinary, $linuxAmd64Binary, $linuxArm64Binary, $darwi
 
 $tmpWin = Join-Path $assetsDir "tmp-win"
 New-Item -ItemType Directory -Force -Path $tmpWin | Out-Null
-Copy-Item $windowsBinary (Join-Path $tmpWin "ind.exe") -Force
-Compress-Archive -Path (Join-Path $tmpWin "*") -DestinationPath (Join-Path $assetsDir "ind-v$Version-windows-amd64.zip") -CompressionLevel Optimal -Force
+Copy-Item $windowsBinary (Join-Path $tmpWin "indus.exe") -Force
+Compress-Archive -Path (Join-Path $tmpWin "*") -DestinationPath (Join-Path $assetsDir "indus-v$Version-windows-amd64.zip") -CompressionLevel Optimal -Force
 Remove-Item $tmpWin -Recurse -Force
 
 function New-TarAsset {
@@ -48,7 +48,7 @@ New-TarAsset -SourceBinary $linuxArm64Binary -AssetName "ind-v$Version-linux-arm
 New-TarAsset -SourceBinary $darwinAmd64Binary -AssetName "ind-v$Version-darwin-amd64.tar.gz"
 New-TarAsset -SourceBinary $darwinArm64Binary -AssetName "ind-v$Version-darwin-arm64.tar.gz"
 
-Copy-Item $windowsBinary (Join-Path $assetsDir "ind-v$Version-windows-amd64.exe") -Force
+Copy-Item $windowsBinary (Join-Path $assetsDir "indus-v$Version-windows-amd64.exe") -Force
 
 $latestSummary = Get-ChildItem (Join-Path $repoRoot "dist") -Filter "smoke-summary-*.txt" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $latestReport = Get-ChildItem (Join-Path $repoRoot "dist") -Filter "smoke-report-*.json" | Sort-Object LastWriteTime -Descending | Select-Object -First 1

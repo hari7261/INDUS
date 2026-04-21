@@ -4,10 +4,10 @@
 ; ============================================================
 
 #define AppName      "INDUS Terminal"
-#define AppVersion   GetVersionNumbersString(".\..\dist\ind.exe")
+#define AppVersion   GetVersionNumbersString(".\..\dist\indus.exe")
 #define AppPublisher "Hariom Kumar Pandit"
 #define AppURL       "https://github.com/hari7261/INDUS"
-#define AppExeName   "ind.exe"
+#define AppExeName   "indus.exe"
 #define AppId        "{{B4F2C8D1-3A7E-4F9B-82C6-1D5E3A7F9B2C}"
 
 [Setup]
@@ -26,7 +26,7 @@ PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 ChangesEnvironment=yes
 OutputDir=..\dist
-OutputBaseFilename=indus-setup
+OutputBaseFilename=indus-setup-v{#AppVersion}-windows-amd64
 Compression=lzma2/ultra64
 SolidCompression=yes
 ArchitecturesAllowed=x64compatible
@@ -48,10 +48,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "Create a &desktop shortcut"; GroupDescription: "Additional shortcuts:"
 Name: "startmenuicon"; Description: "Create a Start &Menu shortcut"; GroupDescription: "Additional shortcuts:"
 Name: "contextmenu"; Description: "Add ""Open INDUS Terminal here"" to right-click context menu"; GroupDescription: "Shell integration:"
-Name: "addtopath"; Description: "Add INDUS to &PATH (use 'ind' from any terminal)"; GroupDescription: "System integration:"
+Name: "addtopath"; Description: "Add INDUS to &PATH (use 'indus' from any terminal)"; GroupDescription: "System integration:"
 
 [Files]
-Source: "..\dist\ind.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\dist\indus.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\icon.ico"; DestDir: "{app}"; DestName: "indus.ico"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

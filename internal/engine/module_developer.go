@@ -33,7 +33,7 @@ func (m *developerModule) Execute(_ context.Context, inv Invocation) Response {
 }
 
 func (m *developerModule) bench(inv Invocation) Response {
-	commandLine := inv.Parsed.String("command")
+	commandLine := benchCommandLine(inv.Args)
 	if commandLine == "" {
 		commandLine = "ind sys stats"
 	}
@@ -69,6 +69,30 @@ func (m *developerModule) bench(inv Invocation) Response {
 	}
 	average := total / time.Duration(runs)
 	return Response{Output: fmt.Sprintf("command=%s\nruns=%d\navg=%s\npeak=%s", commandLine, runs, average, peak)}
+}
+
+func benchCommandLine(args []string) string {
+	for i := 0; i < len(args); i++ {
+		arg := args[i]
+
+		switch {
+		case strings.HasPrefix(arg, "--command="):
+			return strings.TrimSpace(strings.TrimPrefix(arg, "--command="))
+		case strings.HasPrefix(arg, "-command="):
+			return strings.TrimSpace(strings.TrimPrefix(arg, "-command="))
+		case arg == "--command" || arg == "-command":
+			var commandParts []string
+			for j := i + 1; j < len(args); j++ {
+				if strings.HasPrefix(args[j], "-") {
+					break
+				}
+				commandParts = append(commandParts, args[j])
+			}
+			return strings.TrimSpace(strings.Join(commandParts, " "))
+		}
+	}
+
+	return ""
 }
 
 func (m *developerModule) watch(inv Invocation) Response {

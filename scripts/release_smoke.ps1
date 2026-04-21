@@ -8,11 +8,11 @@ $PSNativeCommandUseErrorActionPreference = $false
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 if (-not $BinaryPath) {
-  $BinaryPath = Join-Path $repoRoot "dist\ind.exe"
+  $BinaryPath = Join-Path $repoRoot "dist\indus.exe"
 }
 
 if (-not (Test-Path $BinaryPath)) {
-  throw "Binary not found at $BinaryPath. Build first with: go build -o dist/ind.exe ./cmd/indus-terminal"
+  throw "Binary not found at $BinaryPath. Build first with: go build -ldflags='-H windowsgui' -o dist/indus.exe ./cmd/indus-terminal"
 }
 $BinaryPath = (Resolve-Path $BinaryPath).Path
 
@@ -130,6 +130,8 @@ $commands = @(
   @{ name = "ind net ports --from $smokePort --to $smokePort"; args = @("ind", "net", "ports", "--from", "$smokePort", "--to", "$smokePort") },
   @{ name = "ind net status --url http://127.0.0.1:$smokePort"; args = @("ind", "net", "status", "--url", "http://127.0.0.1:$smokePort") },
   @{ name = "ind net fetch http://127.0.0.1:$smokePort --method GET"; args = @("ind", "net", "fetch", "http://127.0.0.1:$smokePort", "--method", "GET") },
+  @{ name = "ind http get http://127.0.0.1:$smokePort"; args = @("ind", "http", "get", "http://127.0.0.1:$smokePort") },
+  @{ name = "ind net http post http://127.0.0.1:$smokePort --data '{""ok"":true}'"; args = @("ind", "net", "http", "post", "http://127.0.0.1:$smokePort", "--data", '{"ok":true}') },
 
   @{ name = "ind dev bench --command 'ind sys stats' --runs 3"; args = @("ind", "dev", "bench", "--command", "ind sys stats", "--runs", "3") },
   @{ name = "ind dev watch --path . --seconds 1"; args = @("ind", "dev", "watch", "--path", ".", "--seconds", "1") },

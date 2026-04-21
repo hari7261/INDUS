@@ -6,7 +6,7 @@ echo INDUS - Production Build
 echo ========================================================
 echo.
 
-set "VERSION=1.5.0"
+set "VERSION=1.5.2"
 for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set "COMMIT=%%i"
 if "!COMMIT!"=="" set "COMMIT=none"
 for /f %%i in ('powershell -NoProfile -Command "(Get-Date).ToUniversalTime().ToString(\"yyyy-MM-ddTHH:mm:ssZ\")"') do set "BUILD_TIME=%%i"
@@ -45,26 +45,21 @@ if not exist build\icon.ico (
 )
 
 echo [1/4] Embedding icon resource...
-"%RSRC_EXE%" -ico build\icon.ico -o cmd\indus\rsrc.syso
+"%RSRC_EXE%" -ico build\icon.ico -o cmd\indus-terminal\rsrc.syso
 if !errorlevel! neq 0 (
   echo ERROR: failed to embed icon resource.
   exit /b 1
 )
-if not exist cmd\indus\rsrc.syso (
-  echo ERROR: cmd\indus\rsrc.syso was not generated.
+if not exist cmd\indus-terminal\rsrc.syso (
+  echo ERROR: cmd\indus-terminal\rsrc.syso was not generated.
   exit /b 1
 )
 
-echo [2/4] Building dist\ind.exe...
+echo [2/4] Building dist\indus.exe...
 set "LDFLAGS=-s -w -H windowsgui -X main.version=%VERSION% -X main.commit=%COMMIT% -X main.buildTime=%BUILD_TIME%"
-go build -ldflags "%LDFLAGS%" -o dist\indus.exe .\cmd\indus
+go build -ldflags "%LDFLAGS%" -o dist\indus.exe .\cmd\indus-terminal
 if !errorlevel! neq 0 (
   echo ERROR: go build failed.
-  exit /b 1
-)
-copy /Y dist\ind.exe dist\indus.exe >nul
-if !errorlevel! neq 0 (
-  echo ERROR: failed to create dist\indus.exe alias.
   exit /b 1
 )
 
@@ -75,26 +70,29 @@ if !errorlevel! neq 0 (
   exit /b 1
 )
 
-if /i "%SKIP_INSTALLER%"=="1" (
-  echo [4/4] Installer build skipped (SKIP_INSTALLER=1).
-) else (
-  echo [4/4] Building installer...
-  set "ISCC=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
-  if not exist "%ISCC%" (
-    echo ERROR: Inno Setup not found at "%ISCC%".
-    echo Install from https://jrsoftware.org/isdl.php
-    exit /b 1
-  )
-  "%ISCC%" installer\indus-setup.iss
-  if !errorlevel! neq 0 (
-    echo ERROR: installer build failed.
-    exit /b 1
-  )
-  if not exist dist\indus-setup.exe (
-    echo ERROR: dist\indus-setup.exe was not created.
-    exit /b 1
-  )
+if /i "%SKIP_INSTALLER%"=="1" goto :skip_installer
+echo [4/4] Building installer...
+set "ISCC=C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+if not exist "%ISCC%" (
+  echo ERROR: Inno Setup not found at "%ISCC%".
+  echo Install from https://jrsoftware.org/isdl.php
+  exit /b 1
 )
+"%ISCC%" installer\indus-setup.iss
+if !errorlevel! neq 0 (
+  echo ERROR: installer build failed.
+  exit /b 1
+)
+if not exist dist\indus-setup-v%VERSION%-windows-amd64.exe (
+  echo ERROR: dist\indus-setup-v%VERSION%-windows-amd64.exe was not created.
+  exit /b 1
+)
+goto :after_installer
+
+:skip_installer
+echo [4/4] Installer build skipped (SKIP_INSTALLER=1).
+
+:after_installer
 
 if not "%SIGN_PFX%"=="" (
   echo Signing binaries...
@@ -104,12 +102,10 @@ if not "%SIGN_PFX%"=="" (
     exit /b 1
   )
 
-  signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\ind.exe
-  if !errorlevel! neq 0 exit /b 1
   signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus.exe
   if !errorlevel! neq 0 exit /b 1
-  if exist dist\indus-setup.exe (
-    signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus-setup.exe
+  if exist dist\indus-setup-v%VERSION%-windows-amd64.exe (
+    signtool sign /fd SHA256 /f "%SIGN_PFX%" /p "%SIGN_PFX_PASSWORD%" /tr http://timestamp.digicert.com /td SHA256 dist\indus-setup-v%VERSION%-windows-amd64.exe
     if !errorlevel! neq 0 exit /b 1
   )
 )
@@ -118,8 +114,7 @@ echo.
 echo ========================================================
 echo Build complete.
 echo ========================================================
-echo dist\ind.exe
 echo dist\indus.exe
-if exist dist\indus-setup.exe echo dist\indus-setup.exe
+if exist dist\indus-setup-v%VERSION%-windows-amd64.exe echo dist\indus-setup-v%VERSION%-windows-amd64.exe
 echo.
 exit /b 0

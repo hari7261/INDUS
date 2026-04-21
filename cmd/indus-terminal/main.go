@@ -9,12 +9,13 @@ import (
 	"path/filepath"
 	"strings"
 	"syscall"
+	"time"
 
 	"indus/internal/engine"
 )
 
 var (
-	version   = "1.5.0"
+	version   = "1.5.2"
 	commit    = "initial"
 	buildTime = "2026-03-08T00:00:00Z"
 )
@@ -149,18 +150,48 @@ func (t *Terminal) printBanner() {
 		white   = "\033[97m"
 		green   = "\033[38;5;46m"
 		cyan    = "\033[36m"
-		blue    = "\033[38;5;39m"
 	)
 
 	bar := strings.Repeat("=", 68)
+
+	waves := []string{
+		"~    ~      ~    ~      ~",
+		"  ~    ~      ~    ~     ",
+		"    ~    ~      ~    ~   ",
+	}
+
+	for i := 0; i < 5; i++ {
+		frame := waves[i%len(waves)]
+
+		fmt.Printf("\r%s%s%s", saffron, frame, reset)
+		time.Sleep(70 * time.Millisecond)
+
+		fmt.Printf("\r%s%s%s", white, frame, reset)
+		time.Sleep(70 * time.Millisecond)
+
+		fmt.Printf("\r%s%s%s", green, frame, reset)
+		time.Sleep(70 * time.Millisecond)
+	}
+	fmt.Print("\r\n")
+
 	fmt.Printf("%s%s%s\n", saffron, bar, reset)
 	fmt.Printf("%s%s%s\n", white, bar, reset)
 	fmt.Printf("%s%s%s\n", green, bar, reset)
-	fmt.Printf("%s  ___ _   _ ____  _   _ ____%s\n", blue, reset)
-	fmt.Printf("%s |_ _| \\ | |  _ \\| | | / ___|%s\n", blue, reset)
-	fmt.Printf("%s  | ||  \\| | | | | | | \\___ \\%s\n", blue, reset)
-	fmt.Printf("%s  | || |\\  | |_| | |_| |___) |%s\n", blue, reset)
-	fmt.Printf("%s |___|_| \\_|____/ \\___/|____/%s\n", blue, reset)
+
+	bot := []string{
+		"        ▄▄▄",
+		"       (◉_◉)",
+		"      /|███|\\",
+		"       /   \\",
+	}
+
+	fmt.Printf("%s  ██╗███╗   ██╗██████╗ ██╗   ██╗███████╗%s%s\n", saffron, reset, saffron+bot[0]+reset)
+	fmt.Printf("%s  ██║████╗  ██║██╔══██╗██║   ██║██╔════╝%s%s\n", saffron, reset, saffron+bot[1]+reset)
+	fmt.Printf("%s  ██║██╔██╗ ██║██║  ██║██║   ██║███████╗%s%s\n", white, reset, saffron+bot[2]+reset)
+	fmt.Printf("%s  ██║██║╚██╗██║██║  ██║██║   ██║╚════██║%s%s\n", white, reset, saffron+bot[3]+reset)
+	fmt.Printf("%s  ██║██║ ╚████║██████╔╝╚██████╔╝███████║%s\n", green, reset)
+	fmt.Printf("%s  ╚═╝╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚══════╝%s\n", green, reset)
+
 	fmt.Println("")
 	fmt.Printf("%s  Namaste! Welcome to INDUS Terminal v%s%s\n", saffron, version, reset)
 	fmt.Printf("%s  Native format: ind <command> [options]%s\n", cyan, reset)

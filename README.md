@@ -48,9 +48,12 @@ Download `indus.exe` from [Releases](https://github.com/hari7261/INDUS/releases/
 
 ## ✨ Features
 
-### 🆕 What's New in v1.5.4
+### 🆕 What's New in v1.5.5
 
 **Major Production Enhancements:**
+- ✅ **Self-Update Command** - `ind update` can check, download, and stage the latest Windows release
+- ✅ **Saved Workflow Tasks** - `ind task` lets you create reusable multi-step INDUS automation flows
+- ✅ **Persistent Terminal Profile** - `ind term profile` controls prompt label, banner visibility, animation, and compact mode
 - ✅ **Full System Command Passthrough** - Run ANY Windows/system command directly (git, docker, python, npm, etc.)
 - ✅ **Development Toolchain Detection** - Automatically detect and verify 30+ dev tools (Python, Node.js, Go, Rust, Java, and more)
 - ✅ **Enhanced Error Handling** - Fixed critical bugs in environment variable management
@@ -58,7 +61,7 @@ Download `indus.exe` from [Releases](https://github.com/hari7261/INDUS/releases/
 - ✅ **Port Validation** - Proper TCP port range validation (1-65535)
 - ✅ **Improved Console** - Better console initialization and independence
 - ✅ **GUI-Only Windows Release** - Windows artifacts now ship as a single `indus.exe` GUI-first executable
-- ✅ **60 Built-in Commands** - Two new commands: `tools scan` and `tools check`
+- ✅ **67 Built-in Commands** - Includes update, task automation, and terminal profile controls
 - ✅ **Production Ready** - All known issues resolved, comprehensive bug fixes
 
 **Bug Fixes:**

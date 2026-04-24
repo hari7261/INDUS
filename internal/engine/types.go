@@ -73,12 +73,30 @@ type PackageRecord struct {
 	InstalledAt string `json:"installed_at"`
 }
 
+type TaskRecord struct {
+	Name      string   `json:"name"`
+	Commands  []string `json:"commands"`
+	CreatedAt string   `json:"created_at"`
+	UpdatedAt string   `json:"updated_at"`
+	LastRunAt string   `json:"last_run_at,omitempty"`
+}
+
+type TerminalProfile struct {
+	ShowBanner       bool   `json:"show_banner"`
+	BannerAnimation  string `json:"banner_animation"`
+	BannerDurationMS int    `json:"banner_duration_ms"`
+	CompactMode      bool   `json:"compact_mode"`
+	PromptLabel      string `json:"prompt_label"`
+}
+
 type PersistentState struct {
 	Theme           string                   `json:"theme"`
 	ManagedEnv      map[string]string        `json:"managed_env"`
 	Workspaces      []WorkspaceRecord        `json:"workspaces"`
 	ActiveWorkspace string                   `json:"active_workspace"`
 	Packages        map[string]PackageRecord `json:"packages"`
+	Tasks           map[string]TaskRecord    `json:"tasks"`
+	Profile         TerminalProfile          `json:"profile"`
 }
 
 type Paths struct {
@@ -89,6 +107,7 @@ type Paths struct {
 	StateFile    string
 	CacheDir     string
 	ReportsDir   string
+	UpdatesDir   string
 }
 
 type Metric struct {

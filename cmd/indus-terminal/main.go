@@ -15,9 +15,9 @@ import (
 )
 
 var (
-	version   = "1.5.4"
+	version   = "1.5.5"
 	commit    = "initial"
-	buildTime = "2026-03-08T00:00:00Z"
+	buildTime = "2026-04-25T00:00:00Z"
 )
 
 func main() {
@@ -140,10 +140,19 @@ func (t *Terminal) Start(ctx context.Context) error {
 		response := t.engine.ExecuteLine(ctx, t.session, line)
 		t.applyEffects(response)
 		renderResponse(response)
+		if response.Effects.Exit {
+			fmt.Println("Restarting INDUS to apply changes...")
+			return nil
+		}
 	}
 }
 
 func (t *Terminal) printBanner() {
+	profile := t.engine.StateSnapshot().Profile
+	if !profile.ShowBanner {
+		return
+	}
+
 	const (
 		reset   = "\033[0m"
 		saffron = "\033[38;5;208m"
@@ -159,13 +168,50 @@ func (t *Terminal) printBanner() {
 	fmt.Printf("%s%s%s\n", green, bar, reset)
 	fmt.Println("")
 
-	frames := [][]string{
-		{
-			"        ▄▄▄      ",
-			"       (◉_◉)ノ   ",
-			"      /|███|     ",
-			"       /   \\     ",
-		},
+	frames := bannerFrames(profile.BannerAnimation)
+	if len(frames) == 0 {
+		frames = bannerFrames("static")
+	}
+
+	frameDuration := 250 * time.Millisecond
+	if profile.BannerDurationMS > 0 && len(frames) > 0 {
+		total := time.Duration(profile.BannerDurationMS) * time.Millisecond
+		frameDuration = total / time.Duration(len(frames)*4)
+		if frameDuration < 120*time.Millisecond {
+			frameDuration = 120 * time.Millisecond
+		}
+	}
+
+	if profile.BannerAnimation == "none" || len(frames) == 1 {
+		printBannerArt(reset, saffron, white, green, frames[0])
+	} else {
+		frameCount := int((time.Duration(profile.BannerDurationMS) * time.Millisecond) / frameDuration)
+		if frameCount < len(frames) {
+			frameCount = len(frames)
+		}
+		for i := 0; i < frameCount; i++ {
+			printBannerArt(reset, saffron, white, green, frames[i%len(frames)])
+			if i < frameCount-1 {
+				fmt.Print("\033[6A")
+				time.Sleep(frameDuration)
+			}
+		}
+	}
+
+	if profile.CompactMode {
+		fmt.Printf("\n%s  INDUS v%s%s\n\n", saffron, version, reset)
+		return
+	}
+
+	fmt.Println("")
+	fmt.Printf("%s  Namaste! Welcome to INDUS Terminal v%s%s\n", saffron, version, reset)
+	fmt.Printf("%s  Native format: ind <command> [options]%s\n", cyan, reset)
+	fmt.Printf("%s  Docs: ind docs | Help: help | Exit: exit%s\n", white, reset)
+	fmt.Println("")
+}
+
+func bannerFrames(animation string) [][]string {
+	static := [][]string{
 		{
 			"        ▄▄▄      ",
 			"       (◉_◉)     ",
@@ -174,20 +220,27 @@ func (t *Terminal) printBanner() {
 		},
 	}
 
-	frameCount := int((5 * time.Second) / (250 * time.Millisecond))
-	for i := 0; i < frameCount; i++ {
-		printBannerArt(reset, saffron, white, green, frames[i%len(frames)])
-		if i < frameCount-1 {
-			fmt.Print("\033[6A")
-			time.Sleep(250 * time.Millisecond)
+	switch animation {
+	case "none", "static":
+		return static
+	case "mascot-wave":
+		return [][]string{
+			{
+				"        ▄▄▄      ",
+				"       (◉_◉)ノ   ",
+				"      /|███|     ",
+				"       /   \\     ",
+			},
+			{
+				"        ▄▄▄      ",
+				"       (◉_◉)     ",
+				"      /|███|\\    ",
+				"       /   \\     ",
+			},
 		}
+	default:
+		return static
 	}
-
-	fmt.Println("")
-	fmt.Printf("%s  Namaste! Welcome to INDUS Terminal v%s%s\n", saffron, version, reset)
-	fmt.Printf("%s  Native format: ind <command> [options]%s\n", cyan, reset)
-	fmt.Printf("%s  Docs: ind docs | Help: help | Exit: exit%s\n", white, reset)
-	fmt.Println("")
 }
 
 func printBannerArt(reset, saffron, white, green string, bot []string) {
@@ -201,7 +254,11 @@ func printBannerArt(reset, saffron, white, green string, bot []string) {
 
 func (t *Terminal) printPrompt() {
 	reset := "\033[0m"
-	fmt.Printf("%sINDUS%s %s > ", t.session.Theme().Prompt, reset, t.session.CWD())
+	label := t.engine.StateSnapshot().Profile.PromptLabel
+	if strings.TrimSpace(label) == "" {
+		label = "INDUS"
+	}
+	fmt.Printf("%s%s%s %s > ", t.session.Theme().Prompt, label, reset, t.session.CWD())
 }
 
 func (t *Terminal) applyEffects(response engine.Response) {

@@ -1,5 +1,5 @@
 {
-  "version": "1.5.1",
+  "version": "1.5.5",
   "commands": {
     "about": {
       "description": "show the INDUS runtime profile and release posture",
@@ -53,6 +53,14 @@
       "example": "ind version",
       "since": "1.4.0",
       "cache_ttl_ms": 15000
+    },
+    "update": {
+      "description": "check, download, or install the latest INDUS release",
+      "module": "update",
+      "category": "update",
+      "usage": "ind update [check|download|install] [--output file] [--force]",
+      "example": "ind update install",
+      "since": "1.5.5"
     },
     "dev bench": {
       "description": "benchmark a native INDUS command with latency metrics",
@@ -428,6 +436,54 @@
       "usage": "ind term theme [theme]",
       "example": "ind term theme saffron",
       "since": "1.4.0"
+    },
+    "term profile": {
+      "description": "show or update persistent terminal profile settings",
+      "module": "terminal",
+      "category": "terminal",
+      "usage": "ind term profile [show|set|reset]",
+      "example": "ind term profile set prompt INDUS",
+      "since": "1.5.5"
+    },
+    "task create": {
+      "description": "create or update a saved INDUS workflow task",
+      "module": "task",
+      "category": "automation",
+      "usage": "ind task create <name> --commands \"ind doctor && ind status\"",
+      "example": "ind task create deploy --commands \"ind doctor && ind proj build .\"",
+      "since": "1.5.5"
+    },
+    "task list": {
+      "description": "list saved INDUS workflow tasks",
+      "module": "task",
+      "category": "automation",
+      "usage": "ind task list",
+      "example": "ind task list",
+      "since": "1.5.5"
+    },
+    "task show": {
+      "description": "show the commands stored in a saved INDUS task",
+      "module": "task",
+      "category": "automation",
+      "usage": "ind task show <name>",
+      "example": "ind task show deploy",
+      "since": "1.5.5"
+    },
+    "task run": {
+      "description": "run a saved INDUS workflow task from start to finish",
+      "module": "task",
+      "category": "automation",
+      "usage": "ind task run <name> [--continue]",
+      "example": "ind task run deploy",
+      "since": "1.5.5"
+    },
+    "task remove": {
+      "description": "remove a saved INDUS workflow task",
+      "module": "task",
+      "category": "automation",
+      "usage": "ind task remove <name>",
+      "example": "ind task remove deploy",
+      "since": "1.5.5"
     },
     "tools scan": {
       "description": "scan and detect all installed development toolchains",

@@ -53,6 +53,10 @@ func (s *StateStore) Load() error {
 	if s.state.Packages == nil {
 		s.state.Packages = map[string]PackageRecord{}
 	}
+	if s.state.Tasks == nil {
+		s.state.Tasks = map[string]TaskRecord{}
+	}
+	s.state.Profile = normalizeTerminalProfile(s.state.Profile)
 	return nil
 }
 
@@ -63,6 +67,7 @@ func (s *StateStore) Snapshot() PersistentState {
 	clone := s.state
 	clone.ManagedEnv = cloneStringMap(s.state.ManagedEnv)
 	clone.Packages = clonePackageMap(s.state.Packages)
+	clone.Tasks = cloneTaskMap(s.state.Tasks)
 	clone.Workspaces = append([]WorkspaceRecord(nil), s.state.Workspaces...)
 	return clone
 }
@@ -78,6 +83,10 @@ func (s *StateStore) Update(fn func(*PersistentState)) error {
 	if s.state.Packages == nil {
 		s.state.Packages = map[string]PackageRecord{}
 	}
+	if s.state.Tasks == nil {
+		s.state.Tasks = map[string]TaskRecord{}
+	}
+	s.state.Profile = normalizeTerminalProfile(s.state.Profile)
 
 	return s.saveLocked()
 }
@@ -95,6 +104,8 @@ func defaultState() PersistentState {
 		Theme:      "saffron",
 		ManagedEnv: map[string]string{},
 		Packages:   map[string]PackageRecord{},
+		Tasks:      map[string]TaskRecord{},
+		Profile:    defaultTerminalProfile(),
 	}
 }
 
@@ -112,4 +123,42 @@ func clonePackageMap(source map[string]PackageRecord) map[string]PackageRecord {
 		result[key] = value
 	}
 	return result
+}
+
+func cloneTaskMap(source map[string]TaskRecord) map[string]TaskRecord {
+	result := map[string]TaskRecord{}
+	for key, value := range source {
+		value.Commands = append([]string(nil), value.Commands...)
+		result[key] = value
+	}
+	return result
+}
+
+func defaultTerminalProfile() TerminalProfile {
+	return TerminalProfile{
+		ShowBanner:       true,
+		BannerAnimation:  "mascot-wave",
+		BannerDurationMS: 5000,
+		CompactMode:      false,
+		PromptLabel:      "INDUS",
+	}
+}
+
+func normalizeTerminalProfile(profile TerminalProfile) TerminalProfile {
+	defaults := defaultTerminalProfile()
+	isZero := profile == (TerminalProfile{})
+
+	if profile.BannerAnimation == "" {
+		profile.BannerAnimation = defaults.BannerAnimation
+	}
+	if profile.BannerDurationMS <= 0 {
+		profile.BannerDurationMS = defaults.BannerDurationMS
+	}
+	if profile.PromptLabel == "" {
+		profile.PromptLabel = defaults.PromptLabel
+	}
+	if isZero {
+		profile.ShowBanner = defaults.ShowBanner
+	}
+	return profile
 }

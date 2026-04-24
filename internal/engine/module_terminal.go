@@ -3,7 +3,9 @@ package engine
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type terminalModule struct {
@@ -14,6 +16,8 @@ func (m *terminalModule) Execute(_ context.Context, inv Invocation) Response {
 	switch inv.Path {
 	case "term clearx":
 		return Response{Effects: Effects{ClearScreen: true}}
+	case "term profile":
+		return m.profile(inv)
 	case "term theme":
 		return m.theme(inv)
 	case "term history":
@@ -100,9 +104,10 @@ func (m *terminalModule) reset() Response {
 	m.engine.cache.Clear()
 	_ = m.engine.state.Update(func(state *PersistentState) {
 		state.Theme = defaultTheme().Name
+		state.Profile = defaultTerminalProfile()
 	})
 	return Response{
-		Output: "theme=saffron\ncache=cleared",
+		Output: "theme=saffron\nprofile=default\ncache=cleared",
 		Effects: Effects{
 			Theme: defaultTheme(),
 		},
@@ -110,5 +115,116 @@ func (m *terminalModule) reset() Response {
 }
 
 func (m *terminalModule) doctor(inv Invocation) Response {
-	return Response{Output: fmt.Sprintf("theme=%s\ninteractive=%t\nmetrics=%d", inv.Session.theme.Name, inv.Mode == ModeInteractive, len(m.engine.Metrics()))}
+	profile := m.engine.StateSnapshot().Profile
+	return Response{Output: fmt.Sprintf("theme=%s\ninteractive=%t\nmetrics=%d\nbanner=%t\nanimation=%s\nprompt=%s", inv.Session.theme.Name, inv.Mode == ModeInteractive, len(m.engine.Metrics()), profile.ShowBanner, profile.BannerAnimation, profile.PromptLabel)}
+}
+
+func (m *terminalModule) profile(inv Invocation) Response {
+	if len(inv.Parsed.Positionals) == 0 {
+		return m.profileShow()
+	}
+
+	switch strings.ToLower(inv.Parsed.Positionals[0]) {
+	case "show":
+		return m.profileShow()
+	case "reset":
+		if err := m.engine.state.Update(func(state *PersistentState) {
+			state.Profile = defaultTerminalProfile()
+		}); err != nil {
+			return Response{Err: commandFailedError(inv.Command, err)}
+		}
+		return Response{Output: "profile=default"}
+	case "set":
+		return m.profileSet(inv)
+	default:
+		return Response{Err: invalidArgumentError(inv.Command, "usage: ind term profile [show|set|reset]")}
+	}
+}
+
+func (m *terminalModule) profileShow() Response {
+	profile := m.engine.StateSnapshot().Profile
+	return Response{Output: fmt.Sprintf(
+		"show_banner=%t\nbanner_animation=%s\nbanner_duration_ms=%d\ncompact_mode=%t\nprompt_label=%s",
+		profile.ShowBanner,
+		profile.BannerAnimation,
+		profile.BannerDurationMS,
+		profile.CompactMode,
+		profile.PromptLabel,
+	)}
+}
+
+func (m *terminalModule) profileSet(inv Invocation) Response {
+	if len(inv.Parsed.Positionals) < 3 {
+		return Response{Err: invalidArgumentError(inv.Command, "usage: ind term profile set <key> <value>")}
+	}
+
+	key := strings.ToLower(inv.Parsed.Positionals[1])
+	value := strings.TrimSpace(strings.Join(inv.Parsed.Positionals[2:], " "))
+
+	var output string
+	err := m.engine.state.Update(func(state *PersistentState) {
+		profile := state.Profile
+		switch key {
+		case "banner":
+			parsed, ok := parseProfileBool(value)
+			if !ok {
+				output = ""
+				return
+			}
+			profile.ShowBanner = parsed
+			output = fmt.Sprintf("show_banner=%t", profile.ShowBanner)
+		case "animation":
+			switch strings.ToLower(value) {
+			case "mascot-wave", "static", "none":
+				profile.BannerAnimation = strings.ToLower(value)
+				output = "banner_animation=" + profile.BannerAnimation
+			default:
+				output = ""
+			}
+		case "duration":
+			duration, parseErr := time.ParseDuration(value)
+			if parseErr == nil {
+				profile.BannerDurationMS = int(duration / time.Millisecond)
+				output = fmt.Sprintf("banner_duration_ms=%d", profile.BannerDurationMS)
+				break
+			}
+			if milliseconds, intErr := strconv.Atoi(value); intErr == nil && milliseconds > 0 {
+				profile.BannerDurationMS = milliseconds
+				output = fmt.Sprintf("banner_duration_ms=%d", profile.BannerDurationMS)
+			}
+		case "compact":
+			parsed, ok := parseProfileBool(value)
+			if !ok {
+				output = ""
+				return
+			}
+			profile.CompactMode = parsed
+			output = fmt.Sprintf("compact_mode=%t", profile.CompactMode)
+		case "prompt":
+			profile.PromptLabel = value
+			output = "prompt_label=" + profile.PromptLabel
+		default:
+			output = ""
+		}
+
+		state.Profile = normalizeTerminalProfile(profile)
+	})
+	if err != nil {
+		return Response{Err: commandFailedError(inv.Command, err)}
+	}
+	if output == "" {
+		return Response{Err: invalidArgumentError(inv.Command, "unsupported profile value")}
+	}
+	return Response{Output: output}
+}
+
+func parseProfileBool(value string) (bool, bool) {
+	switch strings.ToLower(strings.TrimSpace(value)) {
+	case "1", "true", "yes", "on", "enable", "enabled":
+		return true, true
+	case "0", "false", "no", "off", "disable", "disabled":
+		return false, true
+	default:
+		return false, false
+	}
 }

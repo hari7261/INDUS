@@ -149,10 +149,19 @@ $commands = @(
 
   @{ name = "ind term clearx"; args = @("ind", "term", "clearx") },
   @{ name = "ind term theme saffron"; args = @("ind", "term", "theme", "saffron") },
+  @{ name = "ind term profile"; args = @("ind", "term", "profile") },
+  @{ name = "ind term profile set prompt INDUS-PRO"; args = @("ind", "term", "profile", "set", "prompt", "INDUS-PRO") },
+  @{ name = "ind term profile set compact on"; args = @("ind", "term", "profile", "set", "compact", "on") },
   @{ name = "ind term history --limit 10"; args = @("ind", "term", "history", "--limit", "10") },
   @{ name = "ind term speed"; args = @("ind", "term", "speed") },
   @{ name = "ind term reset"; args = @("ind", "term", "reset") },
   @{ name = "ind term doctor"; args = @("ind", "term", "doctor") },
+
+  @{ name = "ind task create smoke-flow --commands 'ind env set INDUS_SMOKE ok && ind env list'"; args = @("ind", "task", "create", "smoke-flow", "--commands", "ind env set INDUS_SMOKE ok && ind env list") },
+  @{ name = "ind task list"; args = @("ind", "task", "list") },
+  @{ name = "ind task show smoke-flow"; args = @("ind", "task", "show", "smoke-flow") },
+  @{ name = "ind task run smoke-flow"; args = @("ind", "task", "run", "smoke-flow") },
+  @{ name = "ind task remove smoke-flow"; args = @("ind", "task", "remove", "smoke-flow") },
 
   @{ name = "ind work init orbit-space"; args = @("ind", "work", "init", "orbit-space") },
   @{ name = "ind work list"; args = @("ind", "work", "list") },

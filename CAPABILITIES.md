@@ -1,12 +1,12 @@
-# INDUS CLI - Complete Capabilities (v1.5.4)
+# INDUS CLI - Complete Capabilities (v1.5.5)
 
 ## 🎯 What Can INDUS Do?
 
-INDUS is a production-grade CLI that combines built-in developer tools with full system command access. **Version 1.5.0** brings enhanced system command execution, development toolchain detection, and production-ready stability.
+INDUS is a production-grade CLI that combines built-in developer tools with full system command access. **Version 1.5.5** adds self-update, saved workflow tasks, and persistent terminal profile controls on top of the existing system command and toolchain features.
 
 ---
 
-## 🚀 Built-in INDUS Commands (60 Commands)
+## 🚀 Built-in INDUS Commands (67 Commands)
 
 ### 1. Project Initialization
 ```bash
@@ -96,7 +96,7 @@ version
 
 ---
 
-### 5. Development Toolchain Detection (NEW in v1.5.4)
+### 5. Development Toolchain Detection (NEW in v1.5.5)
 ```bash
 # Scan all installed development tools
 ind tools scan
@@ -144,7 +144,7 @@ NOT FOUND:
 
 ---
 
-## 💻 System Command Passthrough (FULLY FUNCTIONAL in v1.5.4)
+## 💻 System Command Passthrough (FULLY FUNCTIONAL in v1.5.5)
 
 INDUS can run **ANY Windows command** directly:
 

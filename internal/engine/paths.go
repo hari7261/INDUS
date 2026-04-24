@@ -11,7 +11,10 @@ func discoverPaths() (Paths, error) {
 		return Paths{}, err
 	}
 
-	root := findRoot(wd)
+	root := os.Getenv("INDUS_ROOT_DIR")
+	if root == "" {
+		root = findRoot(wd)
+	}
 	if !hasRegistry(root) {
 		if exe, exeErr := os.Executable(); exeErr == nil {
 			exeRoot := findRoot(filepath.Dir(exe))
@@ -23,18 +26,25 @@ func discoverPaths() (Paths, error) {
 		}
 	}
 
-	configRoot, err := os.UserConfigDir()
-	if err != nil {
-		configRoot = wd
-	}
-	cacheRoot, err := os.UserCacheDir()
-	if err != nil {
-		cacheRoot = wd
-	}
+	stateDir := os.Getenv("INDUS_STATE_DIR")
+	cacheDir := os.Getenv("INDUS_CACHE_DIR")
 
-	stateDir := filepath.Join(configRoot, "indus")
-	cacheDir := filepath.Join(cacheRoot, "indus")
+	if stateDir == "" {
+		configRoot, err := os.UserConfigDir()
+		if err != nil {
+			configRoot = wd
+		}
+		stateDir = filepath.Join(configRoot, "indus")
+	}
+	if cacheDir == "" {
+		cacheRoot, err := os.UserCacheDir()
+		if err != nil {
+			cacheRoot = wd
+		}
+		cacheDir = filepath.Join(cacheRoot, "indus")
+	}
 	reportsDir := filepath.Join(stateDir, "reports")
+	updatesDir := filepath.Join(stateDir, "updates")
 
 	paths := Paths{
 		RootDir:      root,
@@ -42,6 +52,7 @@ func discoverPaths() (Paths, error) {
 		StateFile:    filepath.Join(stateDir, "state.json"),
 		CacheDir:     cacheDir,
 		ReportsDir:   reportsDir,
+		UpdatesDir:   updatesDir,
 		RegistryPath: filepath.Join(root, "core", "commands", "registry.json"),
 		DocsDir:      filepath.Join(root, "docs"),
 	}
@@ -53,6 +64,9 @@ func discoverPaths() (Paths, error) {
 		return Paths{}, err
 	}
 	if err := os.MkdirAll(paths.ReportsDir, 0o755); err != nil {
+		return Paths{}, err
+	}
+	if err := os.MkdirAll(paths.UpdatesDir, 0o755); err != nil {
 		return Paths{}, err
 	}
 
